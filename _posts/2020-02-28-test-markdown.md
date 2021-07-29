@@ -10,6 +10,9 @@ comments: true
 
 This is a demo post to show you how to write blog posts with markdown.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](https://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/headings/tables/etc.
 
+
+Python:
+
 ```python
 # Enable the main of this script to timeout and log:
 def example(signum, frame):
@@ -19,12 +22,18 @@ def example(signum, frame):
     LOG.error(f"setup.py taking too long, terminated during stage {STAGE} at frame {frame}")
     sys.exit(1)
 ```
+
+Javascript:
+
 ```javascript
 var foo = function(x) {
   return(x + 5);
 }
 foo(3)
 ```
+
+Rust:
+
 ```rust
 fn main() {
     //Scalar types
@@ -53,6 +62,15 @@ fn main() {
 }
 ```
 
+
+
+Go:
+
+```go
+type Person struct {
+	Name string
+}
+```
 **Here is some bold text**
 
 ## Here is a secondary heading
