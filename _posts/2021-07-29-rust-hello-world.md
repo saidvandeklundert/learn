@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rust hello workd
+title: Hello world
 subtitle: For starters
 tags: [rust, python, go]
 comments: true
@@ -10,7 +10,7 @@ comments: true
 
 Create a new cargo package and move to that directory:
 
-```
+```bash
 cargo new hello_world
 cd hello_world
 ```
