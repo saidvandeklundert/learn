@@ -12,7 +12,7 @@ This is a demo post to show you how to write blog posts with markdown.  I strong
 
 ```python
 # Enable the main of this script to timeout and log:
-def sig_handler(signum, frame):
+def example(signum, frame):
     """
     Writes and error to the log and exits the program.
     """
