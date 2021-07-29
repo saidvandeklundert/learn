@@ -840,13 +840,17 @@ table tr td :last-child {
 }
 
 /* --- Code blocks --- */
-pre,
-code {
-  font-family: $code-font-family;
-  font-size: 0.9375em;
-  border: 1px solid $border-color-01;
-  border-radius: 3px;
-  background-color: $code-background-color;
+
+pre code {
+  white-space: pre;
+}
+pre.highlight, .highlight > pre, td.code pre {
+  background-color: #FAFAFA;
+  background-image: linear-gradient(#F9F9F9 50%, #FDFDFD 50%);
+  background-repeat: repeat;
+  background-size: 3em 3em;
+  background-position: 0px 10px;
+  border-left: 7px solid #444;
 }
 
 pre code {
