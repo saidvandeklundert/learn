@@ -19,7 +19,12 @@ def example(signum, frame):
     LOG.error(f"setup.py taking too long, terminated during stage {STAGE} at frame {frame}")
     sys.exit(1)
 ```
-
+```javascript
+var foo = function(x) {
+  return(x + 5);
+}
+foo(3)
+```
 ```rust
 fn main() {
     //Scalar types

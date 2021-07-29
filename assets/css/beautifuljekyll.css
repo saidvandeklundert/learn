@@ -839,7 +839,7 @@ table tr td :last-child {
 }
 
 /* --- Code blocks --- */
-
+pre,
 code {
   font-family: $code-font-family;
   font-size: 0.9375em;
