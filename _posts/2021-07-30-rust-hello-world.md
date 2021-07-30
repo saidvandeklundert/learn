@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Hello world
-subtitle: For starters
+subtitle: Rust, Python and Go
 tags: [rust, python, go]
 comments: true
 ---
@@ -35,16 +35,23 @@ Hello, world!
 
 ### Python:
 
+Create a file called `hello_world.py`:
+
 ```python
 
 if __name__ == "__main__":
     print("Hello world")
 ```
 
-
+Running it:
+```
+python test.py
+Hello world
+```
 
 ### Go:
 
+Create a file called `hello_world.go`:
 
 ```go
 package main
