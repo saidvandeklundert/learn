@@ -229,6 +229,8 @@ exclude:
   - README.md
   - screenshot.png
   - docs/
+  - backup.txt
+  - todo.md
 
 plugins:
   - jekyll-paginate
