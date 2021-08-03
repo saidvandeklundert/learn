@@ -201,7 +201,7 @@ paginate: 5
 
 kramdown:
   input: GFM
-  syntax_highligher: rouge
+#  syntax_highligher: rouge
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
