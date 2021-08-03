@@ -200,8 +200,8 @@ permalink: /:year-:month-:day-:title/
 paginate: 5
 
 kramdown:
-  input: GFM
-#  syntax_highligher: rouge
+#  input: GFM
+  syntax_highligher: rouge
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
