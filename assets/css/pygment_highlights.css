@@ -5,7 +5,7 @@
 .highlight .err { color: #960050; background-color: #1e0010 } /* Error */
 .highlight .k { color: #339bfd } /* Keyword */
 .highlight .l { color: #ae81ff } /* Literal */
-.highlight .n { color: #39ac73 } /* Name */
+.highlight .n { color: #80d4ff } /* Name */
 .highlight .o { color: #f92672 } /* Operator */
 .highlight .p { color: #f8f8f2 } /* Punctuation */
 .highlight .cm { color: #75715e } /* Comment.Multiline */
@@ -19,7 +19,7 @@
 .highlight .kn { color: #f92672 } /* Keyword.Namespace */
 .highlight .kp { color: #66d9ef } /* Keyword.Pseudo */
 .highlight .kr { color: #66d9ef } /* Keyword.Reserved */
-.highlight .kt { color: #39ac73 } /* Keyword.Type */
+.highlight .kt { color: #66d9ef } /* Keyword.Type */
 .highlight .ld { color: #e6db74 } /* Literal.Date */
 .highlight .m { color: #ae81ff } /* Literal.Number */
 .highlight .s { color: #dfa44c } /* Literal.String */
