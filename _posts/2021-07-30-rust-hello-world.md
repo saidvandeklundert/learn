@@ -63,10 +63,10 @@ fn main() {
     println!("char: {}\nbool: {}\ni32: {}\nfloat32: {}\n", ch, b, i, f);
 }
 
-fn copy_semantics(number: i32, character: char, boolean: bool, float: f32) {
+fn copy_semantics(i: i32, c: char, b: bool, f: f32) {
     println!(
         "char: {}\nbool: {}\ni32: {}\nfloat32: {}\n",
-        number, character, boolean, float
+        i, c, b, f
     );
 } 
 ```
