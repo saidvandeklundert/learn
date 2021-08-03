@@ -5,6 +5,11 @@ layout: null
 @import url("pygment_highlights.css");
 @import url("monokai.css");
 
+/* -- my doing stuff --*/
+code.language-plaintext.highlighter-rouge {
+  color: #23ba0d9c;
+  font-size: inherit;
+}
 /* --- General --- */
 
 html {
@@ -864,6 +869,7 @@ pre {
   line-height: 1.5em;
   border-radius: 0.25rem;
   padding: 0.59375rem;
+  background-color: #dee2e647;    
 }
 .highlight pre {
   border: none;
