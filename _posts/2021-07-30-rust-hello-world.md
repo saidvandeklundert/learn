@@ -3,9 +3,9 @@ layout: post
 title: Rust scalar types
 subtitle: Rust data types
 image: /assets/img/rusty_logo.jpg
-cover-img: /assets/img/rust_logo_black.png
-thumbnail-img: /assets/img/rust_logo_black.png
-share-img: /assets/img/rust_logo_black.png
+cover-img: /assets/img/rusty_logo.jpg
+thumbnail-img: /assets/img/rusty_logo.jpg
+share-img: /assets/img/rusty_logo.jpg
 tags: [rust]
 ---
 
