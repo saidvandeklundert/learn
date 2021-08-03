@@ -47,12 +47,16 @@ Types that have the copy traits are said to have `copy semantics`. What this mea
 
 Non-primitive types do not have the `Copy` trait by default. What this means is that they are subject to `move semantics`. This means that when you pass them into a function, you `move` the value into that function. Without going into details (that I am still learning about myself), this pretty much means that when the function scope ends, the value is destroyed.
 
-Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here because it was so increadibly confusing for me in the beginning when I set out using different types functions.
+Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here. This is because it was increadibly confusing for me in the beginning when I started passing different types to functions I had created.
 
-Here is an example using primitive types:
+Here is an example function that takes in primitive types:
 
 ```rust
 fn main() {
+    let ch: char = 'z';
+    let b: bool = true;
+    let i: i32 = -2323;
+    let f: f32 = 3.4; 
     // Using primitive types in func is done using 'copy semantics':
     copy_semantics(i, ch, b, f);
     // We can still use the values after the function scope closes:
@@ -67,6 +71,7 @@ fn copy_semantics(i: i32, c: char, b: bool, f: f32) {
 } 
 ```
 
+In the code above, we define a few variables. We then pass them to a function. Here, the `Copy` trait ensures that the value is copied into the function. After the function completes, we print the variables we defined to screen. This code will run without any errors. 
 
 The following illustrates the move semantics using a struct:
 
@@ -94,22 +99,27 @@ struct Person {
 }
 ```
 
-
-Running the above code gives us the following:
+In the above code, we define a struct and pass it into a function. In this case, the value is `moved` into the function. When the function completes, the variable is destroyed and `marie` is no more. Running the above code will give us the following error:
 
 <pre>
-   Compiling b1 v0.1.0 (C:\dev-container\LearningRust\b\b1)
+cargo run
+   Compiling testing v0.1.0 (example)
 error[E0425]: cannot find value `person` in this scope
-  --> src\main.rs:41:37
-   |
-41 |     println!("{} is {} years old.", person.name, person.age);
-   |                                     ^^^^^^ not found in this scope
+ --> src\main.rs:9:37
+  |
+9 |     println!("{} is {} years old.", person.name, person.age);
+  |                                     ^^^^^^ not found in this scope
 
 error[E0425]: cannot find value `person` in this scope
-  --> src\main.rs:41:50
-   |
-41 |     println!("{} is {} years old.", person.name, person.age);
-   |                                                  ^^^^^^ not found in this scope
+ --> src\main.rs:9:50
+  |
+9 |     println!("{} is {} years old.", person.name, person.age);
+  |                                                  ^^^^^^ not found in this scope
 
 error: aborting due to 2 previous errors
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `testing`
 </pre>
+
+Here we see the compiler complain about the fact that `person` is not found in the scope of `main`. This is because the value was moved into the `move_semantics` function. And when that function completed, it was destroyed.
