@@ -28,7 +28,7 @@ fn main() {
 }
 ```
 
-Running this will output the  following:
+When we `cargo run` the above, we get the following output:
 
 <pre>
 char: z
@@ -37,23 +37,19 @@ i32: -2323
 float32: 3.4
 </pre>
 
-## Primitive types
-
-Oftentimes, you will also read about primitive types. The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). 
-
-The primitive types include all of the scalar types as well as the following:
+Oftentimes, you will also read about primitive types. The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). The primitive types include all of the scalar types as well as the following:
 
 ![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
-I will cover most of the primitive types in other posts, but for now, one thing that I think is worth pointing out is that all primitive types have a few common traits. Traits in Rust are used to define shared behavior, and one particularly interesting trait for the primitive types is the `Copy` trait.
+I will cover most of the primitive types in future posts, but for now, one thing that I think is worth pointing out is that all primitive types have a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
 Non-primitive types do not have the `Copy` trait by default. What this means is that they are subject to `move semantics`. This means that when you pass them into a function, you `move` the value into that function. Without going into details (that I am still learning about myself), this pretty much means that when the function scope ends, the value is destroyed.
 
-Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here because it was so increadibly confusing for me in the beginning. 
+Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here because it was so increadibly confusing for me in the beginning when I set out using different types functions.
 
-Using primitive types in a function:
+Here is an example using primitive types:
 
 ```rust
 fn main() {
@@ -72,7 +68,7 @@ fn copy_semantics(i: i32, c: char, b: bool, f: f32) {
 ```
 
 
-Illustrating move semantics using a struct:
+The following illustrates the move semantics using a struct:
 
 ```rust
 fn main() {
@@ -99,7 +95,7 @@ struct Person {
 ```
 
 
-Running the above gives us the following:
+Running the above code gives us the following:
 
 <pre>
    Compiling b1 v0.1.0 (C:\dev-container\LearningRust\b\b1)
