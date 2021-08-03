@@ -9,7 +9,7 @@ tags: [rust]
 
 Scalar types are types representing a single value. In Rust, we can identify the following scalar types:
 
-![Rust scalar types](/img/rust_scalar_types.png "Rust scalar types")  
+![Rust scalar types](/learn/img/rust_scalar_types.png "Rust scalar types")  
 
 
 Creating and printing these values in a program can be done as follows:
@@ -39,7 +39,7 @@ Oftentimes, you will also read about primitive types. The language doc mentions 
 
 The primitive types include all of the scalar types as well as the following:
 
-![Rust primitive types](/img/rust_primitive_types.png "Rust primitive types")
+![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
 I will cover most of the primitive types in other posts, but for now, one thing that I think is worth pointing out is that all primitive types have a few common traits. Traits in Rust are used to define shared behavior, and one particularly interesting trait for the primitive types is the `Copy` trait.
 
