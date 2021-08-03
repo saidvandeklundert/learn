@@ -2,10 +2,10 @@
 layout: post
 title: Rust scalar types
 subtitle: Rust data types
-image: /assets/img/rust-logo.jpg
-cover-img: /assets/img/rust-logo.jpg
-thumbnail-img: /assets/img/rust-logo.jpg
-share-img: /assets/img/rust-logo.jpg
+image: /assets/img/rust_logo_black.png
+cover-img: /assets/img/rust_logo_black.png
+thumbnail-img: /assets/img/rust_logo_black.png
+share-img: /assets/img/rust_logo_black.png
 tags: [rust]
 ---
 
