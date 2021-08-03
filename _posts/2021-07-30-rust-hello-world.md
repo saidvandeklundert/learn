@@ -30,12 +30,12 @@ fn main() {
 
 Running this will output the  following:
 
-```
+<pre>
 char: z
 bool: true
 i32: -2323
 float32: 3.4
-```
+</pre>
 
 ## Primitive types
 
