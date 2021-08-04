@@ -105,15 +105,17 @@ b contains: true
 b now contains: false
 </pre>
 
+Oftentimes, you will also read about primitive types. These primitive types include the scalar types as well as some additional ones:
+
+![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
+
+The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and there behaviors. I will cover most of the primitive types in future posts. 
+
+However, because it was so confusing to me when I was starting out with Rust, I think is worth pointing out is that all primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 
 ## Copy semantics and move semantics
 
-Oftentimes, you will also read about primitive types. The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). The primitive types include all of the scalar types as well as the following:
-
-![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
-
-I will cover most of the primitive types in future posts but I think is worth pointing out is that all primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
