@@ -22,7 +22,7 @@ Creating and printing these values in a program can be done as follows:
 fn main() {
     let ch: char = 'z'; // four bytes, expresses single Unicode Scalar Value
     let b: bool = true; // true or false
-    let i: i32 = -2323; // 32 bit signed integer, can be positive or negative
+    let i: i32 = -111; // 32 bit signed integer, can be positive or negative
     let f: f32 = 3.4; // 32 bit float number
     println!("char: {}\nbool: {}\ni32: {}\nfloat32: {}\n", ch, b, i, f);
 }
@@ -33,15 +33,83 @@ When we `cargo run` the above, we get the following output:
 <pre>
 char: z
 bool: true
-i32: -2323
+i32: -111
 float32: 3.4
 </pre>
+
+The `let` keyword is used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. The Rust compiler can also infer the type, so the following would have been valid code as well:
+
+```rust
+fn main() {
+    let ch = 'z';
+    let b = true;
+    let i = -111;
+    let f = 3.4;
+    println!("char: {}\nbool: {}\ni32: {}\nfloat32: {}\n", ch, b, i, f);
+}
+```
+
+The above is valid, though it is not exactly the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable.
+
+
+Another thing worth pointing out is that variables are immutable by default. In the following code, we (try) to change the value of `b` from `true` to `false`:
+
+```rust
+fn main() {
+    let b = true;
+    println!("b contains: {}", b);
+    b = false;
+    println!("b now contains: {}", b);
+}
+```
+
+When we run the above code, we get the following:
+
+<pre>
+error[E0384]: cannot assign twice to immutable variable `b`
+ --> src\main.rs:3:5
+  |
+2 |     let b = true;
+  |         -
+  |         |
+  |         first assignment to `b`
+  |         help: consider making this binding mutable: `mut b`
+3 |     b = false;
+  |     ^^^^^^^^^ cannot assign twice to immutable variable
+</pre>
+
+The compiler does not let us run the code. Additionally, it is also nice enough to give us a hint:
+
+<pre>
+help: consider making this binding mutable: `mut b`
+</pre>
+
+If we want to be able to change the value of a variable, we need to specify that when we bind the value to the variable using the `mut` keyword:
+
+```rust
+fn main() {
+    let mut b = true;
+    println!("b contains: {}", b);
+    b = false;
+    println!("b now contains: {}", b);
+}
+```
+Now, we can run the code and we get the following:
+
+<pre>
+b contains: true
+b now contains: false
+</pre>
+
+
+
+## Copy semantics and move semantics
 
 Oftentimes, you will also read about primitive types. The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). The primitive types include all of the scalar types as well as the following:
 
 ![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
-I will cover most of the primitive types in future posts, but for now, one thing that I think is worth pointing out is that all primitive types have a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
+I will cover most of the primitive types in future posts but I think is worth pointing out is that all primitive types have a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
