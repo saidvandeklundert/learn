@@ -37,6 +37,8 @@ i32: -111
 float32: 3.4
 </pre>
 
+<p style="color:blue;font-size:8px;">To run the above without having Rust installed, go [here](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c).</p>
+
 The `let` keyword is used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. The Rust compiler can also infer the type, so the following would have been valid code as well:
 
 ```rust
@@ -49,7 +51,7 @@ fn main() {
 }
 ```
 
-The above is valid, though it is not exactly the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable.
+The above is valid, though it is not exactly the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable. 
 
 
 Another thing worth pointing out is that variables are immutable by default. In the following code, we (try) to change the value of `b` from `true` to `false`:
@@ -191,3 +193,9 @@ error: could not compile `testing`
 </pre>
 
 Here we see the compiler complain about the fact that `person` is not found in the scope of `main`. This is because the value was moved into the `move_semantics` function. And when that function completed, it was destroyed.
+
+
+### Wrapping up
+
+As I learn more about Rust, I will dive into more complicated features of the language. My goal is to learn it proper and cover the foundations first. This first post on Rust covered coverd the scalar types and some other basics, like defining variables. For more on scalars and the other primitive types, you can check the docs. [Rust primitives](https://doc.rust-lang.org/std/index.html#primitives) offers pretty comprehensive examples and explanations.
+
