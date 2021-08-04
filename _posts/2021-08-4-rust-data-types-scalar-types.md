@@ -39,7 +39,7 @@ float32: 3.4
 
 <p style="font-size:11px;">To be able to run the example without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>.</p>
 
-The `let` keyword was used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. In a lot of cases, the Rust compiler can also infer the type. So something like the following would also work:
+The `let` keyword was used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. In a lot of cases, the Rust compiler can also infer the type. So, something like the following would also work:
 
 ```rust
 fn main() {
@@ -51,7 +51,7 @@ fn main() {
 }
 ```
 
-The above is valid, though it is not exactly the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable. 
+The above is valid, though it is not the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable. 
 
 
 Another thing worth pointing out is that variables are immutable by default. In the following code, we _try_ to change the value of `b` from `true` to `false`:
@@ -108,18 +108,18 @@ Oftentimes, you will also read about primitive types. These primitive types incl
 
 ![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
-The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and there behaviors. I will cover most of the primitive types in future posts. There is one last thing I want touch on in this post.
+The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and their behaviours. I will cover most of the primitive types in future posts. There is one last thing I want touch on in this post.
 
 
 ## Copy semantics and move semantics
 
-I wanted to include this right at the begging because it was so confusing to me when I was starting out with Rust. All primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
+I wanted to include this right at the beginning because it was so confusing to me when I was starting out with Rust. All primitive types share a few common traits. In Rust, traits are used to define shared behaviour. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
 Non-primitive types do not have the `Copy` trait by default. What this means is that they are subject to `move semantics`. This means that when you pass them into a function, you `move` the value into that function. Without going into details (that I am still learning about myself), this pretty much means that when the function scope ends, the value is destroyed.
 
-Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here. This is because it was increadibly confusing for me in the beginning when I started passing different types to functions I had created.
+Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here. This is because it was incredibly confusing for me in the beginning when I started passing different types to functions I had created.
 
 Here is an example function that takes in a primitive type:
 
@@ -149,7 +149,7 @@ fn main() {
         age: 2,
     };
     move_semantics(marie);
-    // Next line is illegal because a move happend when we passed marie to a function:
+    // Next line is illegal because a move happened when we passed marie to a function:
     println!("{} is {} years old.", person.name, person.age);
 }
 
@@ -193,5 +193,5 @@ Here we see the compiler complain about the fact that `person` is not found in t
 
 ### Wrapping up
 
-As I learn more about Rust, I will dive into more complicated features of the language. My goal is to learn it proper and cover the foundations first. This first post on Rust covered coverd the scalar types and some other basics, like defining variables. For more on scalars and the other primitive types, you can check the docs. [Rust primitives](https://doc.rust-lang.org/std/index.html#primitives) offers pretty comprehensive examples and explanations.
+As I learn more about Rust, I will dive into more complicated features of the language. My goal is to learn it proper and cover the foundations first. This first post on Rust covered covered the scalar types and some other basics, like defining variables. For more on scalars and the other primitive types, you can check the docs. [Rust primitives](https://doc.rust-lang.org/std/index.html#primitives) offers pretty comprehensive examples and explanations.
 
