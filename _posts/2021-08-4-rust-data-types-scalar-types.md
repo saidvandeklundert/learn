@@ -37,7 +37,7 @@ i32: -111
 float32: 3.4
 </pre>
 
-<p style="color:blue;font-size:10px;">To run the above without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>).</p>
+<p style="font-size:10px;">To run the above without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>).</p>
 
 The `let` keyword is used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. The Rust compiler can also infer the type, so the following would have been valid code as well:
 
