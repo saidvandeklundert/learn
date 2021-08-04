@@ -189,22 +189,22 @@ To learn more, run the command again with --verbose.
 
 Here we see the compiler mention a few things. Let's start with the following: 
 
-```
+<pre>
 3 |     let marie = Person {
   |         ----- move occurs because `marie` has type `Person`, which does not implement the `Copy` trait
-```
+</pre>
 
 The compiler points out to use the fact that the `Person` struct, does not implement the `Copy` trait. After that, it goes on to tell us where we have a `move`:
-```
+<pre>
 7 |     move_semantics(marie);
   |                    ----- value moved here
-```
+</pre>
 
 Finally, is points us to where there is a conflict:
-```
+<pre>
 9 |     println!("{} is {} years old.", marie.name, marie.age);
   |                                                 ^^^^^^^^^ value borrowed here after move
-```
+</pre>
 
 It is saying `value borrowed here after move`. Because the value was moved into the `move_semantics` function, it was destroyed after that function was completed. There are ways to deal with this, using a reference for instance. The following code would run:
 
@@ -214,10 +214,12 @@ fn main() {
         name: String::from("marie"),
         age: 2,
     };
+    // notice the & before marie on the next line. This means we are now passing a reference.
     move_semantics(&marie);
     println!("{} is {} years old.", marie.name, marie.age);
 }
 
+// notice the & right before Person on the following line. This means the fn now takes a reference.
 fn move_semantics(person: &Person) {
     println!("{} is {} years old.", person.name, person.age);
 }
