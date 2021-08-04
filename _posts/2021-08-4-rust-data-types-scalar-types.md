@@ -214,12 +214,12 @@ fn main() {
         name: String::from("marie"),
         age: 2,
     };
-    // notice the & before marie on the next line. This means we are now passing a reference.
+    // the & before marie means we are now passing a reference.
     move_semantics(&marie);
     println!("{} is {} years old.", marie.name, marie.age);
 }
 
-// notice the & right before Person on the following line. This means the fn now takes a reference.
+// The '&' before Person means the functionn now takes a reference.
 fn move_semantics(person: &Person) {
     println!("{} is {} years old.", person.name, person.age);
 }
