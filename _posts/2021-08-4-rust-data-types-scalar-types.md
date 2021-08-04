@@ -108,9 +108,7 @@ Oftentimes, you will also read about primitive types. These primitive types incl
 
 ![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
-The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and there behaviors. I will cover most of the primitive types in future posts. 
-
-However, there is one last thing I want touch on: copy semantics and move semantics.
+The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and there behaviors. I will cover most of the primitive types in future posts. There is one last thing I want touch on in this post.
 
 
 ## Copy semantics and move semantics
