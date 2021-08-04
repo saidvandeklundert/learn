@@ -121,29 +121,23 @@ Non-primitive types do not have the `Copy` trait by default. What this means is 
 
 Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here. This is because it was increadibly confusing for me in the beginning when I started passing different types to functions I had created.
 
-Here is an example function that takes in primitive types:
+Here is an example function that takes in a primitive type:
 
 ```rust
 fn main() {
-    let ch: char = 'z';
-    let b: bool = true;
-    let i: i32 = -2323;
-    let f: f32 = 3.4; 
+    let i: i32 = 100;
     // Using primitive types in func is done using 'copy semantics':
-    copy_semantics(i, ch, b, f);
+    copy_semantics(i);
     // We can still use the values after the function scope closes:
-    println!("char: {}\nbool: {}\ni32: {}\nfloat32: {}\n", ch, b, i, f);
+    println!("i32: {}", i);
 }
 
-fn copy_semantics(i: i32, c: char, b: bool, f: f32) {
-    println!(
-        "char: {}\nbool: {}\ni32: {}\nfloat32: {}\n",
-        i, c, b, f
-    );
+fn copy_semantics(i: i32) {
+    println!("i32: {}", i);
 } 
 ```
 
-In the code above, we define a few variables. We then pass them to a function. Here, the `Copy` trait ensures that the value is copied into the function. After the function completes, we print the variables we defined to screen. This code will run without any errors. 
+In the code above, we define a primitive which we then pass to a function. Here, the `Copy` trait ensures that the value is copied into the function. After the function completes, we print the variables we defined to screen. This code will run without any errors. 
 
 The following illustrates the move semantics using a struct:
 
