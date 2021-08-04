@@ -56,7 +56,7 @@ fn main() {
 The above is valid, though it is not exactly the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable. 
 
 
-Another thing worth pointing out is that variables are immutable by default. In the following code, we (try) to change the value of `b` from `true` to `false`:
+Another thing worth pointing out is that variables are immutable by default. In the following code, we _try_ to change the value of `b` from `true` to `false`:
 
 ```rust
 fn main() {
@@ -67,7 +67,7 @@ fn main() {
 }
 ```
 
-When we run the above code, we get the following:
+When we run the above, we get the following:
 
 <pre>
 error[E0384]: cannot assign twice to immutable variable `b`
@@ -82,7 +82,7 @@ error[E0384]: cannot assign twice to immutable variable `b`
   |     ^^^^^^^^^ cannot assign twice to immutable variable
 </pre>
 
-The compiler does not let us run the code. Additionally, it is also nice enough to give us a hint:
+Even though the compiler does not let us run the code, it is thoughtful enough to give us a hint:
 
 <pre>
 help: consider making this binding mutable: `mut b`
@@ -113,7 +113,7 @@ Oftentimes, you will also read about primitive types. The language doc mentions 
 
 ![Rust primitive types](/learn/img/rust_primitive_types.png "Rust primitive types")
 
-I will cover most of the primitive types in future posts but I think is worth pointing out is that all primitive types have a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
+I will cover most of the primitive types in future posts but I think is worth pointing out is that all primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
