@@ -37,11 +37,9 @@ i32: -111
 float32: 3.4
 </pre>
 
-<p style="font-size:11px;">To be able to run the example without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>).</p>
+<p style="font-size:11px;">To be able to run the example without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>.</p>
 
-The `let` keyword is used the bind a value to a variable. 
-
-In the previous example, we explicitly specified a type for every variable. The Rust compiler can also infer the type, so the following would also work:
+The `let` keyword was used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. In a lot of cases, the Rust compiler can also infer the type. So something like the following would also work:
 
 ```rust
 fn main() {
@@ -88,7 +86,7 @@ Even though the compiler does not let us run the code, it is thoughtful enough t
 help: consider making this binding mutable: `mut b`
 </pre>
 
-If we want to be able to change the value of a variable, we need to specify that when we bind the value to the variable using the `mut` keyword:
+If we want to be able to change the value of a variable, we need to specify that when we bind the value to the variable. We can do so using the `mut` keyword:
 
 ```rust
 fn main() {
@@ -98,7 +96,8 @@ fn main() {
     println!("b now contains: {}", b);
 }
 ```
-Now, we can run the code and we get the following:
+
+We can now run the code without any errors:
 
 <pre>
 b contains: true
