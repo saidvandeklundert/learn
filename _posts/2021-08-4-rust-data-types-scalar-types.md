@@ -110,11 +110,12 @@ Oftentimes, you will also read about primitive types. These primitive types incl
 
 The language doc mentions the entire list of primitive types [here](https://doc.rust-lang.org/std/index.html#primitives). It does a good job of thoroughly explaining all the types and there behaviors. I will cover most of the primitive types in future posts. 
 
-However, because it was so confusing to me when I was starting out with Rust, I think is worth pointing out is that all primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
+However, there is one last thing I want touch on: copy semantics and move semantics.
 
 
 ## Copy semantics and move semantics
 
+I wanted to include this right at the begging because it was so confusing to me when I was starting out with Rust. All primitive types share a few common traits. In Rust, traits are used to define shared behavior. One particularly interesting trait for the primitive types is the `Copy` trait.
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
