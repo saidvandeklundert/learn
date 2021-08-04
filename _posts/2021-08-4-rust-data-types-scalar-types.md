@@ -39,7 +39,7 @@ float32: 3.4
 
 <p style="font-size:11px;">To be able to run the example without having Rust installed, go <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=22533c3a2fae48a860168a0d49b53f4c">here</a>.</p>
 
-The `let` keyword was used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. In a lot of cases, the Rust compiler can also infer the type. So, something like the following would also work:
+The `let` keyword was used the bind a value to a variable. In the previous example, we explicitly specified a type for every variable. In a lot of cases, the Rust compiler can also infer the type. The following would also work:
 
 ```rust
 fn main() {
@@ -80,7 +80,7 @@ error[E0384]: cannot assign twice to immutable variable `b`
   |     ^^^^^^^^^ cannot assign twice to immutable variable
 </pre>
 
-Even though the compiler does not let us run the code, it is thoughtful enough to give us a hint:
+Even though the compiler does not let us run the code, it is nice enough to give us a hint:
 
 <pre>
 help: consider making this binding mutable: `mut b`
@@ -135,7 +135,7 @@ fn copy_semantics(i: i32) {
 } 
 ```
 
-In the code above, we define an `i32` which we then pass to a function. Here, the `Copy` trait ensures that the value of `i` is copied into the function. After the `copy_semantics` function completes, `i` still exists and print the variable to screen. This code will run without any errors. 
+In the code above, we define an `i32` which we then pass to a function. Here, the `Copy` trait ensures that the value of `i` is copied into the function. After the `copy_semantics` function completes, `i` still exists and we print the variable to screen. This code will run without any errors. 
 
 The following illustrates the move semantics using a struct:
 
@@ -199,7 +199,7 @@ The compiler points out to use the fact that the `Person` struct, does not imple
   |                    ----- value moved here
 </pre>
 
-Finally, is points us to where there is a conflict:
+Finally, it points us to where we encounter a problem:
 <pre>
 9 |     println!("{} is {} years old.", marie.name, marie.age);
   |                                                 ^^^^^^^^^ value borrowed here after move
@@ -229,7 +229,7 @@ struct Person {
 }
 ```
 
-The specifics on why this works the way it does exactly is for a future post.
+The specifics on why this works, and what other solutions we could implement here, are for a future post.
 
 ### Wrapping up
 
