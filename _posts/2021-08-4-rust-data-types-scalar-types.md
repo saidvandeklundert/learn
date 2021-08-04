@@ -117,9 +117,7 @@ I wanted to include this right at the beginning because it was so confusing to m
 
 Types that have the copy traits are said to have `copy semantics`. What this means is that when you pass them into a function, you pass a copy of that value into that function.
 
-Non-primitive types do not have the `Copy` trait by default. What this means is that they are subject to `move semantics`. This means that when you pass them into a function, you `move` the value into that function. Without going into details (that I am still learning about myself), this pretty much means that when the function scope ends, the value is destroyed.
-
-Though it touches on some advanced concepts that I want to dedicate future posts to, I found it worth mentioning here. This is because it was incredibly confusing for me in the beginning when I started passing different types to functions I had created.
+Non-primitive types do not have the `Copy` trait by default. This means they are subject to `move semantics`. When you pass them into a function, you `move` the value into that function. Without going into details (that I am still learning about myself), this pretty much means that when the function scope ends, the value is destroyed.
 
 Here is an example function that takes in a primitive type:
 
@@ -137,7 +135,7 @@ fn copy_semantics(i: i32) {
 } 
 ```
 
-In the code above, we define a primitive which we then pass to a function. Here, the `Copy` trait ensures that the value is copied into the function. After the function completes, we print the variables we defined to screen. This code will run without any errors. 
+In the code above, we define an `i32` which we then pass to a function. Here, the `Copy` trait ensures that the value of `i` is copied into the function. After the `copy_semantics` function completes, `i` still exists and print the variable to screen. This code will run without any errors. 
 
 The following illustrates the move semantics using a struct:
 
@@ -150,9 +148,8 @@ fn main() {
     };
     move_semantics(marie);
     // Next line is illegal because a move happened when we passed marie to a function:
-    println!("{} is {} years old.", person.name, person.age);
+    println!("{} is {} years old.", marie.name, marie.age);
 }
-
 
 fn move_semantics(person: Person) {
     println!("{} is {} years old.", person.name, person.age);
@@ -165,31 +162,74 @@ struct Person {
 }
 ```
 
-In the above code, we define a struct and pass it into a function. In this case, the value is `moved` into the function. When the function completes, the variable is destroyed and `marie` is no more. Running the above code will give us the following error:
+In the above code, we define a struct and pass it into a function. In this case, the value is `moved` into the function. When the function `move_semantics` completes, the variable is destroyed and `marie` is no more. Running the above code will give us the following error:
 
 <pre>
 cargo run
    Compiling testing v0.1.0 (example)
-error[E0425]: cannot find value `person` in this scope
- --> src\main.rs:9:37
+error[E0382]: borrow of moved value: `marie`
+ --> src\main.rs:9:49
   |
-9 |     println!("{} is {} years old.", person.name, person.age);
-  |                                     ^^^^^^ not found in this scope
+3 |     let marie = Person {
+  |         ----- move occurs because `marie` has type `Person`, which does not implement the `Copy` trait
+...
+7 |     move_semantics(marie);
+  |                    ----- value moved here
+8 |     // Next line is illegal because a move happened when we passed marie to a function:
+9 |     println!("{} is {} years old.", marie.name, marie.age);
+  |                                                 ^^^^^^^^^ value borrowed here after move
 
-error[E0425]: cannot find value `person` in this scope
- --> src\main.rs:9:50
-  |
-9 |     println!("{} is {} years old.", person.name, person.age);
-  |                                                  ^^^^^^ not found in this scope
+error: aborting due to previous error
 
-error: aborting due to 2 previous errors
-
-For more information about this error, try `rustc --explain E0425`.
+For more information about this error, try `rustc --explain E0382`.
 error: could not compile `testing`
+
+To learn more, run the command again with --verbose.
 </pre>
 
-Here we see the compiler complain about the fact that `person` is not found in the scope of `main`. This is because the value was moved into the `move_semantics` function. And when that function completed, it was destroyed.
+Here we see the compiler mention a few things. Let's start with the following: 
 
+```
+3 |     let marie = Person {
+  |         ----- move occurs because `marie` has type `Person`, which does not implement the `Copy` trait
+```
+
+The compiler points out to use the fact that the `Person` struct, does not implement the `Copy` trait. After that, it goes on to tell us where we have a `move`:
+```
+7 |     move_semantics(marie);
+  |                    ----- value moved here
+```
+
+Finally, is points us to where there is a conflict:
+```
+9 |     println!("{} is {} years old.", marie.name, marie.age);
+  |                                                 ^^^^^^^^^ value borrowed here after move
+```
+
+It is saying `value borrowed here after move`. Because the value was moved into the `move_semantics` function, it was destroyed after that function was completed. There are ways to deal with this, using a reference for instance. The following code would run:
+
+```rust
+fn main() {
+    let marie = Person {
+        name: String::from("marie"),
+        age: 2,
+    };
+    move_semantics(&marie);
+    println!("{} is {} years old.", marie.name, marie.age);
+}
+
+fn move_semantics(person: &Person) {
+    println!("{} is {} years old.", person.name, person.age);
+}
+
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: u8,
+}
+```
+
+The specifics on why this works the way it does exactly is for a future post.
 
 ### Wrapping up
 
