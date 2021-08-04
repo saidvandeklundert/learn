@@ -155,7 +155,6 @@ fn move_semantics(person: Person) {
     println!("{} is {} years old.", person.name, person.age);
 }
 
-#[derive(Debug)]
 struct Person {
     name: String,
     age: u8,
@@ -224,7 +223,6 @@ fn move_semantics(person: &Person) {
     println!("{} is {} years old.", person.name, person.age);
 }
 
-#[derive(Debug)]
 struct Person {
     name: String,
     age: u8,
