@@ -51,7 +51,7 @@ fn main() {
 }
 ```
 
-The above is valid, though it is not the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the `i` variable and `f64` for the `f` variable. 
+The above is valid, though it is not the same as the first code snippet. When the compiler has to infer the type, it settles on using `i32` for the integer variable and `f64` for the float variable. 
 
 
 Another thing worth pointing out is that variables are immutable by default. In the following code, we _try_ to change the value of `b` from `true` to `false`:
@@ -86,7 +86,7 @@ Even though the compiler does not let us run the code, it is thoughtful enough t
 help: consider making this binding mutable: `mut b`
 </pre>
 
-If we want to be able to change the value of a variable, we need to specify that when we bind the value to the variable. We can do so using the `mut` keyword:
+If we want to be able to change the value of a variable, we need to specify that a variable is mutable. This is done when we define the variable and we use the `mut` keyword to do so:
 
 ```rust
 fn main() {
