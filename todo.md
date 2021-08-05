@@ -14,3 +14,5 @@ Rust:
 Rust fundamentals:
 - scalars
 - compound types
+- Drop method
+- Entry api hashmap
