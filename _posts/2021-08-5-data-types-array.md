@@ -205,6 +205,16 @@ u8_arr is 4 bytes
 */
 ```
 
+Multidimenional arrays are possible as well, here is an example of an array that contains arrays:
+
+```rust
+let row_1: [u8; 4] = [0; 4];
+let row_2: [u8; 4] = [0; 4];
+let row_3: [u8; 4] = [0; 4];
+let md_arr = [row_1, row_2, row_3];
+println!("md_arr: {:?}", md_arr); // md_arr: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+```
+
 The array implements the `Copy` trait. So, when we pass it into a function, the value is copied into a function:
 
 ```rust
@@ -249,5 +259,6 @@ before array_ref(): [100, 110, 120, 130]
 after changing it in the func: [0, 0, 0, 0]
 after array_ref(): [0, 0, 0, 0]
 </pre>
+
 
 
