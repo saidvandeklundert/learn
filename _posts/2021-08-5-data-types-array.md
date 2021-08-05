@@ -136,6 +136,7 @@ for item in a {
 
 
 Iterate the array and use enumerate to work with the index as well as the value at that index:
+
 ```rust
 for (index, item) in a.iter().enumerate() {
     println!("index: {:?} element {:?}", index, item);
@@ -166,6 +167,7 @@ a = [
 ```
 
 Finding the position of an element inside an array:
+
 ```rust
 // find the position of a value in an array:
 dbg!(a.iter().position(|v| v == &120));
@@ -204,6 +206,7 @@ u8_arr is 4 bytes
 ```
 
 The array implements the `Copy` trait. So when we pass it into a function, the value is copied into a function:
+
 ```rust
 fn array_copy(mut arr: [u8; 4]) {
     for elem in arr.iter_mut() {
