@@ -28,7 +28,7 @@ If you need a sequence type that can grow or shrink, you are in need of a vector
 
 ## Working with arrays in Rust
 
-Other then the above, when you are starting out with Rust, there is really not that much more you have to know about arrays. The best way to get more familiar with them is to play around with them. The following is a basic cheatsheet that should give you a good overal idea on how to start using arrays.
+Other then the above, when you are starting out with Rust, there is really not that much more you have to know about arrays. The best way to get more familiar with them is to play around with them. The following is a basic cheat sheet that should give you a good overall idea on how to start using arrays.
 
 Creating an array:
 
@@ -92,14 +92,14 @@ if a.contains(&x) {
 }
 ```
 
-We can also use a more 'rusty' approach. In the following example, we call `iter()` on the array. This returns an iterator and on this return, we call `any()`. Any takes a closure and will return a bool indicating whether or not there was a match:
+We can also use a more 'rusty' approach. In the following example, we call `iter()` on the array. This returns an iterator and on this return, we call `any()`. Any takes a closure and will return a bool indicating whether there was a match:
 
 ```rust
 let any_res = a.iter().any(|v| v == &10);
 dbg!(any_res);  // any_res = true
 ```
 
-We can also use this approch to test for other conditions. Some examples:
+We can also use this appraoch to test for other conditions. Some examples:
 
 ```rust
 dbg!(a.iter().any(|v| v < &0)); // a.iter().any(|v| v < &0) = false
@@ -205,7 +205,7 @@ u8_arr is 4 bytes
 */
 ```
 
-The array implements the `Copy` trait. So when we pass it into a function, the value is copied into a function:
+The array implements the `Copy` trait. So, when we pass it into a function, the value is copied into a function:
 
 ```rust
 fn array_copy(mut arr: [u8; 4]) {
