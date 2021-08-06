@@ -337,5 +337,5 @@ drwxr-xr-x. 16 said UnixUsers     4096 Jun  8 06:38 Python-3.9.5
 
 ### Wrapping up
 
-We created a small CLI tool that allows us to send a command over SSH to a server or a router. In the examples, I send a command to Linux server and an Arista switch. I did not get into all the specifics. For instance, I do not properly handle the `Result`, instead I used `unwrap()` everywhere. However, the point was not to offer an exhaustive walkthrough. The point was to give you a running start sending CLI commands to systems over SSH. 
+We created a small CLI tool that allows us to send a command over SSH to a server or a router. In the examples, I send a command to Linux server and an Arista switch. I did not get into all the specifics and this is not something that is ready for production. For one, I do not properly handle the `Result`, instead I used `unwrap()` everywhere. The main point in this article was to give you a running start sending CLI commands to systems over SSH. I hope this gives you a nice starting point.
 
