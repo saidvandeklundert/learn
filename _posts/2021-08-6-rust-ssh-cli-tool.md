@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, rust basics]
 ---
 
-Creating small CLI tools is a fun way to get more familiar with a programming language. If you are coming from an infrastructure background, a CLI tool that you can use to send commands to devices/servers might be considered a neat starting point getting into Rust. This is how I started off learning Python, by writing small things that were usefull in a context that I was familiar with. Back then, I used `argparse`, `getpass` and `netmiko`. Starting with Rust is pretty daunting and I have found that using similar tactic used to learn Python can also be applied when learning Rust.
+Creating small CLI tools is a fun way to get more familiar with a programming language. If you are coming from an infrastructure background, a CLI tool that you can use to send commands to devices/servers might be considered a neat starting point getting into Rust. This is how I started off learning Python, by writing small things that were usefull in a context that I was familiar with. Back then, I used `argparse`, `getpass` and `netmiko`. Starting with Rust is pretty daunting, and I have found that using similar tactic used to learn Python can also be applied when learning Rust.
 
 In this article, I explore a tiny bit of Rust by building a CLI tool that will let you log into a router or a server and issue a command over SSH. I hope the examples here can offer you a nice running start exploring Rust.
 
@@ -184,7 +184,7 @@ Though, we would also need to collect the password. For that, we include the `rp
 rpassword = "5.0"
 </pre>
 
-The `rpassword` crate allows us to ask users for a password wihtout echoing it to screen and use that in our script. 
+The `rpassword` crate allows us to ask users for a password without echoing it to screen and use that in our script. 
 
 To collect the arguments as well as the password, we now have the following:
 
