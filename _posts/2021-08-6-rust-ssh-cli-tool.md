@@ -75,7 +75,7 @@ fn main() {
     let mut s = String::new();
     channel.read_to_string(&mut s).unwrap();
     println!("{}", s);
-    channel.wait_close();
+    channel.wait_close().ok();
     println!("{}", channel.exit_status().unwrap());
 }
 ```
@@ -86,17 +86,6 @@ After putting in the file, we can use `cargo run` to run the code:
 
 <pre>
 root@ru:/ssh# cargo run 
-   Compiling ssh v0.1.0 (/ssh)
-warning: unused `Result` that must be used
-  --> src/main.rs:18:49
-   |
-18 | ...                   channel.wait_close();
-   |                       ^^^^^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(unused_must_use)]` on by default
-   = note: this `Result` may be an `Err` variant, which should be handled
-
-warning: 1 warning emitted
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.83s
      Running `target/debug/ssh`
@@ -292,7 +281,7 @@ fn main() {
     let mut command_output = String::new();
     channel.read_to_string(&mut command_output).unwrap();
     println!("{}", command_output);
-    channel.wait_close();
+    channel.wait_close().ok();
     println!("{}", channel.exit_status().unwrap());
 }
 ```
@@ -302,16 +291,6 @@ When we run the above code, we get the following:
 
 <pre>
 root@ru:/ssh# cargo run -- -h 192.168.1.50  -c 'show version' -u said
-warning: unused `Result` that must be used
-  --> src/main.rs:37:65
-   |
-37 | ...                   channel.wait_close();
-   |                       ^^^^^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(unused_must_use)]` on by default
-   = note: this `Result` may be an `Err` variant, which should be handled
-
-warning: 1 warning emitted
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/ssh_example -h 192.168.1.50 -c 'show version' -u said`
@@ -341,16 +320,6 @@ Instead of targeting a router, we can also play around targeting Linux servers:
 
 <pre>
 root@ru:/ssh# cargo run -- -h 10.0.0.1  -c 'ls -ltr' -u said           
-warning: unused `Result` that must be used
-  --> src/main.rs:37:65
-   |
-37 | ...                   channel.wait_close();
-   |                       ^^^^^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(unused_must_use)]` on by default
-   = note: this `Result` may be an `Err` variant, which should be handled
-
-warning: 1 warning emitted
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/ssh_example -h 10.0.0.1 -c 'ls -ltr' -u said`
