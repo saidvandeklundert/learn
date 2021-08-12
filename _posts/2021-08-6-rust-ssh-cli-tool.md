@@ -36,7 +36,7 @@ cd ssh/
 vi Cargo.toml
 </pre>
 
-Now we put in place the following file:
+We put the following in our `Cargo.toml`:
 
 ```toml
 [package]
@@ -173,9 +173,7 @@ Though, we would also need to collect the password. For that, we include the `rp
 rpassword = "5.0"
 </pre>
 
-The `rpassword` crate allows us to ask users for a password without echoing it to screen and use that in our script. 
-
-To collect the arguments as well as the password, we now have the following:
+The `rpassword` crate allows us to ask users for a password without echoing it to screen. To collect the arguments as well as the password, we now have the following:
 
 ```rust
 extern crate rpassword;
@@ -287,7 +285,7 @@ fn main() {
 ```
 
 
-When we run the above code, we get the following:
+Running the above gives us the following:
 
 <pre>
 root@ru:/ssh# cargo run -- -h 192.168.1.50  -c 'show version' -u said
@@ -337,5 +335,5 @@ drwxr-xr-x. 16 said UnixUsers     4096 Jun  8 06:38 Python-3.9.5
 
 ### Wrapping up
 
-We created a small CLI tool that allows us to send a command over SSH to a server or a router. In the examples, I send a command to Linux server and an Arista switch. I did not get into all the specifics and this is not something that is ready for production. For one, I do not properly handle the `Result`, instead I used `unwrap()` everywhere. The main point in this article was to give you a running start sending CLI commands to systems over SSH. I hope this gives you a nice starting point.
+We created a small CLI tool that allows us to send a command over SSH to a server or a router. In the examples, I send a command to Linux server and an Arista switch. I did not get into all the specifics and this is not something that is ready for production. For one, I do not properly handle the `Result`, instead I used `unwrap()` everywhere. But the main point in this article was to give you a running start sending CLI commands to systems over SSH. I hope this gives you a nice starting point.
 
