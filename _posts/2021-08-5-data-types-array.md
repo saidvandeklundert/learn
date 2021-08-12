@@ -10,7 +10,7 @@ tags: [rust, rust basics]
 ---
 
 
-In Rust, the `array` is the simplest of the sequence types (the others being slices and vectors). The array lives on the stack and has a fixed length. The length you declare an array with is part of it's type and it is going to remain the same throughout the program. This is very important, because to succesfully work with an array, you have to be able to specify the length up front at compile time.
+In Rust, the `array` is the simplest of the sequence types (the others being slices and tuples). The array lives on the stack and has a fixed length. The length you declare an array with is part of it's type and it is going to remain the same throughout the program. This is very important, because to succesfully work with an array, you have to be able to specify the length up front at compile time.
 
 The array can be declared as a mutable. This will let you change the values of the elements inside the array.
 
