@@ -10,14 +10,11 @@ tags: [rust, rust basics]
 ---
 
 
-The Rust `tuple` is placed in several categories of types. 
-
-The tuple is a `primitive type`. Among others, this means tuples have the `Copy` trait implemented, making them pass by value.
+The Rust `tuple` is placed in several categories of types. For starters, the tuple is a `primitive type`. Among others, this means tuples have the `Copy` trait implemented, making them pass by value.
 
 Together with the array, the `tuple` also falls into the category of `primitive compound types`. These types group multiple values into a single type. Though, unlike the array, the values in the tuple can be of the same type or they can be of different types.
 
 Additionally, together with arrays and slices, the tuple is a `sequence type`. The tuple can be used to hold a list of values. Though, unlike slices and arrays, tuples do not support iteration.
-
 
 
 ### Basic tuple operations
@@ -99,6 +96,6 @@ equal
 */
 ```
 
-Tuples, like arrays, cannot grow or shrink in size. If you need a type that can grow or shrink, you are probably in need of a vector. 
+No examples to grow or shrink the tuple was include. This is because tuples, like arrays, cannot have their size changed. If you need a type that can grow or shrink, you are probably in need of a vector. 
 
 
