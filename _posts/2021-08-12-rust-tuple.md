@@ -16,7 +16,7 @@ The tuple is a `primitive type`. Among others, this means tuples have the `Copy`
 
 Together with the array, the `tuple` also falls into the category of `primitive compound types`. These types group multiple values into a single type. Though, unlike the array, the values in the tuple can be of the same type or they can be of different types.
 
-Additionally, together with arrays and slices, the tuple is a `sequence type`. The tuple can be used to hold a list values. Unlike slices and arrays though, tuples do not support iteration.
+Additionally, together with arrays and slices, the tuple is a `sequence type`. The tuple can be used to hold a list of values. Though, unlike slices and arrays, tuples do not support iteration.
 
 
 
@@ -52,13 +52,13 @@ dbg!(a, b, c);
 /*
 ```
 
-Oftentimes, you will also see the tuple  being used to express 'nothing'. In such cases, it is an empty tuple that is referred to as 'unit':
+Oftentimes, you will also see the tuple being used to express 'nothing'. In such cases, it is an empty tuple that is referred to as 'unit':
 
 ```rust
 ();
 ```
 
-Tuples can also be usefull in case you want to return multiple values from a single function.
+Tuples can also be useful in case you want to return multiple values from a single function.
 
 ```rust
 fn some_operation(input: i32) -> (&'static str, bool, i32) {
@@ -100,5 +100,5 @@ equal
 ```
 
 Tuples, like arrays, cannot grow or shrink in size. If you need a type that can grow or shrink, you are probably in need of a vector. 
-### Wrapping up
+
 
