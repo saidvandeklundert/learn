@@ -22,7 +22,7 @@ Arrays do not seem to be too pervasive in Rust. Some things they are used for co
 - fixed values ( days of the week, MAC address, IP address, UUID)
 
 
-If you need a sequence type that can grow or shrink, you are in need of a vector. If you are still interested in using arrays, here are some commonly used operations.
+If you need a type that can grow or shrink, you are in need of a vector. If you are still interested in using arrays, here are some commonly used operations.
 
 
 
