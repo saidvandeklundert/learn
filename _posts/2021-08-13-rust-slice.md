@@ -25,6 +25,6 @@ This similar to a slice in Go. In Rust though, the slice can be a view into a ba
 
 The following shows an example array and 2 slices from that array:
 
-![Rust slice](/learn/img/rust_slice.png "Rust slice")
+![Rust slice](/assets/img/rust_slice.png "Rust slice")
 
 
