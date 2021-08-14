@@ -25,7 +25,7 @@ In Rust, the slice can be a view into a backing array as well as a view into oth
 
 The following shows an example array and 2 slices from that array:
 
-![Rust slice](/learn/img/rust_slice.png "Rust slice")
+![Rust slice](/learn/img/rust_slice.png "Rust slice"){:height="80%" width="80%"}
 
 On the left and on the right, we see slices that offer a view into the array that is shown in the middle. The array and the slices were defined as follows: 
 
