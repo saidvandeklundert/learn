@@ -25,7 +25,9 @@ In Rust, the slice can be a view into a backing array as well as a view into oth
 
 The following shows an example array and 2 slices from that array:
 
+{:refdef: style="text-align: center;"}
 ![Rust slice](/learn/img/rust_slice.png "Rust slice"){:height="70%" width="70%"}
+{: refdef}
 
 On the left and on the right, we see slices that offer a view into the array that is shown in the middle. The array and the slices were defined as follows: 
 
@@ -64,7 +66,9 @@ let mut array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6];
 let array_slice = &mut array[0..5]; // [ 0, 1, 2, 3, 4 ]
 ```
 
+{:refdef: style="text-align: center;"}
 ![Rust slice](/learn/img/slice_1.png "Rust slice"){:height="70%" width="70%"}
+{: refdef}
 
 Checking the length of the slice and iterating the index / value:
 
