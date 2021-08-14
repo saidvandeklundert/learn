@@ -28,3 +28,8 @@ The following shows an example array and 2 slices from that array:
 ![Rust slice](/assets/img/rust_slice.png "Rust slice")
 
 
+In the middle, you see an array that is defined as `array : [i32;10]`. The index runs from 0 to 9 and I gave the similar values.
+
+On the left and on the right, there are 2 examples slices. At the top, we see the slice header and and the bottom, we see the index and the values associated with the slices.
+
+The lefthand slice, `slice1`, is defined `&array[5..10]`. Because of this, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index runs from 0 to 4 and the values are those we can see in the backing array. On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
