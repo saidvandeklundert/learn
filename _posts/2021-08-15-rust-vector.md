@@ -77,6 +77,19 @@ vector.pop()); // Some(2)
 vector; // [0, 1]
 ```
 
+Retrieving values from a vector:
+
+```rust
+vector[1] // 1
+```
+
+The above will panic when you refer to an index that does not exist. To safely access an index, use `.get()` (or `get_mut()` to get access to a mutable reference):
+
+```rust
+vector.get(1) // Some(1)
+vector.get(100) // None
+```
+
 Creating another vector using the macro:
 
 ```rust
