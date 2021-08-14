@@ -35,7 +35,7 @@ On the left and on the right, there are 2 examples slices. At the top, we see th
 The lefthand slice, `slice1`, is defined `&array[5..10]`. Because of this, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index runs from 0 to 4 and the values are those we can see in the backing array. On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
 
 
-### Some common slice operations
+### Common slice operations
 
 We start of defining and array and look at a few ways to take a slice:
 
@@ -110,10 +110,78 @@ slice.iter().position(|v| v == &120); // None
 slice.iter().position(|v| v == &4); // Some(4)
 ```
 
-Now, let's change the value of the slice and immediately thereafter, check the elements in the slice as well as in the array that owns the values that the slice is referencing:
-
+Changing the value of an element in the slice:
 ```rust
 slice[0] = 100;
 dbg!(slice); // [100, 1, 2, 3, 4]
 dbg!(array); // [100, 1, 2, 3, 4, 5, 6]
+```
+
+After we changed the value of an element, we can see that change reflected in the slice as well as in the underlying array that owns the values references by the slice.
+
+### Slices out of different types
+
+Slices can be taken out of arrays, vectors and Strings:
+
+```rust
+let array: [i32; 4] = [0, 1, 2, 3];
+let array_slice = &array[..2]; //[0, 1]
+let vector = vec![1, 2, 3, 4];
+let vector_slice = &vector[0..2]; // [1, 2]
+let string = String::from("string slice");
+let string_slice = &string[0..6]; // "string"
+println!("{:?} {:?} {:?}", array_slice, vector_slice, string_slice);
+// [0, 1] [1, 2] "string"
+```
+
+The previously defined array and vector contain the `i32` type. For this reason, we can create a function that works on both the `vector_slice` as well as the `array_slice`:
+
+```rust
+fn return_second(n: &[i32]) {
+    println!("{}", n[1]);
+}
+return_second(array_slice); // 1
+return_second(vector_slice); // 2
+```
+
+The string slice is a `&str`, so we would not be able to pass it into the `return_second` function. In fact, the string slice is a bit 'special'. All strings in Rust are UTF-8 and therefore, characters can differ in size. The `iter()` does not work on string slices, instead, we need to turn to `chars()`. And to take the nth character from a slice, we will need to turn to `nth()`:
+
+```rust
+let string = String::from("Rust is 😍");
+let string_slice = &string[..];
+
+fn return_second_char(n: &str) {
+    println!("{:?}", n.chars().nth(1));
+}
+
+return_second_char(string_slice); // Some('u')
+
+for c in string_slice.chars() {
+    println!("{}", c)
+}
+/*
+R
+u
+s
+t
+
+i
+s
+
+😍
+*/
+for (i, c) in string_slice.chars().enumerate() {
+    println!("{} {}", i, c)
+}
+/*
+0 R
+1 u
+2 s
+3 t
+4
+5 i
+6 s
+7
+8 😍
+*/
 ```
