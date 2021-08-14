@@ -37,13 +37,83 @@ The lefthand slice, `slice1`, is defined `&array[5..10]`. Because of this, the p
 
 ### Some common slice operations
 
-We start of defining and array and a slice. The slice will be a view into the first 5 elements of the array. And since we will be changing a value in the slice later on, both are defined as mutable:
+We start of defining and array and look at a few ways to take a slice:
 
 ```rust
-let mut array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+let array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6];
+
+let slice = &array[..]; // [ 0, 1, 2, 3, 4, 5, 6 ]
+let slice = &array[0..3]; // [ 0, 1, 2 ]
+let slice = &array[..3]; // [ 0, 1, 2 ]
+let slice = &array[2..4]; // [ 2, 3 ]
+let slice = &array[2..]; // [ 2, 3, 4, 5, 6 ]
+```
+
+The above shows an immutable array and a few ways in which we could create a slice out of it. The comment after the slice definition displays the `dbg!(slice);` output.
+
+
+Let's proceed and create a mutable slice so we can also change the value later on. We can do that as follows:
+
+```rust
+let mut array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6];
 let array_slice = &mut array[0..5]; // [ 0, 1, 2, 3, 4 ]
 ```
 
-We now have the following:
-
 ![Rust slice](/assets/img/slice_1.png "Rust slice")
+
+Checking the length of the slice and iterating the index / value:
+
+```rust
+slice.len(); // 5
+
+for (index, item) in slice.iter().enumerate() {
+    println!("index: {:?} element {:?}", index, item);
+}
+/*
+index: 0 element 0
+index: 1 element 1
+index: 2 element 2
+index: 3 element 3
+index: 4 element 4
+*/
+```
+
+Retrieving a value from the slice:
+
+```rust
+slice[1]; // 1
+```
+
+The slice lenght is not (always) known at compile time. The compiler will not save you in case you access an index value that is out of bounds:
+
+```rust
+slice[100];
+```
+
+Running the above for our slice will result in the following:
+
+```
+thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 100'
+```
+
+To safely access values from a slice, we can use `get`:
+
+```rust
+slice.get(2); // Some(2)
+slice.get(100); // None
+```
+
+Finding values in a slice:
+
+```rust
+slice.iter().position(|v| v == &120); // None
+slice.iter().position(|v| v == &4); // Some(4)
+```
+
+Now, let's change the value of the slice and immediately thereafter, check the elements in the slice as well as in the array that owns the values that the slice is referencing:
+
+```rust
+slice[0] = 100;
+dbg!(slice); // [100, 1, 2, 3, 4]
+dbg!(array); // [100, 1, 2, 3, 4, 5, 6]
+```
