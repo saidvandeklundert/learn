@@ -11,7 +11,7 @@ tags: [rust, rust basics]
 
 In Rust, the `slice` is a `primitive type` as well as a `sequence type`. I found slices very confusing at first. In the Rust book, slices are defined as 'a dynamically-sized view into a contiguous sequence'. 
 
-But somewhere in the rust-lang github repo, the slice is defined as follows:
+But somewhere in the rust-lang Github repo, the slice is defined as follows:
 
 ```
 Slices are a view into a block of memory represented as a pointer and a length.
@@ -30,9 +30,9 @@ The following shows an example array and 2 slices from that array:
 
 In the middle, you see an array that is defined as `array : [i32;10]`. The index runs from 0 to 9 and I gave the similar values.
 
-On the left and on the right, there are 2 examples slices. At the top, we see the slice header and and the bottom, we see the index and the values associated with the slices.
+On the left and on the right, there are 2 examples slices. At the top, we see the slice header and the bottom, we see the index and the values associated with the slices.
 
-The lefthand slice, `slice1`, is defined `&array[5..10]`. Because of this, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index runs from 0 to 4 and the values are those we can see in the backing array. On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
+The left-hand slice, `slice1`, is defined `&array[5..10]`. Because of this, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index runs from 0 to 4 and the values are those we can see in the backing array. On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
 
 
 ### Common slice operations
@@ -84,7 +84,7 @@ Retrieving a value from the slice:
 slice[1]; // 1
 ```
 
-The slice lenght is not (always) known at compile time. The compiler will not save you in case you access an index value that is out of bounds:
+The slice length is not (always) known at compile time. The compiler will not save you in case you access an index value that is out of bounds:
 
 ```rust
 slice[100];
