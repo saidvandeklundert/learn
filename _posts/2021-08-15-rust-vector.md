@@ -177,7 +177,46 @@ vector; // [0, 1]
 ```
 
 
+Working with different types inside a single vector using an Enum with Variants:
 
+```rust
+#[derive(Debug)]
+enum ManyAsOne {
+    String(String),
+    I32(i32),
+    F64(f64),
+}
+let vec = vec![
+    ManyAsOne::I32(65444),
+    ManyAsOne::String(String::from("Hello world.")),
+    ManyAsOne::String(String::from("Foo bar.")),
+    ManyAsOne::F64(3.14159265),
+    ManyAsOne::I32(1984),
+];
+for elem in vec {
+    println!("{:?}", elem);
+    match elem {
+        ManyAsOne::I32(value) => println!("value: {}", value),
+        ManyAsOne::String(value) => println!("value: {}", value),
+        ManyAsOne::F64(value) => println!("value: {}", value),
+    }
+}
+```
+
+Running the above code outputs the following:
+
+<pre>
+I32(65444)
+value: 65444
+String("Hello world.")
+value: Hello world.
+String("Foo bar.")
+value: Foo bar.
+F64(3.14159265)
+value: 3.14159265
+I32(1984)
+value: 1984
+</pre>
 
 
 
