@@ -185,3 +185,45 @@ for (i, c) in string_slice.chars().enumerate() {
 8 😍
 */
 ```
+
+
+### Fat and thin pointers
+
+In closing, some additional words on fat and thin pointers. While I was reading up on slices, I got completely hung up on them for several reasons. I did not really understand the difference between a reference to an array and a slice and several other factors were making the slice a bit of a grey area.
+
+A colleague, (Nate Newton), wrote some code for me that helped me understand it a bit better. Just being able to 'see' sometimes helps me better understand things. And what he showed me was something along these lines:
+
+```rust
+use std::mem;
+let array: [i32; 500] = [0; 500];
+let slice = &array[..];
+let array_pointer = &array;
+let slice_pointer = &slice;
+let start_of_array_slice = &array[0];
+println!("--------------------------------------------");
+println!("array_pointer address: {:p}", array_pointer);
+println!("slice_pointer address: {:p}", slice_pointer);
+println!("start_of_array_slice address: {:p}", start_of_array_slice);
+println!("slice occupies {} bytes", mem::size_of_val(&slice));
+println!(
+    "array_pointer occupies {} bytes",
+    mem::size_of_val(&array_pointer)
+);
+println!("array occupies {} bytes", mem::size_of_val(&array));
+println!("--------------------------------------------");
+```
+
+The above outputs the following:
+
+```
+--------------------------------------------
+array_pointer address: 0x9def68
+slice_pointer address: 0x9df738
+start_of_array_slice address: 0x9def68
+slice occupies 16 bytes
+array_pointer occupies 8 bytes
+array occupies 2000 bytes
+--------------------------------------------
+```
+
+The total size of the array is 2000 bytes. The slice of the entire array, the fat pointer, occupies 16 bytes. If we take a pointer to the array, we get a thin pointer which is takes up 8 bytes. The memory address of the array pointer and the memory address to the start of the slice are the same.
