@@ -46,4 +46,4 @@ let array_slice = &mut array[0..5]; // [ 0, 1, 2, 3, 4 ]
 
 We now have the following:
 
-![Rust slice](/assets/img/slice_1 "Rust slice")
+![Rust slice](/assets/img/slice_1.png "Rust slice")
