@@ -19,8 +19,6 @@ In Rust, a vector is represented using 3 parameters:
 
 These parameters are held together in a struct. When working with sequences, the vector offers us quite some ergonomics as we will see later on. 
 
--- New
-
 Let's start off creating a vector:
 
 ```rust
@@ -29,7 +27,7 @@ vec.push(1);
 vec.push(2);
 ```
 
-We use `with_capacity`. Not required, though it is what Rust recommends whenever it is possible to specify how big the vector is expected to get. Directly after defining the vector, we have an empty vector with a lenght of 0 and a capacity of 6. Next, we push two elements onto it. Now, the vector contains the values `[ 1, 2]`. This increases the length to 2 while the capacity remains the same. Our vetor now looks like this:
+We use `with_capacity`. Not required, though it is what Rust recommends whenever it is possible to specify how big the vector is expected to get. Directly after defining the vector, we have an empty vector with a lenght of 0 and a capacity of 6. Next, we push two elements onto it. Now, the vector contains the values `[ 1, 2]`. This increases the length to 2 while the capacity remains the same. Our vector now looks like this:
 
 {:refdef: style="text-align: center;"}
 ![Rust vector](/assets/img/rust_vector_1.png "Rust vector"){:height="80%" width="80%"}
@@ -39,7 +37,6 @@ To better understand vectors, we can print several of it's properties to screen:
 
 ```rust
 println!("--------------------------------------------");
-println!("Pointer to vec: {:p}", &vec);
 println!("Values inside vec: {:?}", vec);
 println!("Length of the vec: {:?}", vec.len());
 println!("Capacity of the vec: {:?}", vec.capacity());
@@ -50,14 +47,13 @@ The code outputs the following:
 
 <pre>
 --------------------------------------------
-Pointer to vec: 0x9df938
 Values inside vec: [1, 2]
 Length of the vec: 2
 Capacity of the vec: 6
 --------------------------------------------
 </pre>
 
-We display the pointer to the data on the heap, the values inside the vector, the lenght of the vector and the capacity.
+Here we display the values, the lenght and the capacity of the vector.
 
 Now, if we were to add 5 elements to this vector, we would exceed the capacity and Rust would resize the vector. This resizing basically involves creating a new vector that has double the capacity and copying over the old vector. To see this in action, we can do the following:
 
@@ -78,55 +74,12 @@ Capacity of the vec: 12
 --------------------------------------------
 </pre>
 
-
--- New
-
-
--- OLD
-The following displays an example vector:
-
-![Rust vector](/assets/img/rust_vector.png "Rust vector")
-
-The top left code defines the vector:
-
-```rust
-let mut vec: Vec<i32> = Vec::with_capacity(6);
-vec.push(1);
-vec.push(2);
-```
-
-The above code starts of creating a vector. We use `with_capacity`. Not required, though it is what Rust recommends whenever it is possible to specify how big the vector is expected to get. Directly after defining the vector, we have an empty vector with a lenght of 0 and a capacity of 6.
-
-After we have created the vector, we push two elements onto it. Now, the vector contains the values `[ 1, 2]`. This increases the length to 2 while the capacity remains the same. 
-
-After this, we have Rust return some of the vector's properties to screen. We display the pointer to the data on the heap, the values inside the vector, the lenght of the vector and the capacity.
-
-In the middle, we can see the vector data structure. It is the vector struct that is displaying the fields with the values as they are right after calling the `push()` method twice. We can see the pointer pointing to the place in the heap where the data can be found.
-
-Now, if we were to add 5 elements to this vector, we would exceed the capacity and Rust would resize the vector. This resizing basically involves creating a new vector that has double the capacity and copying over the old vector. To see this in action, we can do the following:
-
-```rust
-let mut vector = vec![3, 4, 5, 6, 7];
-vec.append(&mut vector);
-println!("--------------------------------------------");
-println!("Length of the vec: {:?}", vec.len());
-println!("Capacity of the vec: {:?}", vec.capacity());
-println!("--------------------------------------------");
-```
-After adding this code, we would get to see the following:
-
-<pre>
---------------------------------------------
-Length of the vec: 7
-Capacity of the vec: 12
---------------------------------------------
-</pre>
-
--- OLD
 
 ## Common operations:
 
-Creating an empty vector and pusing some values onto it:
+The following are some examples on how you could use vectors. Most of the comments detail the content of the vector after an operation. They (mostly) come from printing the variable using `println!("{:?}", x);`. To reduce clutter, I removed the print statements.
+
+Now, for starters, creating an empty vector and pusing some values onto it:
 
 ```rust
 let mut vector: Vec<i32> = Vec::new(); // []
@@ -135,7 +88,7 @@ vector.push(1); // [0, 1]
 vector.push(2); // [0, 1, 2]
 ```
 
-Remove the last value from a vector, returning an Option:
+Removing the last value from a vector, and getting an Option returned that contains that value:
 
 ```rust
 vector.pop()); // Some(2)
@@ -155,21 +108,21 @@ vector.get(1) // Some(1)
 vector.get(100) // None
 ```
 
-Creating another vector using the macro:
+Here we create a second vector using the macro:
 
 ```rust
 let mut vec = vec![2, 2, 3, 4, 5];
 vec; // [2, 2, 3, 4, 5]
 ```
 
-Remove an index from the vec:
+We can use `remove` to remove an index from the vec:
 
 ```rust
 vec.remove(0);
 vec; // [2, 3, 4, 5]
 ```
 
-Move all elements from a vector into the vector that is calling the method:
+Use `append` to move all elements from a vector into the vector that is calling the method:
 
 ```rust
 vector.append(&mut vec);
@@ -217,7 +170,7 @@ for elem in vecter_iterator_m {
 println!("{:?}", vector); // [0, 2, 4, 6, 8, 10]
 ```
 
-Verify whether or not a value exists inside a vector:
+To verify whether or not a value exists inside a vector:
 
 ```rust
 vector.contains(&200); // false
@@ -231,7 +184,7 @@ vector.insert(2, 1);
 vector; // [0, 2, 1, 4, 6, 8, 10]
 ```
 
-Sort a vector and then execute a binary search:
+Sorting a vector and then execute a binary search:
 
 ```rust
 vector.sort()
@@ -240,7 +193,7 @@ vector.binary_search(&4); // Ok(3)
 vector.binary_search(&400); // Err(7)
 ```
 
-Resize the vector and fill empty elements with 0's:
+Resize a vector and filling empty elements with 0's:
 
 ```rust
 vector.resize(10, 0);
@@ -253,7 +206,6 @@ We can use the same method to shrink the vector:
 vector.resize(2, 0);
 vector; // [0, 1]
 ```
-
 
 Working with different types inside a single vector using an Enum with Variants:
 
@@ -318,7 +270,7 @@ let mut marie = Person {
 marie.interests.push(String::from("Astronomy"));
 println!("{:?}", marie);
 ```
-Runninng the above will output the following:
+Running the above will output the following:
 
 <pre>
 Person { name: "Marie", age: 31, interests: ["Rust", "Python", "History", "Astronomy"] }
