@@ -59,9 +59,7 @@ let mut array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6];
 let array_slice = &mut array[0..5]; // [ 0, 1, 2, 3, 4 ]
 ```
 
-{:refdef: style="text-align: center;"}
-![Rust slice](/assets/img/slice_1.png "Rust slice"){:height="80%" width="80%"}
-{: refdef}
+![Rust slice](/assets/img/slice_1.png "Rust slice")
 
 Checking the length of the slice and iterating the index / value:
 
