@@ -10,15 +10,78 @@ tags: [rust, rust basics]
 ---
 ## What is a vector:
 
-Vectors can be thought of as resizeable arrays. It is a data structure that can be used to store a sequence of elements. The stored elements have to be of the same type. In case you need to be flexible, you could choose to use an enum and define a variety of enum variants as a way to (kind of) store elements of a different type inside a vector (more on that later).
+Vectors can be thought of as resizeable arrays. It is a data structure that can be used to store a sequence of elements. The stored elements have to be of the same type. In case you need to be flexible, you could choose to use an enum with several variants as a way to store elements of a different type inside a vector (more on that later).
 
 In Rust, a vector is represented using 3 parameters:
-
-- pointer to the data (on the heap)
+- pointer to the vector's data on the heap
 - length
 - capacity
 
-Though these parameters are held together in a struct, this is abstracted away. When working with sequences, the vector offers us quite some ergonomics as we will see later on. The following displays an example vector:
+These parameters are held together in a struct. When working with sequences, the vector offers us quite some ergonomics as we will see later on. 
+
+-- New
+
+Let's start off creating a vector:
+
+```rust
+let mut vec: Vec<i32> = Vec::with_capacity(6);
+vec.push(1);
+vec.push(2);
+```
+
+We use `with_capacity`. Not required, though it is what Rust recommends whenever it is possible to specify how big the vector is expected to get. Directly after defining the vector, we have an empty vector with a lenght of 0 and a capacity of 6. Next, we push two elements onto it. Now, the vector contains the values `[ 1, 2]`. This increases the length to 2 while the capacity remains the same. Our vetor now looks like this:
+
+![Rust vector](/assets/img/rust_vector_1.png "Rust vector")
+
+To better understand vectors, we can print several of it's properties to screen:
+
+```rust
+println!("--------------------------------------------");
+println!("Pointer to vec: {:p}", &vec);
+println!("Values inside vec: {:?}", vec);
+println!("Length of the vec: {:?}", vec.len());
+println!("Capacity of the vec: {:?}", vec.capacity());
+println!("--------------------------------------------");
+```
+
+The code outputs the following:
+
+<pre>
+--------------------------------------------
+Pointer to vec: 0x9df938
+Values inside vec: [1, 2]
+Length of the vec: 2
+Capacity of the vec: 6
+--------------------------------------------
+</pre>
+
+We display the pointer to the data on the heap, the values inside the vector, the lenght of the vector and the capacity.
+
+Now, if we were to add 5 elements to this vector, we would exceed the capacity and Rust would resize the vector. This resizing basically involves creating a new vector that has double the capacity and copying over the old vector. To see this in action, we can do the following:
+
+```rust
+let mut vector = vec![3, 4, 5, 6, 7];
+vec.append(&mut vector);
+println!("--------------------------------------------");
+println!("Length of the vec: {:?}", vec.len());
+println!("Capacity of the vec: {:?}", vec.capacity());
+println!("--------------------------------------------");
+```
+After adding this code, we would get to see the following:
+
+<pre>
+--------------------------------------------
+Length of the vec: 7
+Capacity of the vec: 12
+--------------------------------------------
+</pre>
+
+
+-- New
+
+
+-- OLD
+The following displays an example vector:
 
 ![Rust vector](/assets/img/rust_vector.png "Rust vector")
 
@@ -57,7 +120,7 @@ Capacity of the vec: 12
 --------------------------------------------
 </pre>
 
-
+-- OLD
 
 ## Common operations:
 
