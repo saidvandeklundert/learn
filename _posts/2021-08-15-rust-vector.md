@@ -296,8 +296,33 @@ I32(1984)
 value: 1984
 </pre>
 
+Finaly, it is also possible to put a vector inside a struct:
 
+```rust
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: u8,
+    interests: Vec<String>,
+}
 
+let mut marie = Person {
+    name: String::from("Marie"),
+    age: 31,
+    interests: vec![
+        String::from("Rust"),
+        String::from("Python"),
+        String::from("History"),
+    ],
+};
+marie.interests.push(String::from("Astronomy"));
+println!("{:?}", marie);
+```
+Runninng the above will output the following:
+
+<pre>
+Person { name: "Marie", age: 31, interests: ["Rust", "Python", "History", "Astronomy"] }
+</pre>
 
 https://doc.rust-lang.org/rust-by-example/std/vec.html
 
