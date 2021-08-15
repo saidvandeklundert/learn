@@ -248,7 +248,18 @@ I32(1984)
 value: 1984
 </pre>
 
-Finaly, it is also possible to put a vector inside a struct:
+Putting a vector into a hashmap:
+
+```rust
+use std::collections::HashMap;
+let mut job_results: HashMap<String, Vec<i32>> = HashMap::new();
+job_results.insert(String::from("1"), vec![3, 2, 2, 2, 2]);
+job_results.insert(String::from("2"), vec![2, 3, 2, 2, 2]);
+job_results.insert(String::from("3"), vec![2, 2, 3, 2, 2]);
+job_results;  // {"2": [2, 3, 2, 2, 2], "3": [2, 2, 3, 2, 2], "1": [3, 2, 2, 2, 2]}
+```
+
+And finaly, it is also possible to put a vector inside a struct:
 
 ```rust
 #[derive(Debug)]
