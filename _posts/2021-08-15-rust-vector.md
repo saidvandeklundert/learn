@@ -30,7 +30,7 @@ vec.push(2);
 We use `with_capacity`. Not required, though it is what Rust recommends whenever it is possible to specify how big the vector is expected to get. Directly after defining the vector, we have an empty vector with a lenght of 0 and a capacity of 6. Next, we push two elements onto it. Now, the vector contains the values `[ 1, 2]`. This increases the length to 2 while the capacity remains the same. Our vector now looks like this:
 
 {:refdef: style="text-align: center;"}
-![Rust vector](/assets/img/rust_vector_1.png "Rust vector"){:height="80%" width="80%"}
+![Rust vector](/learn/img/rust_vector_1.png "Rust vector"){:height="80%" width="80%"}
 {: refdef}
 
 To better understand vectors, we can print several of it's properties to screen:
