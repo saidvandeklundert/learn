@@ -13,9 +13,9 @@ In Rust, the `slice` is a `primitive type` as well as a `sequence type`. I found
 
 But somewhere in the rust-lang Github repo, the slice is defined as follows:
 
-```
+<pre>
 Slices are a view into a block of memory represented as a pointer and a length.
-```
+</pre>
 
 I found this more helpful. It tells us the slice is a `fat pointer`. So basically, when you have a slice of an array, the slice contains the following:
 - a pointer to the address of the element in the array that the slice starts with
@@ -25,14 +25,21 @@ In Rust, the slice can be a view into a backing array as well as a view into oth
 
 The following shows an example array and 2 slices from that array:
 
-![Rust slice](/assets/img/rust_slice.png "Rust slice")
+{:refdef: style="text-align: center;"}
+![Rust slice](/learn/img/rust_slice.png "Rust slice"){:height="80%" width="80%"}
+{: refdef}
 
+On the left and on the right, we see slices that offer a view into the array that is shown in the middle. The array and the slices were defined as follows: 
 
-In the middle, you see an array that is defined as `array : [i32;10]`. The index runs from 0 to 9 and I gave the similar values.
+```rust
+let array: [i32; 10] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+let slice1 = &array[5..10];
+let slice2 = &array[3..7];
+```
 
-On the left and on the right, there are 2 examples slices. At the top, we see the slice header and the bottom, we see the index and the values associated with the slices.
+In `slice1`, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index of the slice itself runs from 0 to 4 and the values are those we can see in the backing array. 
 
-The left-hand slice, `slice1`, is defined `&array[5..10]`. Because of this, the pointer of the slice is pointing to array index 5. We can also see `slice1` has a length of 5. This means the slice will contain 5 elements of the array. A little below the slice, we can see the index and the values associated with `slice1`. The index runs from 0 to 4 and the values are those we can see in the backing array. On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
+On the righthand side, we see `slice2`. That slice's pointer is pointing to element 3 and the slice has a length of 4.
 
 
 ### Common slice operations
@@ -59,7 +66,9 @@ let mut array: [i32; 7] = [0, 1, 2, 3, 4, 5, 6];
 let array_slice = &mut array[0..5]; // [ 0, 1, 2, 3, 4 ]
 ```
 
-![Rust slice](/assets/img/slice_1.png "Rust slice")
+{:refdef: style="text-align: center;"}
+![Rust slice](/learn/img/slice_1.png "Rust slice"){:height="80%" width="80%"}
+{: refdef}
 
 Checking the length of the slice and iterating the index / value:
 
@@ -92,9 +101,9 @@ slice[100];
 
 Running the above for our slice will result in the following:
 
-```
+<pre>
 thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 100'
-```
+</pre>
 
 To safely access values from a slice, we can use `get`:
 
@@ -125,7 +134,7 @@ Slices can be taken out of arrays, vectors and Strings:
 
 ```rust
 let array: [i32; 4] = [0, 1, 2, 3];
-let array_slice = &array[..2]; //[0, 1]
+let array_slice = &array[..2]; // [0, 1]
 let vector = vec![1, 2, 3, 4];
 let vector_slice = &vector[0..2]; // [1, 2]
 let string = String::from("string slice");
@@ -215,7 +224,7 @@ println!("--------------------------------------------");
 
 The above outputs the following:
 
-```
+<pre>
 --------------------------------------------
 array_pointer address: 0x9def68
 slice_pointer address: 0x9df738
@@ -224,6 +233,6 @@ slice occupies 16 bytes
 array_pointer occupies 8 bytes
 array occupies 2000 bytes
 --------------------------------------------
-```
+</pre>
 
 The total size of the array is 2000 bytes. The slice of the entire array, the fat pointer, occupies 16 bytes. If we take a pointer to the array, we get a thin pointer which is takes up 8 bytes. The memory address of the array pointer and the memory address to the start of the slice are the same.
