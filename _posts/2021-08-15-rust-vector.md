@@ -323,7 +323,3 @@ Runninng the above will output the following:
 <pre>
 Person { name: "Marie", age: 31, interests: ["Rust", "Python", "History", "Astronomy"] }
 </pre>
-
-https://doc.rust-lang.org/rust-by-example/std/vec.html
-
-https://doc.rust-lang.org/src/alloc/vec/mod.rs.html#151
