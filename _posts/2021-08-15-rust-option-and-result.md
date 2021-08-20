@@ -92,7 +92,7 @@ We got This.
 We got That
 </pre>
 
-### the Rust prelude
+### The Rust prelude
 
 The Rust prelude, described [here](https://doc.rust-lang.org/std/prelude/index.html#), is something that is a part of every program. It is a list of things that are automatically imported into every Rust program. Most of the items in the prelude are traits that are used very often. But in addition to this, we also find the following 2 items:
 - std::option::Option::{self, Some, None}
@@ -103,7 +103,7 @@ The first one is the `Option` enum, described as 'a type which expresses the pre
 Because these types are so commonly used, their variants are also exported. Let's go over both types in more detail.
 
 
-## the Option
+## The Option
 
 Brought into scope by the prelude, the [Option](https://doc.rust-lang.org/std/option/index.html) is available to us without having to lift a finger. The option is defined as follows:
 
@@ -114,11 +114,9 @@ pub enum Option<T> {
 }
 ```
 
-The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. So the Option offers a way to indicate that some value is something or nothing
+The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. Key thing that is not immediately obvious to those starting out with Rust is the '<T>'_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
 
-Another thing not immediately obvious to those starting out with Rust is the '<T>'_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
-
-### The option is generic over type T.
+### The Option is generic over type T.
 
 The enum is 'generic over type T'. The 'T' could have been any letter, just that 'T' is used as a convention where 1 generic is involved.
 
