@@ -22,7 +22,7 @@ In order to understand the `Option` and the `Result`, it is important to underst
 
 ### The Rust Enum
 
-In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. The Option and the Result are pretty straightforward though. 
+There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. The Option and the Result are pretty straightforward though. 
 
 Let's first look at an example enum:
 
@@ -387,6 +387,26 @@ None
 </pre>
 
 ## The result
+
+Another important construct in Rust is the `Result` enum. Same as with the Option
+
+The definition of the Result can be found in `result.rs`:
+
+```rust
+pub enum Result<T, E> {
+    /// Contains the success value
+    Ok(T),
+    /// Contains the error value    
+    Err(E),
+}
+```
+
+The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value.
+
+
+```
+std::result::Result::{self, Ok, Err}
+```
 
 ### short description and picture
 
