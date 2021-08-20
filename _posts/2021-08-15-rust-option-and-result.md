@@ -20,12 +20,25 @@ In order to understand the `Option` and the `Result`, it is important to underst
 - matching enum variants
 - the Rust prelude
 
-### the enum in Rust
+### The Rust Enum
 
 In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. The Option and the Result are pretty straightforward though. 
 
 Let's first look at an example enum:
 
+```rust
+enum Example {
+    This,
+    That,
+}
+
+let this = Example::This;
+let that = Example::That;
+```
+
+In the above, we define an enum called `Example`. This enum has 2 variants called `This` and `That`. Next, we create 2 instances of the enum, variables `this` and `that`. Both are created with their own variant. It is important to note that an instance of an enum is always 1 of the variants. When you use a field struct, you can define struct with all it's possible fields. An enum is different because you assign only one of the fields (called variants).
+
+By default, the enum variants is not something you can print to screen. Let's bring `strum_macros` into scope. This makes it easy to derive 'Display' on the enum we defined, which we do using `#[derive(Display)]` above the enum definition:
 
 ```rust
 use strum_macros::Display;
@@ -43,11 +56,7 @@ println!("Example::This contains: {}", this);
 println!("Example::That contains: {}", that);
 ```
 
-In the above, we define an enum called `Example`. This enum has 2 variants called `This` and `That`. We also bring `use strum_macros::Display;` into scope. This makes it easy to derive 'Display' on the enum we defined, which we do using `#[derive(Display)]` above the enum definition. Basically, this allows us to print the enum value after creating one.
-
-Next, we create 2 instances of the enum, `this` and `that`. Both are created with their own variant. It is important to note that an instance of an enum is always 1 of the variants. When you use a field struct, you can define struct with all it's possible fields. An enum is different because you assign only one of the fields (called variants).
-
-Finally, the above code prints the values to screen, giving us the following:
+Now, we can use print to display the enum variant values to screen:
 
 <pre>
 Example::This contains: This
