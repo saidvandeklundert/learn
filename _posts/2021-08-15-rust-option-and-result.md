@@ -212,7 +212,7 @@ pub const fn unwrap(self) -> T {
 }
 ```
 
-In `option.rs`, we can see `unwrap` is defined in the `impl<T> Option<T>` block. When we call it on a value, it will try to 'unwrap' the value that is tucked into T. It matches on 'self' and if the `Some` variant is present, 'val' is 'unwrapped' and returned. If the 'None' variant is present, the panic macro is called.
+In `option.rs`, we can see `unwrap` is defined in the `impl<T> Option<T>` block. When we call it on a value, it will try to 'unwrap' the value that is tucked into T. It matches on 'self' and if the `Some` variant is present, 'val' is 'unwrapped' and returned. If the 'None' variant is present, the panic macro is called:
 
 
 ```rust
@@ -230,11 +230,11 @@ Some("Something")
 thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:86:17
 </pre>
 
-Calling unwrap on an Option is quick and easy. However, the safe approach would be to unwrap the option with a match.
+Calling unwrap on an Option is quick and easy. Bot obviously, baking in the possibility of letting your program `panic` and crash is not the most elegant or safe approach. 
 
 ## Option examples
 
-Let's look at some use cases for the 'Option' in practice and, after that, look at how it is sometimes used in a few popular packages.
+Let's look at some examples where 'Option' is used.
 
 ### passing an optional value to a function
 
@@ -312,12 +312,47 @@ if let Some(a) = contains_char("Rust in action", 'a') {
 }
 ```
 
-### passing an optional function return to another function
-
-### Examples from the field
+### Examples
 
 
-// Next time
+An example from the std is the pop method for the vector. The vector has a `pop`-method that returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
+
+The `pop` method for the vec from Rust 1.53:
+
+```rust
+impl<T, A: Allocator> Vec<T, A> {
+    // .. lots of other code
+    pub fn pop(&mut self) -> Option<T> {
+        if self.len == 0 {
+            None
+        } else {
+            unsafe {
+                self.len -= 1;
+                Some(ptr::read(self.as_ptr().add(self.len())))
+            }
+        }
+    }
+    // lots of other code
+}    
+```
+
+A trivial example where we output the result of popping a vector beyond the point where it is still containing items:
+
+```rust
+let mut vec = vec![0, 1];
+let a = vec.pop();
+let b = vec.pop();
+let c = vec.pop();
+println!("{:?}\n{:?}\n{:?}\n", a, b, c);
+```
+
+The above outputs the following:
+
+<pre>
+Some(1)
+Some(0)
+None
+</pre>
 
 ## The result
 
