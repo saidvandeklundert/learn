@@ -312,10 +312,42 @@ if let Some(a) = contains_char("Rust in action", 'a') {
 }
 ```
 
-### Examples
+### Optional values inside a struct
+
+We can also use the `Option` inside a struct. This might be usefull in case a field may or may not have any value:
+
+```rust
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: Option<i32>,
+}
+
+let marie = Person {
+    name: String::from("Marie"),
+    age: Some(2),
+};
+
+let jan = Person {
+    name: String::from("Jan"),
+    age: None,
+};
+println!("{:?}\n{:?}", marie, jan);
+```
+
+The above code outputs the following:
+
+<pre>
+Person { name: "Marie", age: Some(2) }
+Person { name: "Jan", age: None }
+</pre>
 
 
-An example from the std is the pop method for the vector. The vector has a `pop`-method that returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
+
+### Real world example
+
+
+An real world example where the Option is used is inside Rust. The pop method for the vector returns an `Option<T>`. The vector has a `pop`-method that returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
 
 The `pop` method for the vec from Rust 1.53:
 
