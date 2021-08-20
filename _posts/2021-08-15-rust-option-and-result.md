@@ -65,7 +65,7 @@ Example::That contains: That
 
 ### matching enum variants
 
-using the `match` keyword, we can do pattern matching on this enum. The following function takes the Example enum as an argument:
+Using the `match` keyword, we can do pattern matching on enums. The following function takes the Example enum as an argument:
 
 ```rust
 fn mather(x: Example) {
@@ -92,9 +92,7 @@ We got That
 
 ### the Rust prelude
 
-The Rust prelude, described [here](https://doc.rust-lang.org/std/prelude/index.html#), is something that is a part of every program. It is a list of things that are automatically imported into every Rust program. You do not have to import these. Most of the things that Rust imports for you are traits that are used very often. 
-
-Inside the list of things that Rust imports for you, we also find the following 2 items that are of interest here:
+The Rust prelude, described [here](https://doc.rust-lang.org/std/prelude/index.html#), is something that is a part of every program. It is a list of things that are automatically imported into every Rust program. Most of the items in the prelude are traits that are used very often. But in addition to this, we also find the following 2 items:
 - std::option::Option::{self, Some, None}
 - std::result::Result::{self, Ok, Err}
 
