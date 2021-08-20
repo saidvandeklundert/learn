@@ -22,9 +22,17 @@ In order to understand the `Option` and the `Result`, it is important to underst
 
 ### The Rust Enum
 
-There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. The Option and the Result are pretty straightforward though. 
+There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. 
+
+The Option and the Result are pretty straightforward though. 
 
 Let's first look at an example enum:
+
+
+{:refdef: style="text-align: center;"}
+![Rust enum](/assets/img/enum_definition.png "Rust enum"){:height="80%" width="80%"}
+{: refdef}
+
 
 ```rust
 enum Example {
