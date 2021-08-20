@@ -120,7 +120,7 @@ The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`.
 
 The enum is 'generic over type T'. The 'T' could have been any letter, just that 'T' is used as a convention where 1 generic is involved.
 
-So what does it mean when we say 'the enum is generic over type T'? It means that we can use it for any type. As soon as we start working with the Enum, we can (and must actually) replace 'T' with any concrete type:
+So what does it mean when we say 'the enum is generic over type T'? It means that we can use it for any type. As soon as we start working with the Enum, we can (and must actually) replace 'T' with a concrete type. This can be any type, as illustrated by the following:
 
 ```rust
 let a_str: Option<&str> = Some("a str");
@@ -159,15 +159,13 @@ Some(Person { name: "Marie", age: 2 })
 None
 </pre>
 
-The code shows us the enum can be generic over standard as well as over custom types. Additionally, when we define an enum as being of type x, it can still contain the variant 'None'.
-
-### matching on the Option
-
-So the Option is a way of saying the following:
+The code shows us the enum can be generic over standard as well as over custom types. Additionally, when we define an enum as being of type x, it can still contain the variant 'None'. So the Option is a way of saying the following:
 
 <pre>
 This can be of a type T value, which can be anything really, or it can be nothing. 
 </pre>
+
+### Matching on the Option
 
 Since Rust does not use exceptions or null values, you will see the Option (and as we will learn later on the Result) used all over the place.
 
@@ -201,7 +199,7 @@ We got nothing
 Oftentimes, you'll see unwrap being used. This looked a bit mysterious at first. Hoovering over it in the IDE offers some clues:
 
 {:refdef: style="text-align: center;"}
-![ID unwrap](/learn/assets/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
+![ID unwrap](/assets/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
 {: refdef}
 
 In case you are using VScode, another nice thing to know is that simulteounously pressing Ctrl + left mouse button can oftentimes take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
