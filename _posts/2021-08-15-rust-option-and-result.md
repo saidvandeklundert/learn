@@ -38,6 +38,8 @@ let that = Example::That;
 
 In the above, we define an enum called `Example`. This enum has 2 variants called `This` and `That`. Next, we create 2 instances of the enum, variables `this` and `that`. Both are created with their own variant. It is important to note that an instance of an enum is always 1 of the variants. When you use a field struct, you can define struct with all it's possible fields. An enum is different because you assign only one of the fields (called variants).
 
+### Displaying the enum variants
+
 By default, the enum variants is not something you can print to screen. Let's bring `strum_macros` into scope. This makes it easy to derive 'Display' on the enum we defined, which we do using `#[derive(Display)]` above the enum definition:
 
 ```rust
@@ -63,7 +65,7 @@ Example::This contains: This
 Example::That contains: That
 </pre>
 
-### matching enum variants
+### Matching enum variants
 
 Using the `match` keyword, we can do pattern matching on enums. The following function takes the Example enum as an argument:
 
