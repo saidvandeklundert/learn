@@ -20,7 +20,7 @@ In order to understand the `Option` and the `Result`, it is important to underst
 - matching enum variants
 - the Rust prelude
 
-### The Rust Enum
+### The enum in Rust
 
 There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. 
 
@@ -242,7 +242,7 @@ Calling unwrap on an Option is quick and easy. Bot obviously, baking in the poss
 
 ## Option examples
 
-Let's look at some examples where 'Option' is used.
+Let's look at some examples where you could use an Option.
 
 ### passing an optional value to a function
 
@@ -355,7 +355,7 @@ Person { name: "Jan", age: None }
 ### Real world example
 
 
-An real world example where the Option is used is inside Rust. The pop method for the vector returns an `Option<T>`. The vector has a `pop`-method that returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
+An example where the Option is used inside Rust is the pop method for vectors. This method returns an `Option<T>`. The `pop`-method returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
 
 The `pop` method for the vec from Rust 1.53:
 
@@ -409,7 +409,7 @@ pub enum Result<T, E> {
 }
 ```
 
-The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value.
+The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lof ot room when using the error value in our flow control or reporting.
 
 
 ```
