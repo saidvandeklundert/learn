@@ -523,13 +523,126 @@ thread 'main' panicked at 'unable to deserialize JSON: Error("control character 
 </pre>
 
 
-Since unwrap and expect result in a panic, it ends the program, period. Most oftentimes, you'll see unwrap being used in the example section, where the focus is on the example and lack of context really prohibets proper error handling for a specific scenario. The example section is where the use of unwrap is mostly confined to. That, and throw away scripts.
-### short description and picture
+Since unwrap and expect result in a panic, it ends the program, period. Most oftentimes, you'll see unwrap being used in the example section, where the focus is on the example and lack of context really prohibets proper error handling for a specific scenario. The example section, code comments and documentation examples is where you will most oftentimes encounter unwrap. See for instance the example to have serde serialize fields as camelCase:
 
-### Using ?
+```rust
+use serde::Serialize;
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct Person {
+    first_name: String,
+    last_name: String,
+}
+
+fn main() {
+    let person = Person {
+        first_name: "Graydon".to_string(),
+        last_name: "Hoare".to_string(),
+    };
+
+    let json = serde_json::to_string_pretty(&person).unwrap();  // <- unwrap
+
+    // Prints:
+    //
+    //    {
+    //      "firstName": "Graydon",
+    //      "lastName": "Hoare"
+    //    }
+    println!("{}", json);
+}
+```
+<p style="font-size:11px;">Example taken from the serde documentation, right <a href="https://serde.rs/attr-rename.html">here</a>.</p>
+
+In addition to documentation and examples, unwrap has it's place in tests.
+### Using ? and handling different errors
+
+Different projects oftentimes define their own errors. Searching a repo for something like `pub struct Error` or `pub enum Error` can sometimes reveal the errors defined for a project. But the thing is, different crates and projects might return their own error type. If you have a function that uses methods from a variety of projects, and you want to propagate that error, things can get a bit more tricky. There are several ways to deal with this. Let's look at an example where we deal with this by 'Boxing' the error.
+
+In the next example, we define a function that reads the entire contents of target file into a string and then serializes it into JSON, while mapping it to a struct. The function returns a Result. The Ok variant is the 'Person' struct and the Error that will be propagated can be an error coming serde or std::fs. To be able to return errors from both these packages, we return `Result<Person, Box<dyn Error>>`. The 'Person' is the Ok variant of the Result. The Err variant is defined as <b>Box&ltdyn Error&gt</b>, which represents 'any type of error'.
+
+Another thing worth mentioning about the following example is the use of `?`. We will use `fs::read_to_string(s)` to read a file as a string and we will use `erde_json::from_str(&text)` to serialize the text to a struct. In order to avoid having to write match arms for the Results returned by those methods, we place the `?` behind the call to those methods. This syntactic sugar will perform an `unwrap` in case the preceding Result contains an Ok. If the preceding Result contains an Err variant, it ensures that this Err is returned just as if the `return` keyword would have been used to propagate the error.
+
+The example code:
+
+```rust
+use serde::{Deserialize, Serialize};
+use std::error::Error;
+use std::fs;
+
+// Debug allows us to print the struct.
+// Deserialize and Serialize adds decoder and encoder capabilities to the struct.
+#[derive(Debug, Deserialize, Serialize)]
+struct Person {
+    name: String,
+    age: usize,
+}
+
+fn file_to_json(s: &str) -> Result<Person, Box<dyn Error>> {
+    let text = fs::read_to_string(s)?;
+    let marie: Person = serde_json::from_str(&text)?;
+    Ok(marie)
+}
+
+let x = file_to_json("json.txt");
+let y = file_to_json("invalid_json.txt");
+let z = file_to_json("non_existing_file.txt");
+
+dbg!(x);
+dbg!(y);
+dbg!(z);
+```
+The first time we call the function, it succeeds and `dbg!(x);` outputs the following:
+
+<pre>
+[src\main.rs:20] x = Ok(
+    Person {
+        name: "Marie",
+        age: 2,
+    },
+)
+</pre>
+
+The second calls encounters an error. The file contains the following:
+<pre>
+{
+	"name": "Marie",
+	"a
+}
+</pre>
+
+This file can be opened and read to a String, but Serde cannot parse it as JSON. This function call outputs the following:
+
+<pre>
+[src\main.rs:21] y = Err(
+    Error("control character (\\u0000-\\u001F) found while parsing a string", line: 3, column: 4),     
+)
+</pre>
+
+We can see the Serde error was properly propagated.
+
+The last function call tried to open a file that does not exist:
+
+<pre>
+[src\main.rs:22] z = Err(
+    Os {
+        code: 2,
+        kind: NotFound,
+        message: "The system cannot find the file specified.",
+    },
+)
+</pre>
+
+That error, comming from `std::fs`, was also properly propagated.
+
 ### Examples from reqwest
 
+
+TODO
+
+### Wrapping up
 
 Followup content:
 - The Rust Programming Language [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
+- Error handling and deaing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
