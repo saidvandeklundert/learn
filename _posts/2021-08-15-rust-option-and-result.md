@@ -210,7 +210,7 @@ Oftentimes, you'll see unwrap being used. This looked a bit mysterious at first.
 ![ID unwrap](/assets/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
 {: refdef}
 
-In case you are using VScode, another nice thing to know is that simulteounously pressing Ctrl + left mouse button can oftentimes take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
+In case you are using VScode, something that is nice to know is that simulteounously pressing Ctrl + left mouse button can take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
 ```rust
 pub const fn unwrap(self) -> T {
     match self {
