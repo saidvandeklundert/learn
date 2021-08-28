@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, rust basics]
 ---
 
-## why is Option and Result important
+## Why understanding Option and Result are so important
 
 
 ## Introduction
@@ -22,7 +22,7 @@ In order to understand the `Option` and the `Result`, it is important to underst
 
 ### The enum in Rust
 
-There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible, as it can contain tuples, structs and more. This allows you to create quite an elaborate enum. 
+There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible. It can contain many data types like tuples, structs and more. Additionally, you can also implement methods on enums. 
 
 The Option and the Result are pretty straightforward though. 
 
@@ -396,9 +396,7 @@ None
 
 ## The result
 
-Another important construct in Rust is the `Result` enum. Same as with the Option
-
-The definition of the Result can be found in `result.rs`:
+Another important construct in Rust is the `Result` enum. Same as with the Option, the Result is an enum. The definition of the Result can be found in `result.rs`:
 
 ```rust
 pub enum Result<T, E> {
@@ -409,7 +407,7 @@ pub enum Result<T, E> {
 }
 ```
 
-The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lof ot room when using the error value in our flow control or reporting.
+The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lof of room when using the error value in our flow control or reporting.
 
 
 ```
