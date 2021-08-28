@@ -414,10 +414,122 @@ The Result enum is generic over 2 types, given the name T and E. The T is used f
 std::result::Result::{self, Ok, Err}
 ```
 
+### Matching on the Result
+
+
+Let's start off creating an example function that returns a Result. In the example function, we check whether a string contains a minimum amount of characters. The function is the following:
+
+```rust
+fn check_length(s: &str, min: usize) -> Result<&str, String> {
+    if s.chars().count() >= min {
+        return Ok(s)
+    } else {
+        return Err(format!("'{}' is not long enough!", s))
+    }
+}
+```
+
+It is not a very usefull function, but simple enough to illustrate returning a Result. The function takes in a string literal and checks the amount of characters it contains. If the amount of characters is equal to, or more then 'min', the string is returned. If this is not the case, an error is returned. The return is annotated with the Result enum. We specify the types that the Result will contain when the function returns. If the string is long enough, we return a string literal. If there is an error, we will return a message that is a String. This explains the `Result<&str, String>`. 
+
+The `if s.chars().count() >= min` does the check for us. In case it evaluates to `true`, it will return the string wrapped in the `Ok` variant of the `Result` enum. The reason we can simply write `Ok(s)` is because the variants that make up Result are brought into scope as well. We can see that the `else` statement will return an `Err` variant. In this case, it is a String that contains a message.
+
+Let's run the function and output the Result using dbg!:
+
+```rust
+let a = check_length("some str", 5);
+let b = check_length("another str", 300);
+dbg!(a); // Ok("some str",)
+dbg!(b); // Err("'another str' is not long enough!",)
+```
+
+We can use a match expression to deal with the Result that our function returns: 
+
+```rust
+let func_return = check_length("some string literal", 100);
+let a_str = match func_return {
+    Ok(a_str) => a_str,
+    Err(error) => panic!("Problem running 'check_length':\n {:?}", error),
+};
+// thread 'main' panicked at 'Problem running 'check_length':
+// "'some string literal' is not long enough!"'
+```
+
+### Unwrapping the Result
+
+Instead of using a match expression, there is also a shortcut that you'll come accross very often. This shortcut is the `unwrap` method that is defined for the `Result` enum. The method is defined as follows:
+
+```rust
+impl<T, E: fmt::Debug> Result<T, E> {
+    ...
+    pub fn unwrap(self) -> T {
+        match self {
+            Ok(t) => t,
+            Err(e) => unwrap_failed("called `Result::unwrap()` on an `Err` value", &e),
+        }
+    }
+    ...
+}
+```
+
+Calling `unwrap` returned the contained 'Ok' value. If there is no 'Ok' value, `unwrap` will panic. In the following example, the `from_str` method returns an 'Ok' value:
+
+```rust
+use serde_json::json;
+let json_string = r#"
+{
+    "key": "value",
+    "another key": "another value",
+    "key to a list" : [1 ,2]
+}"#;
+let json_serialized: serde_json::Value = serde_json::from_str(&json_string).unwrap();
+println!("{:?}", &json_serialized);
+// Object({"another key": String("another value"), "key": String("value"), "key to a list": Array([Number(1), Number(2)])})
+```
+
+We can see that 'json_serialized' contains the value that was wrapped in the 'Ok' variant. 
+
+The following demonstrates what happend when we call unwrap on a function that does not return an 'Ok' variant. Here, we call 'serde_json::from_str' on invalide JSON:
+
+```rust
+use serde_json::json;
+let invalid_json = r#"
+{
+    "key": "v
+}"#;
+
+let json_serialized: serde_json::Value = serde_json::from_str(&invalid_json).unwrap();
+/*
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error("control character (\\u0000-\\u001F) found while parsing a string", line: 4, column: 0)',
+*/
+```
+
+There is a panic and the program comes to a halt. Instead of `unwrap`, we could also choose to use `expect`. 
+
+
+```rust
+use serde_json::json;
+
+let invalid_json = r#"
+{
+    "key": "v
+}"#;
+let b: serde_json::Value =
+    serde_json::from_str(&invalid_json).expect("unable to deserialize JSON");
+```
+This time, when we run the code, we can also see the message that we added to it:
+
+<pre>
+thread 'main' panicked at 'unable to deserialize JSON: Error("control character (\\u0000-\\u001F) found while parsing a string", line: 4, column: 0)'
+</pre>
+
+
+Since unwrap and expect result in a panic, it ends the program, period. Most oftentimes, you'll see unwrap being used in the example section, where the focus is on the example and lack of context really prohibets proper error handling for a specific scenario. The example section is where the use of unwrap is mostly confined to. That, and throw away scripts.
 ### short description and picture
 
-### defining a Result
+### Using ?
+### Examples from reqwest
 
-### Examples from the field reqwest
 
-### Returning a Result from a function
+Followup content:
+- The Rust Programming Language [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
+- From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
