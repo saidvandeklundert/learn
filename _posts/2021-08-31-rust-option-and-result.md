@@ -674,7 +674,7 @@ fn get_secrets(s: &str) -> Result<Secrets> {
 In the above example, `anyhow = "1.0.43"` was added to the `Cargo.toml` file. At the top, three things are brought into scope:
 - <b>anyhow::Result</b>
 
-A (more) convenient type to work with and deal with errors. You can also use this on `main()`. The <b>get_secrets</b> function is where we see this Result in use. It is this enum for which some traits have been implemented that make things easier. One of those traits is 'Context'.
+A (more) convenient type to work with and deal with errors. You can also use this on `main()`. The <b>get_secrets</b> function is where we see this Result in use. It is this enum for which traits have been implemented that make things easier. One of those traits, that we will discuss next, is called 'Context'.
 
 If we run <b>get_secrets</b> and all is well, we get the following return:
 
@@ -696,23 +696,23 @@ The above will output the following:
 */
 </pre>
 
+We got a 'normal' Ok value.
+
 - <b>anyhow::Context</b> 
 
-As errors are propagated, Context allows you to wrap the original error and include a message for more contextual awareness. Previously, we would open a file like so:
+As errors are propagated, the Context trait allows you to wrap the original error and include a message for more contextual awareness. Previously, we would open a file like so:
 
 ```rust
 let text = fs::read_to_string(s)?;
 ```
 
-This will open the file and unwrap the Ok variant. Alternaticely, if <b>read_to_string</b> returns an eror, the `?` will propagate that error by returning it.
-
-Now, we have the following:
+This will open the file and unwrap the Ok variant. Alternaticely, if <b>read_to_string</b> returns an Err, the `?` will propagate that error. Now, we have the following:
 
 ```rust
 let text = fs::read_to_string(s).context("Secrets file is missing.")?;
 ```
 
-We also annotated <b>serde_json::from_str</b>. We can use the following to trigger 2 errors:
+We did something similar with for the <b>serde_json::from_str</b> method. We can use the following to trigger 2 errors:
 
 ```rust
 let b = get_secrets("secrets.jsonnn");
@@ -746,9 +746,7 @@ In the first case, there will be an error because the file does not exist. In th
 
 - <b>anyhow::anyhow</b>
 
-This is a macro that you can use to have a function return an `anyhow::Error`.
-
-The following loads some JSON that contains a password that is too short(silly example I know):
+This is a macro that you can use to have a function return an `anyhow::Error`. The following loads some JSON that contains a password that is too short(silly example I know):
 
 ```rust
 let d = get_secrets("wrong_secrets.json");
