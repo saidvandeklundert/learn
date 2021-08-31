@@ -638,11 +638,11 @@ That error, comming from `std::fs`, was also properly propagated.
 
 There are many crates available to help us deal with errors. Some help us manage boilerplate code, others add features such as extra reporting. One example of a crate that is easy to use when starting out with Rust is [anyhow](https://crates.io/crates/anyhow):
 
-
+<br>
 {:refdef: style="text-align: center;"}
 ![Rust anyhow](/assets/img/anyhow.png "Rust anyhow"){:height="80%" width="80%"}
 {: refdef}
-
+<br>
 
 This crate wll give us a simplified Result type and we can easily annotate our errors by adding context. The following code snippet illustrates the three basic things that anyhow equips us with:
 
