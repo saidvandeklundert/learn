@@ -635,10 +635,134 @@ The last function call tried to open a file that does not exist:
 
 That error, comming from `std::fs`, was also properly propagated.
 
-### Examples from reqwest
+### using other crates: anyhow
+
+There are many crates available to help us deal with errors. Some help us manage boilerplate code, others add features such as extra reporting. One example of a crate that is easy to use when starting out is [anyhow](https://crates.io/crates/anyhow):
+
+{:refdef: style="text-align: center;"}
+![Rust anyhow](/assets/img/anyhow.png "Rust anyhow"){:height="80%" width="80%"}
+{: refdef}
+
+This crate wll give us a simplified Result type and we can easily annotate our errors by adding context. The following code snippet illustrates the three basic things that anyhow equips us with:
 
 
-TODO
+```rust
+use anyhow::{anyhow, Context, Result};
+use serde::{Deserialize, Serialize};
+use std::fs;
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Secrets {
+    username: String,
+    password: String,
+}
+
+fn get_secrets(s: &str) -> Result<Secrets> {
+    let text = fs::read_to_string(s).context("Secrets file is missing.")?;
+    let secrets: Secrets =
+        serde_json::from_str(&text).context("Problem serializing secrets.")?;
+    if secrets.password.chars().count() < 2 {
+        return Err(anyhow!("Password in secrets file is too short"));
+    }
+    Ok(secrets)
+}
+```
+
+In the above example, `anyhow = "1.0.43"` was added to the `Cargo.toml` file. At the top, three things are brought into scope:
+- <b>anyhow::Result</b>
+
+A (more) convenient type to work with and deal with errors. You can also use this on `main()`. The <b>get_secrets</b> function is where we see this Result in use. It is this enum for which some traits have been implemented that make things easier. One of those traits is 'Context'.
+
+If we run <b>get_secrets</b> and all is well, we get the following return:
+
+```rust
+let a = get_secrets("secrets.json");
+dbg!(a);
+```
+
+The above will output the following:
+
+<pre>
+/*
+[src\main.rs:] a = Ok(
+    Secrets {
+        username: "username",
+        password: "password",
+    },
+)
+*/
+</pre>
+
+- <b>anyhow::Context</b> 
+
+As errors are propagated, Context allows you to wrap the original error and include a message for more contextual awareness. Previously, we would open a file like so:
+
+```rust
+let text = fs::read_to_string(s)?;
+```
+
+This will open the file and unwrap the Ok variant. Alternaticely, if <b>read_to_string</b> returns an eror, the `?` will propagate that error by returning it.
+
+Now, we have the following:
+
+```rust
+let text = fs::read_to_string(s).context("Secrets file is missing.")?;
+```
+
+We also annotated <b>serde_json::from_str</b>. We can use the following to trigger 2 errors:
+
+```rust
+let b = get_secrets("secrets.jsonnn");
+dbg!(b);
+
+let c = get_secrets("invalid_json.txt");
+dbg!(c);
+```
+
+In the first case, there will be an error because the file does not exist. In the second case, serde will give us an error because it cannot parse the JSON. The above functions output the following:
+
+<pre>
+[src\main.rs:358] b = Err(
+    Error {
+        context: "Secrets file is missing.",
+        source: Os {
+            code: 2,
+            kind: NotFound,
+            message: "The system cannot find the file specified.",
+        },
+    },
+)
+[src\main.rs:361] c = Err(
+    Error {
+        context: "Problem serializing secrets.",
+        source: Error("control character (\\u0000-\\u001F) found while parsing a string", line: 3, column: 4),
+    },
+)
+</pre>
+
+
+- <b>anyhow::anyhow</b>
+
+This is a macro that you can use to have a function return an `anyhow::Error`.
+
+The following loads some JSON that contains a password that is too short(silly example I know):
+
+```rust
+let d = get_secrets("wrong_secrets.json");
+dbg!(d);
+```
+
+The result would be the following:
+
+<pre>
+[src\main.rs:364] d = Err(
+    "Password in secrets file is too short",
+)
+</pre>
+
+
+The `anyhow` crate was forked by Jane Lusby. She created [eyre](https://crates.io/crates/eyre/0.3.7). That is also something worth checking out. Especially combined with the excellent [Rustconf 2020](https://2020.rustconf.com/talks) talk, dubbed [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ).
+
 
 ### Wrapping up
 
@@ -646,3 +770,14 @@ Followup content:
 - The Rust Programming Language [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
 - Error handling and deaing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
+- [next level thoughts and ideas on errors](https://www.lpalmieri.com/posts/error-handling-rust/)
+- [wrapping errors](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html)
+
+
+
+
+
+
+
+
+
