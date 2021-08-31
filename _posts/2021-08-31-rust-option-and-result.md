@@ -407,7 +407,7 @@ pub enum Result<T, E> {
 }
 ```
 
-The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lof of room when using the error value in our flow control or reporting.
+The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lot of room when using the error value in our flow control or reporting.
 
 
 ```
@@ -554,7 +554,6 @@ fn main() {
 ```
 <p style="font-size:11px;">Example taken from the serde documentation, right <a href="https://serde.rs/attr-rename.html">here</a>.</p>
 
-In addition to documentation and examples, unwrap has it's place in tests.
 ### Using ? and handling different errors
 
 Different projects oftentimes define their own errors. Searching a repo for something like `pub struct Error` or `pub enum Error` can sometimes reveal the errors defined for a project. But the thing is, different crates and projects might return their own error `type`. If you have a function that uses methods from a variety of projects, and you want to propagate that error, things can get a bit more tricky. There are several ways to deal with this. Let's look at an example where we deal with this by 'Boxing' the error.
@@ -637,11 +636,13 @@ That error, comming from `std::fs`, was also properly propagated.
 
 ### using other crates: anyhow
 
-There are many crates available to help us deal with errors. Some help us manage boilerplate code, others add features such as extra reporting. One example of a crate that is easy to use when starting out is [anyhow](https://crates.io/crates/anyhow):
+There are many crates available to help us deal with errors. Some help us manage boilerplate code, others add features such as extra reporting. One example of a crate that is easy to use when starting out with Rust is [anyhow](https://crates.io/crates/anyhow):
+
 
 {:refdef: style="text-align: center;"}
 ![Rust anyhow](/assets/img/anyhow.png "Rust anyhow"){:height="80%" width="80%"}
 {: refdef}
+
 
 This crate wll give us a simplified Result type and we can easily annotate our errors by adding context. The following code snippet illustrates the three basic things that anyhow equips us with:
 
