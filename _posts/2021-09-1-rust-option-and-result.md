@@ -25,12 +25,6 @@ There are good reasons for using enums. Among others, they are good for safe inp
 
 The Option and the Result are pretty straightforward though. Let's first look at an example enum:
 
-
-{:refdef: style="text-align: center;"}
-![Rust enum](/learn/img/enum_definition.png "Rust enum"){:height="80%" width="80%"}
-{: refdef}
-
-
 ```rust
 enum Example {
     This,
@@ -109,11 +103,6 @@ Because these types are so commonly used, their variants are also exported. Let'
 
 
 ## The Option
-
-
-{:refdef: style="text-align: center;"}
-![Rust Option](/learn/img/option_definition.png "Rust Option"){:height="80%" width="80%"}
-{: refdef}
 
 
 Brought into scope by the prelude, the [Option](https://doc.rust-lang.org/std/option/index.html) is available to us without having to lift a finger. The option is defined as follows:
@@ -398,10 +387,6 @@ None
 
 ## The result
 
-{:refdef: style="text-align: center;"}
-![Rust Result](/learn/img/result_definition.png "Rust Result"){:height="80%" width="80%"}
-{: refdef}
-
 
 Another important construct in Rust is the `Result` enum. Same as with the Option, the Result is an enum. The definition of the Result can be found in `result.rs`:
 
@@ -681,8 +666,8 @@ fn get_secrets(s: &str) -> Result<Secrets> {
 }
 ```
 
-In the above example, `anyhow = "1.0.43"` was added to the `Cargo.toml` file. At the top, three things are brought into scope:
-- <b>anyhow::Result</b>
+In the above example, `anyhow = "1.0.43"` was added to the `Cargo.toml` file. At the top, three things are brought into scope. These are `anyhow`, `Context` and `Result`. Let's discuss them one by one.
+#### anyhow::Result
 
 A (more) convenient type to work with and deal with errors. You can also use this on `main()`. The <b>get_secrets</b> function is where we see this Result in use. It is this enum for which traits have been implemented that make things easier. One of those traits, that we will discuss next, is called 'Context'.
 
@@ -708,7 +693,7 @@ The above will output the following:
 
 We got a 'normal' Ok value.
 
-- <b>anyhow::Context</b> 
+#### anyhow::Context
 
 As errors are propagated, the Context trait allows you to wrap the original error and include a message for more contextual awareness. Previously, we would open a file like so:
 
@@ -754,7 +739,7 @@ In the first case, there will be an error because the file does not exist. In th
 </pre>
 
 
-- <b>anyhow::anyhow</b>
+#### anyhow::anyhow
 
 This is a macro that you can use to have a function return an `anyhow::Error`. The following loads some JSON that contains a password that is too short (silly example I know):
 
