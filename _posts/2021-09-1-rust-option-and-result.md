@@ -302,7 +302,6 @@ The first one, which is the least safe, would be simply calling unwrap:
 let a = contains_char("Rust in action", 'a');
 let a_unwrapped = a.unwrap();   
 println!("{:?}", a_unwrapped);
-
 ```
 
 The second, safer option, is to use a `match` statement:
@@ -777,7 +776,9 @@ The `anyhow` crate was forked by Jane Lusby. She created [eyre](https://crates.i
 
 ### Wrapping up
 
-Understanding how the Option as well as the Result is used in Rust is very important. The above explanation of the Option, Result and error handling in Rust is my written account of how I learned about them. I hope this article will benefit others. Here are some additional links that are worth checking out to better understand the Option, the Result and error handling in Rust:
+Understanding how the Option as well as the Result is used in Rust is very important. The above explanation of the Option, Result and error handling in Rust is my written account of how I learned about them. I hope this article will benefit others. 
+
+The code used in this article can be found [here](https://github.com/saidvandeklundert/LearningRust/blob/master/blog/option-and-result/src/main.rs). In addition to that, here are some additional links that are worth checking out to better understand the Option, the Result and error handling in Rust:
 - The Rust Programming Language [Chapter 6](https://doc.rust-lang.org/book/ch06-00-enums.html) and [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
 - Error handling and dealing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
