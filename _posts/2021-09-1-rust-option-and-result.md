@@ -27,7 +27,7 @@ The Option and the Result are pretty straightforward though. Let's first look at
 
 
 {:refdef: style="text-align: center;"}
-![Rust enum](/assets/img/enum_definition.png "Rust enum"){:height="80%" width="80%"}
+![Rust enum](/learn/img/enum_definition.png "Rust enum"){:height="80%" width="80%"}
 {: refdef}
 
 
@@ -112,7 +112,7 @@ Because these types are so commonly used, their variants are also exported. Let'
 
 
 {:refdef: style="text-align: center;"}
-![Rust Option](/assets/img/option_definition.png "Rust Option"){:height="80%" width="80%"}
+![Rust Option](/learn/img/option_definition.png "Rust Option"){:height="80%" width="80%"}
 {: refdef}
 
 
@@ -210,7 +210,7 @@ We got nothing
 Oftentimes, you'll see unwrap being used. This looked a bit mysterious at first. Hoovering over it in the IDE offers some clues:
 
 {:refdef: style="text-align: center;"}
-![ID unwrap](/assets/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
+![ID unwrap](/learn/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
 {: refdef}
 
 In case you are using VScode, something that is nice to know is that simultaneously pressing Ctrl + left mouse button can take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
@@ -399,7 +399,7 @@ None
 ## The result
 
 {:refdef: style="text-align: center;"}
-![Rust Result](/assets/img/result_definition.png "Rust Result"){:height="80%" width="80%"}
+![Rust Result](/learn/img/result_definition.png "Rust Result"){:height="80%" width="80%"}
 {: refdef}
 
 
@@ -651,7 +651,7 @@ There are many crates available to help us deal with errors. Some help us manage
 <br>
 
 {:refdef: style="text-align: center;"}
-![Rust anyhow](/assets/img/anyhow.png "Rust anyhow"){:height="80%" width="80%"}
+![Rust anyhow](/learn/img/anyhow.png "Rust anyhow"){:height="80%" width="80%"}
 {: refdef}
 
 <br>
