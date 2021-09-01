@@ -9,8 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, rust basics]
 ---
 
-## Why understanding Option and Result are so important
-
+The centrepieces to optional values and error handling in Rust are the Option and the Result. I saw references to them in practically every crate out there. I saw lots of expressions ending with `?`, many functions returning `Result`, references to `Ok` and `Some` and I realized that a thorough understanding of both was going to be essential. In this article, I will work my way through the Option and the Result enum and touch on error handling in Rust.
 
 ## Introduction
 
@@ -778,12 +777,14 @@ The `anyhow` crate was forked by Jane Lusby. She created [eyre](https://crates.i
 
 ### Wrapping up
 
-Followup content:
-- The Rust Programming Language [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
+Understanding how the Option as well as the Result is used in Rust is very important. The above explanation of the Option, Result and error handling in Rust is my written account of how I learned about them. I hope this article will benefit others. Here are some additional links that are worth checking out to better understand the Option, the Result and error handling in Rust:
+- The Rust Programming Language [Chapter 6](https://doc.rust-lang.org/book/ch06-00-enums.html) and [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
 - Error handling and deaing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
-- [next level thoughts and ideas on errors](https://www.lpalmieri.com/posts/error-handling-rust/)
-- [wrapping errors](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html)
+- [Next level thoughts and ideas on errors](https://www.lpalmieri.com/posts/error-handling-rust/)
+- [Wrapping errors](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html)
+
+
 
 
 
