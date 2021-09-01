@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, rust basics]
 ---
 
-The centrepieces to optional values and error handling in Rust are the Option and the Result. I saw references to them in practically every crate out there. I saw lots of expressions ending with `?`, many functions returning `Result`, references to `Ok` and `Some` and I realized that a thorough understanding of both was going to be essential. In this article, I will work my way through the Option and the Result enum and touch on error handling in Rust.
+A thorough understanding of the Option enum and the Result enum are essential to understanding optional values and error handling in Rust. In this ariticle, I will work my way through both of them.
 
 ## Introduction
 
