@@ -416,10 +416,13 @@ pub enum Result<T, E> {
 
 The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a successful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lot of room when using the error value in our flow control or reporting.
 
+As indicated before, the Prelude brings the `Result` enum as well as the `Ok` and `Err` variants into scope in the Prelude like so:
 
 ```
 std::result::Result::{self, Ok, Err}
 ```
+
+This means we can access Result, Ok and Err directly at any place in our code.
 
 ### Matching on the Result
 
