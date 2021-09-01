@@ -14,7 +14,7 @@ The centrepieces to optional values and error handling in Rust are the Option an
 ## Introduction
 
 
-In order to understand the `Option` and the `Result`, it is important to understand the following:
+To understand the `Option` and the `Result`, it is important to understand the following:
 - the enum in Rust
 - matching enum variants
 - the Rust prelude
@@ -215,7 +215,7 @@ Oftentimes, you'll see unwrap being used. This looked a bit mysterious at first.
 ![ID unwrap](/assets/img/ide_unwrap.png "ID unwrap"){:height="80%" width="80%"}
 {: refdef}
 
-In case you are using VScode, something that is nice to know is that simulteounously pressing Ctrl + left mouse button can take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
+In case you are using VScode, something that is nice to know is that simultaneously pressing Ctrl + left mouse button can take you to the source code. In this case, it takes us to the place in `option.rs` where unwrap is defined:
 ```rust
 pub const fn unwrap(self) -> T {
     match self {
@@ -327,7 +327,7 @@ if let Some(a) = contains_char("Rust in action", 'a') {
 
 ### Optional values inside a struct
 
-We can also use the `Option` inside a struct. This might be usefull in case a field may or may not have any value:
+We can also use the `Option` inside a struct. This might be useful in case a field may or may not have any value:
 
 ```rust
 #[derive(Debug)]
@@ -360,7 +360,7 @@ Person { name: "Jan", age: None }
 ### Real world example
 
 
-An example where the Option is used inside Rust is the pop method for vectors. This method returns an `Option<T>`. The `pop`-method returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenvient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
+An example where the Option is used inside Rust is the pop method for vectors. This method returns an `Option<T>`. The `pop`-method returns the last element. But it can be that a vector is empty. In that case, it should return None. An additional problem is that a vector can contain any type. In that case, it is convenient for it to return `Some(T)`. So for that reason, `pop()` returns `Option<T>`. 
 
 The `pop` method for the vec from Rust 1.53:
 
@@ -417,7 +417,7 @@ pub enum Result<T, E> {
 }
 ```
 
-The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a succesful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lot of room when using the error value in our flow control or reporting.
+The Result enum is generic over 2 types, given the name T and E. The T is used for the OK variant, which is used to express a successful result. The E is used for the Err variant, used to express an error value. The fact that Result is generic over E makes it possible to communicate different errors. If Result would not have been generic over E, there would just be 1 type of error. Same as there is 1 type of 'None' in Option. This would not leave a lot of room when using the error value in our flow control or reporting.
 
 
 ```
@@ -427,7 +427,7 @@ std::result::Result::{self, Ok, Err}
 ### Matching on the Result
 
 
-Let's start off creating an example function that returns a Result. In the example function, we check whether a string contains a minimum amount of characters. The function is the following:
+Let's start off creating an example function that returns a Result. In the example function, we check whether a string contains a minimum number of characters. The function is the following:
 
 ```rust
 fn check_length(s: &str, min: usize) -> Result<&str, String> {
@@ -439,7 +439,7 @@ fn check_length(s: &str, min: usize) -> Result<&str, String> {
 }
 ```
 
-It is not a very usefull function, but simple enough to illustrate returning a Result. The function takes in a string literal and checks the amount of characters it contains. If the amount of characters is equal to, or more then 'min', the string is returned. If this is not the case, an error is returned. The return is annotated with the Result enum. We specify the types that the Result will contain when the function returns. If the string is long enough, we return a string literal. If there is an error, we will return a message that is a String. This explains the `Result<&str, String>`. 
+It is not a very useful function, but simple enough to illustrate returning a Result. The function takes in a string literal and checks the number of characters it contains. If the number of characters is equal to, or more then 'min', the string is returned. If this is not the case, an error is returned. The return is annotated with the Result enum. We specify the types that the Result will contain when the function returns. If the string is long enough, we return a string literal. If there is an error, we will return a message that is a String. This explains the `Result<&str, String>`. 
 
 The `if s.chars().count() >= min` does the check for us. In case it evaluates to `true`, it will return the string wrapped in the `Ok` variant of the `Result` enum. The reason we can simply write `Ok(s)` is because the variants that make up Result are brought into scope as well. We can see that the `else` statement will return an `Err` variant. In this case, it is a String that contains a message.
 
@@ -466,7 +466,7 @@ let a_str = match func_return {
 
 ### Unwrapping the Result
 
-Instead of using a match expression, there is also a shortcut that you'll come accross very often. This shortcut is the `unwrap` method that is defined for the `Result` enum. The method is defined as follows:
+Instead of using a match expression, there is also a shortcut that you'll come across very often. This shortcut is the `unwrap` method that is defined for the `Result` enum. The method is defined as follows:
 
 ```rust
 impl<T, E: fmt::Debug> Result<T, E> {
@@ -498,7 +498,7 @@ println!("{:?}", &json_serialized);
 
 We can see that 'json_serialized' contains the value that was wrapped in the 'Ok' variant. 
 
-The following demonstrates what happend when we call unwrap on a function that does not return an 'Ok' variant. Here, we call 'serde_json::from_str' on invalide JSON:
+The following demonstrates what happened when we call unwrap on a function that does not return an 'Ok' variant. Here, we call 'serde_json::from_str' on invalide JSON:
 
 ```rust
 use serde_json::json;
@@ -533,7 +533,7 @@ thread 'main' panicked at 'unable to deserialize JSON: Error("control character 
 </pre>
 
 
-Since unwrap and expect result in a panic, it ends the program, period. Most oftentimes, you'll see unwrap being used in the example section, where the focus is on the example and lack of context really prohibets proper error handling for a specific scenario. The example section, code comments and documentation examples is where you will most oftentimes encounter unwrap. See for instance the example to have serde serialize fields as camelCase:
+Since unwrap and expect result in a panic, it ends the program, period. Most oftentimes, you'll see unwrap being used in the example section, where the focus is on the example and lack of context really prohibits proper error handling for a specific scenario. The example section, code comments and documentation examples is where you will most oftentimes encounter unwrap. See for instance the example to have serde serialize fields as camelCase:
 
 ```rust
 use serde::Serialize;
@@ -566,7 +566,7 @@ fn main() {
 
 ### Using ? and handling different errors
 
-Different projects oftentimes define their own errors. Searching a repo for something like `pub struct Error` or `pub enum Error` can sometimes reveal the errors defined for a project. But the thing is, different crates and projects might return their own error `type`. If you have a function that uses methods from a variety of projects, and you want to propagate that error, things can get a bit more tricky. There are several ways to deal with this. Let's look at an example where we deal with this by 'Boxing' the error.
+Different projects oftentimes define their own errors. Searching a repo for something like `pub struct Error` or `pub enum Error` can sometimes reveal the errors defined for a project. But the thing is, different crates and projects might return their own error `type`. If you have a function that uses methods from a variety of projects, and you want to propagate that error, things can get a bit trickier. There are several ways to deal with this. Let's look at an example where we deal with this by 'Boxing' the error.
 
 In the next example, we define a function that reads the entire contents of target file into a string and then serializes it into JSON, while mapping it to a struct. The function returns a Result. The Ok variant is the 'Person' struct and the Error that will be propagated can be an error coming `serde` or `std::fs`. To be able to return errors from both these packages, we return `Result<Person, Box<dyn Error>>`. The 'Person' is the Ok variant of the Result. The Err variant is defined as `Box<dyn Error>`, which represents 'any type of error'.
 
@@ -642,7 +642,7 @@ The last function call tried to open a file that does not exist:
 )
 </pre>
 
-That error, comming from `std::fs`, was also properly propagated.
+That error, coming from `std::fs`, was also properly propagated.
 
 ### using other crates: anyhow
 
@@ -656,7 +656,7 @@ There are many crates available to help us deal with errors. Some help us manage
 
 <br>
 
-This crate wll give us a simplified Result type and we can easily annotate our errors by adding context. The following code snippet illustrates the three basic things that anyhow equips us with:
+This crate will give us a simplified Result type and we can easily annotate our errors by adding context. The following code snippet illustrates the three basic things that anyhow equips us with:
 
 
 ```rust
@@ -716,7 +716,7 @@ As errors are propagated, the Context trait allows you to wrap the original erro
 let text = fs::read_to_string(s)?;
 ```
 
-This will open the file and unwrap the Ok variant. Alternaticely, if <b>read_to_string</b> returns an Err, the `?` will propagate that error. Now, we have the following:
+This will open the file and unwrap the Ok variant. Alternatively, if <b>read_to_string</b> returns an Err, the `?` will propagate that error. Now, we have the following:
 
 ```rust
 let text = fs::read_to_string(s).context("Secrets file is missing.")?;
@@ -732,7 +732,7 @@ let c = get_secrets("invalid_json.txt");
 dbg!(c);
 ```
 
-In the first case, there will be an error because the file does not exist. In the second case, serde will give us an error because it cannot parse the JSON. The above functions output the following:
+In the first case, there will be an error because the file does not exist. In the second case, Serde will give us an error because it cannot parse the JSON. The above functions output the following:
 
 <pre>
 [src\main.rs:358] b = Err(
@@ -756,7 +756,7 @@ In the first case, there will be an error because the file does not exist. In th
 
 - <b>anyhow::anyhow</b>
 
-This is a macro that you can use to have a function return an `anyhow::Error`. The following loads some JSON that contains a password that is too short(silly example I know):
+This is a macro that you can use to have a function return an `anyhow::Error`. The following loads some JSON that contains a password that is too short (silly example I know):
 
 ```rust
 let d = get_secrets("wrong_secrets.json");
@@ -780,7 +780,7 @@ The `anyhow` crate was forked by Jane Lusby. She created [eyre](https://crates.i
 Understanding how the Option as well as the Result is used in Rust is very important. The above explanation of the Option, Result and error handling in Rust is my written account of how I learned about them. I hope this article will benefit others. Here are some additional links that are worth checking out to better understand the Option, the Result and error handling in Rust:
 - The Rust Programming Language [Chapter 6](https://doc.rust-lang.org/book/ch06-00-enums.html) and [Chapter 9](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - From [Rustconf 2020](https://2020.rustconf.com/talks) talks, the [Error handling Isn't All About Errors](https://www.youtube.com/watch?v=rAF8mLI0naQ) talk by by Jane Lusby
-- Error handling and deaing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
+- Error handling and dealing with multiple error types in [Rust by example](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html)
 - [Next level thoughts and ideas on errors](https://www.lpalmieri.com/posts/error-handling-rust/)
 - [Wrapping errors](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/wrap_error.html)
 
