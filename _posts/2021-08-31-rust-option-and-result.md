@@ -78,7 +78,7 @@ Example::That contains: That
 Using the `match` keyword, we can do pattern matching on enums. The following function takes the Example enum as an argument:
 
 ```rust
-fn mather(x: Example) {
+fn matcher(x: Example) {
     match x {
         Example::This => println!("We got This."),
         Example::That => println!("We got That."),
@@ -112,6 +112,12 @@ Because these types are so commonly used, their variants are also exported. Let'
 
 
 ## The Option
+
+
+{:refdef: style="text-align: center;"}
+![Rust Option](/assets/img/option_definition.png "Rust Option"){:height="80%" width="80%"}
+{: refdef}
+
 
 Brought into scope by the prelude, the [Option](https://doc.rust-lang.org/std/option/index.html) is available to us without having to lift a finger. The option is defined as follows:
 
@@ -395,6 +401,11 @@ None
 </pre>
 
 ## The result
+
+{:refdef: style="text-align: center;"}
+![Rust Result](/assets/img/result_definition.png "Rust Result"){:height="80%" width="80%"}
+{: refdef}
+
 
 Another important construct in Rust is the `Result` enum. Same as with the Option, the Result is an enum. The definition of the Result can be found in `result.rs`:
 
