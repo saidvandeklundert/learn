@@ -125,7 +125,7 @@ pub enum Option<T> {
 }
 ```
 
-The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. Key thing that is not immediately obvious to those starting out with Rust is the `<T>`_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
+The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. A key thing that is not immediately obvious to those starting out with Rust is the `<T>`_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
 
 ### The Option is generic over type T.
 
