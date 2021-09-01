@@ -23,9 +23,7 @@ To understand the `Option` and the `Result`, it is important to understand the f
 
 There are good reasons for using enums. Among others, they are good for safe input handling and adding context to types by giving a collection of variants a name. In Rust, the `Option` as well as the `Result` are _enumerations_, also referred to as _enums_. The enum in Rust is quite flexible. It can contain many data types like tuples, structs and more. Additionally, you can also implement methods on enums. 
 
-The Option and the Result are pretty straightforward though. 
-
-Let's first look at an example enum:
+The Option and the Result are pretty straightforward though. Let's first look at an example enum:
 
 
 {:refdef: style="text-align: center;"}
@@ -43,7 +41,7 @@ let this = Example::This;
 let that = Example::That;
 ```
 
-In the above, we define an enum called `Example`. This enum has 2 variants called `This` and `That`. Next, we create 2 instances of the enum, variables `this` and `that`. Both are created with their own variant. It is important to note that an instance of an enum is always 1 of the variants. When you use a field struct, you can define struct with all it's possible fields. An enum is different because you assign only one of the fields (called variants).
+In the above, we define an enum called `Example`. This enum has 2 variants called `This` and `That`. Next, we create 2 instances of the enum, variables `this` and `that`. Both are created with their own variant. It is important to note that an instance of an enum is always 1 of the variants. When you use a field struct, you can define struct with all it's possible fields. An enum is different because you assign only one of the variants.
 
 ### Displaying the enum variants
 
@@ -85,7 +83,7 @@ fn matcher(x: Example) {
 }
 ```
 
-We can pass it a value of the Example enum, and it will print something based on the variant of the enum value:
+We can pass the matcher function a value of the Example enum. The `match` inside the function will determine what is printed to screen:
 
 ```rust
 matcher(Example::This);
@@ -127,7 +125,7 @@ pub enum Option<T> {
 }
 ```
 
-The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. Key thing that is not immediately obvious to those starting out with Rust is the '<T>'_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
+The above tells us `Option<T>` is an enum with 2 variants: `None` and `Some(T)`. In terms of how it is used, the `None` can be thought of as 'nothing' and the `Some(T)` can be thought of as 'something'. Key thing that is not immediately obvious to those starting out with Rust is the `<T>`_-thing_. The `<T>` tells us the Option Enum is a `generic` Enum. 
 
 ### The Option is generic over type T.
 
