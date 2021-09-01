@@ -223,7 +223,7 @@ pub const fn unwrap(self) -> T {
 }
 ```
 
-In `option.rs`, we can see `unwrap` is defined in the `impl<T> Option<T>` block. When we call it on a value, it will try to 'unwrap' the value that is tucked into T. It matches on 'self' and if the `Some` variant is present, 'val' is 'unwrapped' and returned. If the 'None' variant is present, the panic macro is called:
+In `option.rs`, we can see `unwrap` is defined in the `impl<T> Option<T>` block. When we call it on a value, it will try to 'unwrap' the value that is tucked into the `Some` variant. It matches on 'self' and if the `Some` variant is present, 'val' is 'unwrapped' and returned. If the 'None' variant is present, the panic macro is called:
 
 
 ```rust
@@ -241,13 +241,13 @@ Some("Something")
 thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:86:17
 </pre>
 
-Calling unwrap on an Option is quick and easy. Bot obviously, baking in the possibility of letting your program `panic` and crash is not the most elegant or safe approach. 
+Calling unwrap on an Option is quick and easy but letting your program `panic` and crash is not a very elegant or safe approach. 
 
 ## Option examples
 
 Let's look at some examples where you could use an Option.
 
-### passing an optional value to a function
+### Passing an optional value to a function
 
 ```rust
 fn might_print(option: Option<&str>) {
@@ -269,7 +269,7 @@ The argument contains the following value: 'some str'
 The argument contains None.
 </pre>
 
-### having a function return an optional value
+### Having a function return an optional value
 
 ```rust
 // Returns the text if it contains target character, None otherwise:
@@ -285,7 +285,7 @@ let q = contains_char("Rust in action", 'q');
 println!("{:?}", a);
 println!("{:?}", q);
 ```
-We can safely assign the return of this function to a variable and, later on, use match to determine how to handle a 'None' return. The pervious code prints the following:
+We can safely assign the return of this function to a variable and, later on, use match to determine how to handle a 'None' return. The previous code prints the following:
 
 <pre>
 Some("Rust in action")
