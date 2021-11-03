@@ -224,7 +224,11 @@ Another thing we will focus on is freeing memory. The Rust return values need to
 
 
 
+## Calling a Rust function from Python with a memory leak
 
+### showing the memory leak
+
+### fixing the memory leak
 
 
 ## Closing thoughts
