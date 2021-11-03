@@ -16,7 +16,7 @@ In addition to using C or C++, another thing to consider is Rust. Rust offers an
 In this article, I will cover a few basic examples on how to call several Rust functions from Python. On the Rust side, I will use the `ffi` from the std and on the Python side, I will stick to `ctypes`:
 
 {:refdef: style="text-align: center;"}
-![Calling Rust from Python](/learn/assets/img/calling_rust_from_python_std_ffi_and_ctypes.png "Calling Rust from Python"){:height="80%" width="80%"}
+![Calling Rust from Python](/assets/img/calling_rust_from_python_std_ffi_and_ctypes.png "Calling Rust from Python"){:height="80%" width="80%"}
 {: refdef}
 calling Rust from Python.png
 
