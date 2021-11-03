@@ -13,10 +13,10 @@ Python is a fantastic language! At least, in my opinion it is. There is a great 
 
 In addition to using C or C++, another thing to consider is Rust. Rust offers an FFI (Foreign Function Interface), which allows you to export Rust functions to C. By having Python make use of these exported C functions, you can glue the Python and the Rust universe together. This way, you can bring in some Rust precisely where you need some additional power without having to rewrite your whole Python code base.
 
-In this article, I will cover a few basic examples on how to call several Rust functions from Python. On the Rust side, I will use `libc` and on the Python side, I will stick to `ctypes`:
+In this article, I will cover a few basic examples on how to call several Rust functions from Python. On the Rust side, I will use the `ffi` from the std and on the Python side, I will stick to `ctypes`:
 
 {:refdef: style="text-align: center;"}
-![Calling Rust from Python](/learn/img/calling_rust_from_python.png "Calling Rust from Python"){:height="80%" width="80%"}
+![Calling Rust from Python](/learn/img/calling_rust_from_python_std_ffi_and_ctypes.png "Calling Rust from Python"){:height="80%" width="80%"}
 {: refdef}
 calling Rust from Python.png
 
@@ -93,9 +93,6 @@ authors = ["Said van de Klundert"]
 [lib]
 name = "rust_lib"
 crate-type = ["dylib"]
-
-[dependencies]
-libc = "~0.2"
 </pre>
 
 This indicates we are building a dynamic Rust library and we will be using `libc`.
