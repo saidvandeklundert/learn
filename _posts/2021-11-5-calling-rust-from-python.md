@@ -208,10 +208,10 @@ Python gave us number 2
 There are many types in Rust, Python and C. This can get confusing!
 ## Calling a Rust function from Python with multiple types
 
-This time, we will call a Rust function that takes a struct as argument and returns a struct. On the Python side, we use a Pydantic basemodel that has the same fields as the Rust struct. The struct and Pydantic basemodel will contain multiple fields and types. 
+This time, we will call a Rust function that, from the Rust point of view, takes a struct as argument and returns a struct. On the Python side, we use a Pydantic basemodel that has the same fields as the Rust struct. The struct and Pydantic basemodel will contain fields of multiple different types. 
 We will be dealing with this in the easiest way possible: by using the C `Char *`.
 
-We send over a JSON string between Rust and Python to communicate the values. In Rust, we marshal the JSON into a corresponding struct. And on the Python side, we load the JSON into the corresponding Pydantic basemodel. The advantage is that we only have to work with `Char *` in C and we do not have to work with C structs or any other type in C. 
+We send over a JSON string between Rust and Python to communicate the values. In Rust, we marshal the JSON into the corresponding struct. And on the Python side, we load the JSON into the corresponding Pydantic basemodel. The advantage is that we only have to work with `Char *` in C and we do not have to work with C structs or any other type in C. 
 
 Another thing we will focus on is freeing memory. The Rust return values need to be freed from memory. We will do this by calling a Rust function from Python.
 
