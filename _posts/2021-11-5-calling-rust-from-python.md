@@ -208,29 +208,230 @@ Python gave us number 2
 There are many types in Rust, Python and C. This can get confusing!
 ## Calling a Rust function from Python with multiple types
 
-This time, we will call a Rust function that, from the Rust point of view, takes a struct as argument and returns a struct. On the Python side, we use a Pydantic basemodel that has the same fields as the Rust struct. The struct and Pydantic basemodel will contain fields of multiple different types. 
-We will be dealing with this in the easiest way possible: by using the C `Char *`.
+This time, Python will call a Rust function called `start_procedure`. To avoid distractions, it does not do anything other then taking a struct and returning another one. On the Python side, we use a Pydantic basemodel to create the input that the Rust function requires. The Pydandtic basemodel will have the same fields as the Rust struct. We do the same thing for the return value from Rust. We create a Pydantic basemodel that mirrors the Rust struct on the Python sude. The struct and Pydantic basemodel will contain fields of multiple different types. This is something we will be dealing with in the (according to me at least) easiest way possible: by using the C `Char *`.
 
-We send over a JSON string between Rust and Python to communicate the values. In Rust, we marshal the JSON into the corresponding struct. And on the Python side, we load the JSON into the corresponding Pydantic basemodel. The advantage is that we only have to work with `Char *` in C and we do not have to work with C structs or any other type in C. 
+The picture illustrates what will happen. Between Rust and Python, JSON strings are used to communicate the values. In Rust, we marshal the JSON into the corresponding struct. And on the Python side, we load the JSON into the corresponding Pydantic basemodel. The advantage is that we only have to work with `Char *` in C and we do not have to work with C structs or any other type in C. 
 
-Another thing we will focus on is freeing memory. The Rust return values need to be freed from memory. We will do this by calling a Rust function from Python.
 
 ### The Python side.
 
+The Python script we will use is the following:
+
+```python
+import ctypes
+from pydantic import BaseModel
+from typing import List
+
+rust = ctypes.CDLL("target/release/librust_lib2.so")
+
+
+class ProcedureInput(BaseModel):
+    timeout: int
+    retries: int
+    host_list: List[str]
+    action: str
+    job_id: int
+
+
+class ProcedureOutput(BaseModel):
+    job_id: int
+    result: str
+    message: str
+    failed_hosts: List[str]
+
+
+if __name__ == "__main__":
+    procedure_input = ProcedureInput(
+        timeout=10,
+        retries=3,
+        action="reboot",
+        host_list=["server1", "server2"],
+        job_id=1,
+    )
+
+    ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+
+    returned_bytes = ctypes.c_char_p(ptr).value
+
+    procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+    print(procedure_output.json(indent=2))
+```
+
+We start of loading the library. After that, we define 2 classes. The two classes are pydantic basemodels, which enforces type hints at runtime. The `ProcedureInput` is the argument to the Rust function and the `ProcedureOutput` is what we expect to get in return from the Rust function.
+
+After defining the classes, we instantiate an instance of `ProcedureInput`. Using `rust.start_procedure`, we call the Rust function. When calling the Rust function, the expression `procedure_input.json().encode("utf-8")` will output the fields of the class instance as a JSON string and convert that string to bytes. 
+
+We collect the return from Rust in `ptr`. Next, this is converted to bytes and the `parse_raw` method will enables us to build the `ProcedureOutput` instance from these bytes.
+
+When we run the Python code, we get the following output:
+
+<pre>
+root@rust:/python/rust/rust_lib# python3 call_rust_function.py 
+{
+  "job_id": 1,
+  "result": "success",
+  "message": "1 host failed",
+  "failed_hosts": [
+    "server1"
+  ]
+}
+</pre>
 
 ### The Rust side.
 
-### Running the code.
+The following is the code that was put in place on the Rust side:
 
+```rust
+extern crate serde;
+extern crate serde_json;
+
+use serde::{Deserialize, Serialize};
+use std::ffi::CStr;
+use std::ffi::CString;
+use std::os::raw::c_char;
+use std::str;
+
+#[derive(Debug, Serialize, Deserialize)]
+struct ProcedureInput {
+    timeout: u8,
+    retries: u8,
+    host_list: Vec<String>,
+    action: String,
+    job_id: i32,
+}
+
+#[derive(Serialize, Deserialize)]
+struct ProcedureOutput {
+    result: String,
+    message: String,
+    failed_hosts: Vec<String>,
+    job_id: i32,
+}
+
+#[no_mangle]
+pub extern "C" fn start_procedure(c_string_ptr: *const c_char) -> *mut c_char {
+    let bytes = unsafe { CStr::from_ptr(c_string_ptr).to_bytes() };
+    let string = str::from_utf8(bytes).unwrap();
+    let model: ProcedureInput = serde_json::from_str(string).unwrap();
+    let result = long_running_task(model);
+    let result_json = serde_json::to_string(&result).unwrap();
+    let c_string = CString::new(result_json).unwrap();
+    c_string.into_raw()
+}
+
+fn long_running_task(model: ProcedureInput) -> ProcedureOutput {
+    let result = ProcedureOutput {
+        result: "success".to_string(),
+        message: "1 host failed".to_string(),
+        failed_hosts: vec!["server1".to_string()],
+        job_id: model.job_id,
+    };
+    return result;
+}
+```
+
+Few things happening here. First we have the structs that are 'mirroring' the Pydantic basemodels:
+
+```rust
+#[derive(Debug, Serialize, Deserialize)]
+struct ProcedureInput {
+    timeout: u8,
+    retries: u8,
+    host_list: Vec<String>,
+    action: String,
+    job_id: i32,
+}
+
+#[derive(Serialize, Deserialize)]
+struct ProcedureOutput {
+    result: String,
+    message: String,
+    failed_hosts: Vec<String>,
+    job_id: i32,
+}
+
+```
+
+After this, we have the `start_procedure` function:
+
+```rust
+#[no_mangle]
+pub extern "C" fn start_procedure(c_string_ptr: *const c_char) -> *mut c_char {
+    let bytes = unsafe { CStr::from_ptr(c_string_ptr).to_bytes() };
+    let string = str::from_utf8(bytes).unwrap();
+    let model: ProcedureInput = serde_json::from_str(string).unwrap();
+    let result = long_running_task(model);
+    let result_json = serde_json::to_string(&result).unwrap();
+    let c_string = CString::new(result_json).unwrap();
+    c_string.into_raw()
+}
+
+```
+
+Same as earlier, we start of building a string from the raw pointer. After we have the string, which is the JSON we got from Python, we marshal that into the `ProcedureInput` struct. We pass that struct to the `long_running_task` which gives us a `ProcedureOutput` as a result. Using `serde_json::to_string`, we transform that struct into a JSON string in the variable `result_json`. From that value, we create a new C-compatible string from a container of bytes using `CString::new`. The struct that is returned  has the `into_raw()` method, which consumes the CString and transfers ownership of the string to a C caller. The `into_raw()` method returns a pointer which we used to read the return value earlier on the Python side.
 
 
 ## Calling a Rust function from Python with a memory leak
 
-### showing the memory leak
+If we put the `start_procedure` on a while loop, and let it run for a while, we can see that the process will gradually start to consume more and more memory. The problem is that the value that is returned from Rust is not cleaned up.
+
+With the following change to the Python script, we run the `start_procedure` call indefinately:
+
+```python
+    while True:
+        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+        returned_bytes = ctypes.c_char_p(ptr).value
+        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+        print(procedure_output.json(indent=2))
+```
+
+If we call the script now, we can see the memory usage of the Python script slowly creep up.
 
 ### fixing the memory leak
 
+To address this memory leak, we first need to create a function in Rust that cleans up the memory:
 
+
+```rust
+#[no_mangle]
+pub extern "C" fn free_mem(c_string_ptr: *mut c_char) {
+    unsafe { CString::from_raw(c_string_ptr) };
+}
+```
+
+This function will use `from_raw` to take ownership of a `CString` that was transferred to C. When the function ends, there is no more owner and the value is dropped, releasing the memory. 
+
+We need to call this function on the Python side. The input to the `free_mem` function should be the value that Rust returned to Python.
+. We need to call this function on the Python side. 
+
+The following Python can run continously without leaking any memory:
+
+```python
+    while True:
+        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+        returned_bytes = ctypes.c_char_p(ptr).value
+        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+        print(procedure_output)
+        rust.free_mem(ptr)
+```
+The value that is returned by `start_procedure` is the value we pass to `free_mem`. Another thing to notice is we call `free_mem` after we are done with the value.
+
+The following code would free it too early:
+
+```python
+        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+        returned_bytes = ctypes.c_char_p(ptr).value
+        rust.free_mem(ptr)
+        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+```
+
+When we run this, we make a double free:
+```
+root@rust:/python/rust/rust_lib# python3 call_rust_continously_free_mem.py
+job_id=1 result='success' message='1 host failed' failed_hosts=['server1']
+free(): double free detected in tcache 2
+Aborted
+```
 ## Closing thoughts
 
 
