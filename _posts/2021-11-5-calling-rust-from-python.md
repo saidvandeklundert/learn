@@ -434,8 +434,15 @@ Aborted
 ```
 ## Closing thoughts
 
+Using Rust from Python was something I wanted to try out for some time now. I have been studying Rust for some time now, but for some projects, completely moving over to Python makes no sense. This is because of multiple reasons. The libraries I am using are not available in Rust, most of the projects I am working on involve a code base that would make a rewrite a huge investment and then there is also the fact that I am still learning Rust.
+
+Calling Rust from Python like this paves the way for me to:
+- incorporate Rust in existing Python projects and start small
+- feel confident about existing Python projects, knowing that if speed really becomes an issue, we give things a boost with Rust
+- play around with both Python as well as Rust at the same time!
+
+
 
 
 Notes:
 - I used CPython 3.9.2 and Rust 1.56.0
-- In this article, I used `libc` and `ctypes`. These two are relatively standard/widely used. Both Python and Rust offer other libraries, some of which are built upon `lib` or `ctypes`. 
