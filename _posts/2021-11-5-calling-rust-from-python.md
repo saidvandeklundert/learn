@@ -445,7 +445,7 @@ Calling Rust from Python like this paves the way for me to:
 - feel more confident about existing Python projects, knowing that if speed really becomes an issue, I can give things a boost with Rust
 - play around with both Python as well as Rust at the same time!
 
-There are plenty of efforts where people use Rust to speed up Python. In many cases, you'll also see those efforts make use of `pyo3`, which offers 'Rust bindings for Python, including tools for creating native Python extension modules'. This might be worth checking out in case you want to do more then just playing around with some Rust in your Python. One example where this is being used is [polars](https://github.com/pola-rs/polars). 
+There are plenty of efforts where people use Rust to speed up Python. In many cases, you'll also see those efforts make use of `pyo3`, which offers 'Rust bindings for Python, including tools for creating native Python extension modules'. This might be worth checking out in case you want to do more then just playing around with some Rust in your Python. One example where this is being used is [polars](https://www.pola.rs/).
 
 
 
