@@ -438,14 +438,14 @@ Aborted
 ```
 ## Closing thoughts
 
-Using Rust from Python was something I wanted to try out for some time now. I have been studying Rust for some time now, but for some projects, completely moving over to Python makes no sense. This is because of multiple reasons. The libraries I am using are not available in Rust, most of the projects I am working on involve a code base that would make a rewrite a huge investment and then there is also the fact that I am still learning Rust.
+Using Rust from Python was something I wanted to try out for some time now. Even thought I have been studying Rust for a while, completely moving over to Rust made no sense to any of the projects I am involved in right now. TIn some cases the libraries I am using are not available in Rust and in other cases the projects I am working are too big to rewrite in Rust. Also, there is the fact that I am still learning Rust.
 
 Calling Rust from Python like this paves the way for me to:
 - incorporate Rust in existing Python projects and start small
 - feel more confident about existing Python projects, knowing that if speed really becomes an issue, I can give things a boost with Rust
 - play around with both Python as well as Rust at the same time!
 
-There are plenty of efforts where people use Rust to speed up Python. In many cases, you'll also see those efforts make use of `pyo3`, which offers 'Rust bindings for Python, including tools for creating native Python extension modules'. This might be worth checking out in case you want to do more then just playing around with some Rust in your Python. One example where this is being used is [polars](https://www.pola.rs/).
+There are plenty of efforts where people use Rust to speed up Python. In many cases, you'll also see those projects make use of `pyo3`. This library offers 'Rust bindings for Python, including tools for creating native Python extension modules'. One example where this is being used is [polars](https://www.pola.rs/).
 
 
 The examples from this post can be found [here](Note: when creating this post, I used CPython 3.9.2 and Rust 1.56.0).
