@@ -139,9 +139,9 @@ pub extern "C" fn print_string(c_string_ptr: *const c_char) {
 The `extern` keywork facilitates the creation of an FFI (Foreign Function Interface). It can be used to call functions in other languages or to create an interface that allows other languages to call Rust functions.
 
 From the book of Rust:
-```
+<pre>
 We also need to add a #[no_mangle] annotation to tell the Rust compiler not to mangle the name of this function. Mangling is when a compiler changes the name we’ve given a function to a different name that contains more information for other parts of the compilation process to consume but is less human readable. Every programming language compiler mangles names slightly differently, so for a Rust function to be nameable by other languages, we must disable the Rust compiler’s name mangling.
-```
+</pre>
 
 The function argument is specified as `c_string_ptr: *const c_char`. The `*const` is a raw pointer and the `c_char` is the C char. So combined, it means we have a pointer to a c_char.
 
@@ -431,12 +431,12 @@ In the following example, we free the value before we are done with it in the Py
 
 After havng Rust free the memory, we attempt to read the same bytes on the Python side. When we run this code, we make a double free:
 
-```
+<pre>
 root@rust:/python/rust/rust_lib# python3 call_rust_continuously_free_mem.py
 job_id=1 result='success' message='1 host failed' failed_hosts=['server1']
 free(): double free detected in tcache 2
 Aborted
-```
+</pre>
 ## Closing thoughts
 
 Using Rust from Python was something I wanted to try out for some time now. Even thought I have been studying Rust for a while, completely moving over to Rust made no sense to any of the projects I am involved in right now. In some cases the libraries I am using are not available in Rust and in other cases the projects I am working are too big to rewrite in Rust. Also, there is the fact that I am still learning Rust.
