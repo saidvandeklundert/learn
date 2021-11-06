@@ -449,5 +449,7 @@ Calling Rust from Python like this paves the way for me to:
 There are plenty of efforts where people use Rust to speed up Python. In many cases, you'll also see those projects make use of `pyo3`. This library offers 'Rust bindings for Python, including tools for creating native Python extension modules'. One example where this is being used is [polars](https://www.pola.rs/).
 
 
-The examples from this post can be found [here](Note: when creating this post, I used CPython 3.9.2 and Rust 1.56.0).
+The examples from this post can be found [here](https://github.com/saidvandeklundert/rust_from_python).
+    
+Note: when creating this post, I used CPython 3.9.2, Pydantic version `1.8.2` and Rust 1.56.0.
 
