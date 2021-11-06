@@ -16,7 +16,7 @@ In addition to using C or C++, another thing to consider is Rust. Rust offers an
 In this article, I will cover a few basic examples on how to call several Rust functions from Python. On the Rust side, I will use the `ffi` from the std and on the Python side, I will stick to `ctypes`:
 
 {:refdef: style="text-align: center;"}
-![Calling Rust from Python](/assets/img/calling_rust_from_python_std_ffi_and_ctypes.png "Calling Rust from Python"){:height="80%" width="80%"}
+![Calling Rust from Python](/learn/img/calling_rust_from_python_std_ffi_and_ctypes.png "Calling Rust from Python"){:height="80%" width="80%"}
 {: refdef}
 
 
@@ -26,7 +26,7 @@ In this article, I will cover a few basic examples on how to call several Rust f
 To start thing of, we will write a Rust function that prints a string. The following illustrated what will happen:
 
 {:refdef: style="text-align: center;"}
-![Python string to Rust](/assets/img/python_string_to_rust_via_c.png "Python string to Rust"){:height="80%" width="80%"}
+![Python string to Rust](/learn/img/python_string_to_rust_via_c.png "Python string to Rust"){:height="80%" width="80%"}
 {: refdef}
 
 On the Python side, we will do the following:
@@ -211,7 +211,7 @@ There are many types in Rust, Python and C. This can get confusing!
 This time, Python will call a Rust function called `start_procedure`. To avoid distractions, it does not do anything other then taking a struct and returning another one. On the Python side, we use a Pydantic basemodel to create the input that the Rust function requires. The Pydantic basemodel will have the same fields as the Rust struct. We do the same thing for the return value from Rust. We create a Pydantic basemodel that mirrors the Rust struct on the Python side. The struct and Pydantic basemodel will contain fields of multiple different types. This is something we will be dealing with in the (according to me at least) easiest way possible: by using the C `Char *`.
 
 {:refdef: style="text-align: center;"}
-![Pydantic BaseModel to Rust Struct](/assets/img/model_to_struct.png "Pydantic BaseModel to Rust Struct"){:height="80%" width="80%"}
+![Pydantic BaseModel to Rust Struct](/learn/img/model_to_struct.png "Pydantic BaseModel to Rust Struct"){:height="80%" width="80%"}
 {: refdef}
 
 The picture illustrates what will happen. Between Rust and Python, JSON strings are used to communicate the values. In Rust, we marshal the JSON into the corresponding struct. And on the Python side, we load the JSON into the corresponding Pydantic basemodel. The advantage is that we only have to work with `Char *` in C and we do not have to work with C structs or any other type in C. 
