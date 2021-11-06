@@ -9,9 +9,9 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, python]
 ---
 
-Python is a fantastic language! At least, in my opinion it is. There is a great ecosystem of libraries that you can use and in general I find it a very satisfying language to work with. But being the interpreted language that it is, Python is not the fastest. In order to speed things up, you could turn to C or C++. Extensions will allow you to use functions and programs written in those languages. This offers faster execution speed and you will not be troubled by the GIL. 
+Python is a fantastic language! At least, in my opinion it is. There is a great ecosystem of libraries that you can use and I find it a very satisfying language to work with. But being the interpreted language that it is, Python is not the fastest. To speed things up, you could turn to C or C++. Extensions will allow you to use functions and programs written in those languages. This offers faster execution speed, and you will not be troubled by the GIL. 
 
-In addition to using C or C++, another thing to consider is Rust. Rust offers an FFI (Foreign Function Interface), which allows you to export Rust functions to C. By having Python make use of these exported C functions, you can glue the Python and the Rust universe together. This way, you can bring in some Rust precisely where you need some additional power without having to rewrite your whole Python code base.
+In addition to using C or C++, another thing to consider is Rust. Rust offers an FFI (Foreign Function Interface), which allows you to export Rust functions to C. By having Python make use of these exported C functions, you can glue the Python and the Rust universe together. This way, you can bring in some Rust precisely where you need some additional power.
 
 In this article, I will cover a few basic examples on how to call several Rust functions from Python. On the Rust side, I will use the `ffi` from the std and on the Python side, I will stick to `ctypes`:
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     rust.print_string(SOME_BYTES)
 ```
 
-First, we import `ctypes`. After that, we specify where we can find the `.so` file. The python script, called `print_string.py`, will be placed in the folder where I am building the rust library. So after I run `cargo build --release`, this will be the layout of the files involved:
+First, we import `ctypes`. After that, we specify where we can find the `.so` file. The python script, called `print_string.py`, will be placed in the folder where I am building the rust library. After I run `cargo build --release`, this will be the layout of the files involved:
 
 <pre>
 rust_lib/
@@ -114,9 +114,10 @@ pub extern "C" fn print_string(c_string_ptr: *const c_char) {
 ```
 
 The first line brings the [CStr](https://doc.rust-lang.org/std/ffi/struct.CStr.html) into scope. This is a struct that represents a borrowed C string. The documentation says the following:
-```
+
+<pre>
 This type represents a borrowed reference to a nul-terminated array of bytes. It can be constructed safely from a &[u8] slice, or unsafely from a raw *const c_char. It can then be converted to a Rust &str by performing UTF-8 validation, or into an owned CString.
-```
+</pre>
 
 We will use it in this way and convert the `CStr` to a Rust `&str`.
 
