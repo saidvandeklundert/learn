@@ -1,7 +1,7 @@
 ---
 layout: post
-title: calling Rust from Python
-subtitle: using libc
+title: Calling Rust from Python
+subtitle: speed up your Python using Rust
 image: /assets/img/rusty_logo_small.jpeg
 cover-img: /assets/img/rusty_logo.jpeg
 thumbnail-img: /assets/img/rusty_logo_small.jpeg
