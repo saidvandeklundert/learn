@@ -166,7 +166,6 @@ From the `rust_lib` directory, we do the following:
 <pre>
 root@rust:/python/rust/rust_lib# ./print_string.py  
 Python says hi inside Rust!
-Another way of sending strings to Rust via C.
 </pre>
 
 
@@ -209,7 +208,7 @@ Python gave us number 2
 There are many types in Rust, Python and C. This can get confusing!
 ## Calling a Rust function from Python with multiple types
 
-This time, Python will call a Rust function called `start_procedure`. To avoid distractions, it does not do anything other then taking a struct and returning another one. On the Python side, we use a Pydantic basemodel to create the input that the Rust function requires. The Pydandtic basemodel will have the same fields as the Rust struct. We do the same thing for the return value from Rust. We create a Pydantic basemodel that mirrors the Rust struct on the Python sude. The struct and Pydantic basemodel will contain fields of multiple different types. This is something we will be dealing with in the (according to me at least) easiest way possible: by using the C `Char *`.
+This time, Python will call a Rust function called `start_procedure`. To avoid distractions, it does not do anything other then taking a struct and returning another one. On the Python side, we use a Pydantic basemodel to create the input that the Rust function requires. The Pydantic basemodel will have the same fields as the Rust struct. We do the same thing for the return value from Rust. We create a Pydantic basemodel that mirrors the Rust struct on the Python side. The struct and Pydantic basemodel will contain fields of multiple different types. This is something we will be dealing with in the (according to me at least) easiest way possible: by using the C `Char *`.
 
 {:refdef: style="text-align: center;"}
 ![Pydantic BaseModel to Rust Struct](/assets/img/model_to_struct.png "Pydantic BaseModel to Rust Struct"){:height="80%" width="80%"}
@@ -262,11 +261,11 @@ if __name__ == "__main__":
     print(procedure_output.json(indent=2))
 ```
 
-We start of loading the library. After that, we define 2 classes. The two classes are pydantic basemodels, which enforces type hints at runtime. The `ProcedureInput` is the argument to the Rust function and the `ProcedureOutput` is what we expect to get in return from the Rust function.
+We start of loading the library. After that, we define 2 classes. The two classes are Pydantic basemodels, which enforces type hints at runtime. The `ProcedureInput` is the argument to the Rust function and the `ProcedureOutput` is what we expect to get in return from the Rust function.
 
 After defining the classes, we instantiate an instance of `ProcedureInput`. Using `rust.start_procedure`, we call the Rust function. When calling the Rust function, the expression `procedure_input.json().encode("utf-8")` will output the fields of the class instance as a JSON string and convert that string to bytes. 
 
-We collect the return from Rust in `ptr`. Next, this is converted to bytes and the `parse_raw` method will enables us to build the `ProcedureOutput` instance from these bytes.
+We collect the return from Rust in `ptr`. Next, this is converted to bytes and the `parse_raw` method will enable us to build the `ProcedureOutput` instance from these bytes.
 
 When we run the Python code, we get the following output:
 
@@ -335,7 +334,7 @@ fn long_running_task(model: ProcedureInput) -> ProcedureOutput {
 }
 ```
 
-Few things happening here. First we have the structs that are 'mirroring' the Pydantic basemodels:
+Few things happening here. First, we have the structs that are 'mirroring' the Pydantic basemodels:
 
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
@@ -380,7 +379,7 @@ Same as earlier, we start of building a string from the raw pointer. After we ha
 
 If we put the `start_procedure` on a while loop, and let it run for a while, we can see that the process will gradually start to consume more and more memory. The problem is that the value that is returned from Rust is not cleaned up.
 
-With the following change to the Python script, we run the `start_procedure` call indefinately:
+With the following change to the Python script, we run the `start_procedure` call indefinitely:
 
 ```python
     while True:
@@ -390,7 +389,7 @@ With the following change to the Python script, we run the `start_procedure` cal
         print(procedure_output.json(indent=2))
 ```
 
-If we call the script now, we can see the memory usage of the Python script slowly creep up.
+If we call the script now, we can see the memory usage of the Python script slowly increase.
 
 ### fixing the memory leak
 
@@ -409,7 +408,7 @@ This function will use `from_raw` to take ownership of a `CString` that was tran
 We need to call this function on the Python side. The input to the `free_mem` function should be the value that Rust returned to Python.
 . We need to call this function on the Python side. 
 
-The following Python can run continously without leaking any memory:
+The following Python can run continuously without leaking any memory:
 
 ```python
     while True:
@@ -421,7 +420,7 @@ The following Python can run continously without leaking any memory:
 ```
 The value that is returned by `start_procedure` is the value we pass to `free_mem`. Another thing to notice is we call `free_mem` after we are done with the value.
 
-The following code would free it too early:
+In the following example, we free the value before we are done with it in the Python code:
 
 ```python
         ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
@@ -430,16 +429,17 @@ The following code would free it too early:
         procedure_output = ProcedureOutput.parse_raw(returned_bytes)
 ```
 
-When we run this, we make a double free:
+After havng Rust free the memory, we attempt to read the same bytes on the Python side. When we run this code, we make a double free:
+
 ```
-root@rust:/python/rust/rust_lib# python3 call_rust_continously_free_mem.py
+root@rust:/python/rust/rust_lib# python3 call_rust_continuously_free_mem.py
 job_id=1 result='success' message='1 host failed' failed_hosts=['server1']
 free(): double free detected in tcache 2
 Aborted
 ```
 ## Closing thoughts
 
-Using Rust from Python was something I wanted to try out for some time now. Even thought I have been studying Rust for a while, completely moving over to Rust made no sense to any of the projects I am involved in right now. TIn some cases the libraries I am using are not available in Rust and in other cases the projects I am working are too big to rewrite in Rust. Also, there is the fact that I am still learning Rust.
+Using Rust from Python was something I wanted to try out for some time now. Even thought I have been studying Rust for a while, completely moving over to Rust made no sense to any of the projects I am involved in right now. In some cases the libraries I am using are not available in Rust and in other cases the projects I am working are too big to rewrite in Rust. Also, there is the fact that I am still learning Rust.
 
 Calling Rust from Python like this paves the way for me to:
 - incorporate Rust in existing Python projects and start small
