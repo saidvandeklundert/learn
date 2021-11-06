@@ -382,11 +382,11 @@ If we put the `start_procedure` on a while loop, and let it run for a while, we 
 With the following change to the Python script, we run the `start_procedure` call indefinitely:
 
 ```python
-    while True:
-        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
-        returned_bytes = ctypes.c_char_p(ptr).value
-        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
-        print(procedure_output.json(indent=2))
+while True:
+    ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+    returned_bytes = ctypes.c_char_p(ptr).value
+    procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+    print(procedure_output.json(indent=2))
 ```
 
 If we call the script now, we can see the memory usage of the Python script slowly increase.
@@ -411,22 +411,22 @@ We need to call this function on the Python side. The input to the `free_mem` fu
 The following Python can run continuously without leaking any memory:
 
 ```python
-    while True:
-        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
-        returned_bytes = ctypes.c_char_p(ptr).value
-        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
-        print(procedure_output)
-        rust.free_mem(ptr)
+while True:
+    ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+    returned_bytes = ctypes.c_char_p(ptr).value
+    procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+    print(procedure_output)
+    rust.free_mem(ptr)
 ```
 The value that is returned by `start_procedure` is the value we pass to `free_mem`. Another thing to notice is we call `free_mem` after we are done with the value.
 
 In the following example, we free the value before we are done with it in the Python code:
 
 ```python
-        ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
-        returned_bytes = ctypes.c_char_p(ptr).value
-        rust.free_mem(ptr)
-        procedure_output = ProcedureOutput.parse_raw(returned_bytes)
+ptr = rust.start_procedure(procedure_input.json().encode("utf-8"))
+returned_bytes = ctypes.c_char_p(ptr).value
+rust.free_mem(ptr)
+procedure_output = ProcedureOutput.parse_raw(returned_bytes)
 ```
 
 After havng Rust free the memory, we attempt to read the same bytes on the Python side. When we run this code, we make a double free:
@@ -437,6 +437,7 @@ job_id=1 result='success' message='1 host failed' failed_hosts=['server1']
 free(): double free detected in tcache 2
 Aborted
 </pre>
+
 ## Closing thoughts
 
 Using Rust from Python was something I wanted to try out for some time now. Even thought I have been studying Rust for a while, completely moving over to Rust made no sense to any of the projects I am involved in right now. In some cases the libraries I am using are not available in Rust and in other cases the projects I am working are too big to rewrite in Rust. Also, there is the fact that I am still learning Rust.
