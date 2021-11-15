@@ -415,7 +415,56 @@ some data
 1
 ```
 
-## Serializing a Pydantic basemodel in Rust
+## Sending over Json to Rust
+
+One way to send over complex data structures could be by using JSON. The following example marshalls a string into a struct:
+
+```rust
+extern crate serde;
+extern crate serde_json;
+use serde::{Deserialize, Serialize};
+
+#[pyfunction]
+fn human_says_hi(human_data: String) {
+    println!("{}", human_data);
+    let human: Human = serde_json::from_str(&human_data).unwrap();
+
+    println!(
+        "Now we can work with the struct:\n {:#?}.\n {} is {} years old.",
+        human, human.name, human.age,
+    )
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Human {
+    name: String,
+    age: u8,
+}
+```
+
+On the Python side, I will use Pydantic to send over some Json:
+```python
+>>> from pydantic import BaseModel
+>>> 
+>>> class Human(BaseModel):
+...     name: str
+...     age: int
+...
+>>> 
+>>> jan = Human(name="Jan", age=6)
+>>> print(jan.json())
+{"name": "Jan", "age": 6}
+>>> rust.human_says_hi(jan.json())
+{"name": "Jan", "age": 6}
+Now we can work with the struct:
+ Human {
+    name: "Jan",
+    age: 6,
+}.
+ Jan is 6 years old.
+```
+
+Note, `pydantic` is one of my favorite Python packages. The `.json()` method I used here convert the class to a JSON string.
 
 ## Have Rust use a logger from the Python runtime
 
@@ -478,3 +527,73 @@ DEBUG rust 2021-11-15 20:24:55,213 lib.rs:113 logging a debug message
 
 
 ## Catch an exception
+
+
+```rust
+use std::fmt;
+
+
+// Define 'MyError' as a custom exception:
+#[derive(Debug)]
+struct MyError {
+    /*
+    the 'message' field that is used later on
+    to be able print any message.
+    */
+    pub msg: &'static str,
+}
+
+// Implement the 'Error' trait for 'MyError':
+impl std::error::Error for MyError {}
+
+// Implement the 'Display' trait for 'MyError':
+impl fmt::Display for MyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Error from Rust: {}", self.msg)
+    }
+}
+
+// Implement the 'From' trait for 'MyError'.
+// Used to do value-to-value conversions while consuming the input value.
+impl std::convert::From<MyError> for PyErr {
+    fn from(err: MyError) -> PyErr {
+        PyOSError::new_err(err.to_string())
+    }
+}
+
+#[pyfunction]
+// The function 'greater_than_2' raises an exception if the input value is 2 or less.
+fn greater_than_2(number: isize) -> Result<isize, MyError> {
+    if number <= 2 {
+        return Err(MyError {
+            msg: "number is less than or equal to 2",
+        });
+    } else {
+        return Ok(number);
+    }
+}
+
+#[pymodule]
+fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(greater_than_2, m)?)?;    
+
+    Ok(())
+}
+```
+
+Now, on the Python side, we can see the following:
+
+```python
+>>> rust.greater_than_2(1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+OSError: Error from Rust: number is less than or equal to 2
+>>> rust.greater_than_2(3)
+3
+>>> rust.greater_than_2(11)
+11
+>>> rust.greater_than_2(-11)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+OSError: Error from Rust: number is less than or equal to 2
+```
