@@ -597,3 +597,8 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 OSError: Error from Rust: number is less than or equal to 2
 ```
+
+
+The code from this blog can be found [here](https://github.com/saidvandeklundert/pyo3).
+
+
