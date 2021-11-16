@@ -243,7 +243,7 @@ Calling this function in Python:
 50
 ```
 
-When we do a performance comparison, we can see that it really only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
+When we do a performance comparison, we can see that it only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
 
 ```python
 >>> timeit.timeit("rust.list_sum(a_list)", setup="""
@@ -276,7 +276,7 @@ Hardly any difference. Now, when we increase the function input to 3.000 numbers
 ```
 
 
-Key takeway is that how much you'll be able to speed things up really depends on what part of the code you outsource from Python to Rust. I'll skip any further comparisons between Rust and Python and focus on a few more scenario's that I think are worthwhile.
+Key takeaway is that how much you'll be able to speed things up really depends on what part of the code you outsource from Python to Rust. I'll skip any further comparisons between Rust and Python and focus on a few more scenario's that I think are worthwhile.
 ### printing the values of a dict/HashMap:
 
 ```rust
@@ -303,7 +303,7 @@ key 3 value 3
 key 4 value 4
 ```
 
-Note that the HasMap in Rust is very different from a Python dictionary. Given the fact that we defined the HasMap to use Strings for both key as well as value, it will fail in case we use something else in our Python dictionary. There is nothing that will try and coerce a type into another:
+Note that the HashMap in Rust is very different from a Python dictionary. Given the fact that we defined the HashMap to use Strings for both key as well as value, it will fail in case we use something else in our Python dictionary. There is nothing that will try and coerce a type into another:
 
 ```python
 >>> try:
@@ -317,7 +317,7 @@ Caught a type error: argument 'hm': 'int' object cannot be converted to 'PyStrin
 
 ### printing a word n times
 
-The following function will print a word a number of times. Additionally, it can also print the word in reverse and/or in uppercase:
+The following function will print a word several times. Additionally, it can also print the word in reverse and/or in uppercase:
 
 ```rust
 #[pyfunction]
@@ -456,7 +456,7 @@ some data
 
 ## Sending over Json to Rust
 
-One way to send over complex data structures could be by using JSON. The following example marshalls a string into a struct:
+One way to send over complex data structures could be by using JSON. The following example marshals a JSON-string into a struct:
 
 ```rust
 extern crate serde;
@@ -503,7 +503,7 @@ Now we can work with the struct:
  Jan is 6 years old.
 ```
 
-Note, `pydantic` is one of my favorite Python packages. The `.json()` method I used here convert the class to a JSON string.
+Note, `pydantic` is one of my favourite Python packages. The `.json()` method I used here convert the class to a JSON string.
 
 ## Have Rust use a logger from the Python runtime
 
