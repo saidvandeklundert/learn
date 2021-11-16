@@ -21,7 +21,7 @@ print(result)
 In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include:
 - multiply numbers
 - calculate the n-th Fibonacci in Python as well as in Rust
-- sum the the numbers in a list
+- sum the numbers in a list
 - use a variety of types in Rust functions that are called from Python
 - use a Rust struct in Python code
 - use Python to send JSON to Rust and serialize that JSON as a struct
@@ -32,11 +32,11 @@ In this blog post, I will give a short introduction to PyO3. After that, I will 
 
 PyO3 offers some ergonomics for people wanting to glue Rust and Python code together. It helps you calling Python code from Rust as well as calling Rust code from Python. Since I have been using it only to call Rust code from Python, that is the only thing I will write about here.
 
-PyO3 offers some ergonomics in a vartiety of ways.
+PyO3 offers some ergonomics in a variety of ways.
 
-First of all, there is [maturin](https://github.com/PyO3/maturin), that will compile the Rust code for you and install the compiled code as a Python module that you can import using an import statement. After having things setup, you only have to run 1 command to use the Rust code in Python.
+For starters, there is [maturin](https://github.com/PyO3/maturin), that will compile the Rust code for you and install the compiled code as a Python module that you can import using an import statement. After having things setup, you only have to run 1 command to use the Rust code in Python.
 
-Apart from a tool that makes it easy to get started, PyO3 provides you with a lot of bindings to Python that make it so that you do not really have to bother that much with the interaction between Python and Rust. And to make things really convenient, PyO3 comes with a lot of macro's that prevent you from having to write too much boilerplate code.
+Apart from a tool that makes it easy to get started, PyO3 provides you with a lot of bindings to Python that make it so that you do not really have to bother that much with the interaction between Python and Rust. And to make things really convenient, PyO3 comes with a lot of macros that prevent you from having to write too much boilerplate code.
 
 ## Calling a Rust function from Python
 
@@ -112,19 +112,21 @@ That was it!
 To calculate the n-th Fibonacci number, I will use a Python and Rust function that are very similar to each other. The following is the Python function:
 
 ```python
-def get_fibonacci(n: int) -> int:
-    """Get the nth fibonacci number."""
-    fib_seq = [0]
-    while n > 0:
-        n -= 1
-        if len(fib_seq) == 1:
-            fib_seq.append(1)
-        else:
-            last = fib_seq[-1]
-            second_to_last = fib_seq[-2]
-            fib_seq.append(last + second_to_last)
+def get_fibonacci(number: int) -> int:
+    """Get the nth Fibonacci number."""
+    if number == 1:
+        return 1
+    elif number == 2:
+        return 2
 
-    return fib_seq[-1]
+    total = 0
+    last = 0
+    current = 1
+    for _ in range(1, number):
+        total = last + current
+        last = current
+        current = total
+    return total
 ```
 
 To add the Rust equivalent, we need to do the following:
