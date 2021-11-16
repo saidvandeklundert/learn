@@ -173,20 +173,20 @@ Python 3.9.2 (default, Feb 28 2021, 17:03:44)
 Type "help", "copyright", "credits" or "license" for more information.    
 >>> <b>import timeit</b>
 >>>
->>> timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")</b>
 0.49461510000401177
 >>>
->>> timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")</b>
 1.1281064000068
 >>>
 >>>
->>> timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
 9.057604000001447
->>> timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
 3.5204217999998946
 </pre>
 
-The above tells us that when we call the function to calculate the 5-th Fibonacci number, Python is actually a bit faster. But when we look for the 150th Fibonacci number, Rust is almost 10x faster. 
+The above tells us that when we call the function to calculate the 5-th Fibonacci number, Python is faster. But when we look for the 150th Fibonacci number, Rust is almost three times faster. 
 
 But it gets better. We can also do a release build by adding `--release` as an argument to maturin:
 
@@ -209,7 +209,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 With the release build, is a lot faster in both cases. 
 
-I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. I have found that this type of performance increase is not that typical. Getting things to speed up 2x or 3x is usally pretty easy though. 
+I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. I have found that this type of performance increase is not that typical. Getting things to speed up 2x or 3x is usually not that hard. 
 
 ## Working with different types
 
