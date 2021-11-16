@@ -126,7 +126,7 @@ def get_fibonacci(n: int) -> int:
 ```
 
 To add the Rust equivalent, we need to do the following:
-- add the function to `lib.rs`
+- create the function in our `lib.rs`
 - annotate the function with `#[pyfunction]`
 - add the function to the module
 
@@ -238,6 +238,40 @@ Calling this function in Python:
 50
 ```
 
+When we do a performance comparison, we can see that it really only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
+
+```python
+>>> timeit.timeit("rust.list_sum(a_list)", setup="""
+... import rust
+... a_list = [x for x in range(1,10)]
+... """)
+0.42956949999643257
+>>>
+>>> timeit.timeit("sum_list(a_list)", setup="""
+... from __main__ import sum_list
+... a_list = [x for x in range(1,10)]
+... """)
+0.4579178999993019
+```
+
+Hardly any difference. Now, when we increase the function input to 3.000 numbers, we can start seeing some real advantage over using the Rust function:
+
+```python
+>>> timeit.timeit("sum_list(a_list)", setup="""
+... from __main__ import sum_list
+... a_list = [x for x in range(1,3000)]
+... """)
+159.5998086000036
+>>> timeit.timeit("rust.list_sum(a_list)", setup="""
+... import rust
+... a_list = [x for x in range(1,3000)]
+... """)
+95.2027356000035
+>>>
+```
+
+
+Key takeway is that how much you'll be able to speed things up really depends on what part of the code you outsource from Python to Rust. I'll skip any further comparisons between Rust and Python and focus on a few more scenario's that I think are worthwhile.
 ### printing the values of a dict/HashMap:
 
 ```rust
