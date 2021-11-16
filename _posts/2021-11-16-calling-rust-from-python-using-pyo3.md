@@ -130,6 +130,8 @@ To add the Rust equivalent, we need to do the following:
 - annotate the function with `#[pyfunction]`
 - add the function to the module
 
+This is illustrated in the following code snippet:
+
 ```rust
 #[pyfunction]
 fn get_fibonacci(number: isize) -> PyResult<u128> {
@@ -152,11 +154,12 @@ fn get_fibonacci(number: isize) -> PyResult<u128> {
 
 #[pymodule]
 fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(multiply, m)?)?;    
     m.add_function(wrap_pyfunction!(get_fibonacci, m)?)?;
     Ok(())
 }
 ```
+
+After pulling in the new code, we can use maturin to build and install the module and do a comparison:
 
 <pre>
 (.env) root@rust:/pyo3/pyo3# <b>maturin develop</b>
@@ -173,13 +176,15 @@ Type "help", "copyright", "credits" or "license" for more information.
 1.0903590000016266
 >>>
 >>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
-33.936191699998744
+35.48256180000317
 >>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
 3.6803346000015154
 >>>
 </pre>
 
-Rust is almost 10x faster. But it gets better. We can also do a release build by adding `--release` as an argument to maturin:
+The above tells us that when we call the function to calculate the 5-th Fibonacci number, Python is actually a bit faster. But when we look for the 150th Fibonacci number, Rust is almost 10x faster. 
+
+But it gets better. We can also do a release build by adding `--release` as an argument to maturin:
 
 <pre>
 (.env) root@rust:/pyo3/pyo3# <b>python -i</b>
@@ -197,24 +202,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 <b>0.13583959999959916</b>
 </pre>
 
-Not sure what mechanism is at play here, but that is quite a difference.
+With the release build, is a lot faster in both cases. Not sure what mechanism is at play here, but that is quite a difference.
 
-When I do a release build and compare a function that scans a piece of text for a word, the difference is a little less absurd, but still a 3x improvement:
-
-<pre>
-timeit.timeit("count_occurences(text, 'words')", number=100, setup="""
-from __main__ import count_occurences
-from __main__ import text
-""")
-0.19804459999431856
->>>
-timeit.timeit("rust.count_occurences(text, 'words')", number=100, setup="""
-import rust
-from __main__ import text
-""")
-0.07730440000159433
->>>
-</pre>
+I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. Typically, the performance increase is nowhere near the above example. 
 
 ## Working with different types
 
