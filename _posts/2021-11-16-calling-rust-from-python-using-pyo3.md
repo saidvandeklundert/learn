@@ -17,9 +17,6 @@ import rust
 result = rust.multiply(2, 3)
 print(result)
 ```
-{:refdef: style="text-align: center;"}
-![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3_small.png "PyO3 logo"){:height="80%" width="80%"}
-{: refdef}
 
 In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include:
 - multiply numbers
@@ -652,6 +649,11 @@ It took some code, but in my opinion, not that hard to use after having it setup
 ## Closing thoughts.
 
 Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience, the predefined types are very convenient and the build tool `maturin` is an absolute joy to work with.
+
+{:refdef: style="text-align: center;"}
+![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3_small.png "PyO3 logo"){:height="80%" width="80%"}
+{: refdef}
+
 
 The code from this blog can be found [here](https://github.com/saidvandeklundert/pyo3).
 
