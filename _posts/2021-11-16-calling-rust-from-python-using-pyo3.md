@@ -18,7 +18,7 @@ result = rust.multiply(2, 3)
 print(result)
 ```
 {:refdef: style="text-align: center;"}
-![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3.png "PyO3 logo"){:height="80%" width="80%"}
+![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3_small.png "PyO3 logo"){:height="80%" width="80%"}
 {: refdef}
 
 In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include:
