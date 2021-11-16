@@ -9,22 +9,14 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, python, PyO3 ]
 ---
 
-Calling Rust code from Python is made easy by something called [PyO3](https://github.com/PyO3/pyo3). Imagine having build a Rust library that contains a function called `multiply`. If you build the library as a Python module called `rust`, the following would be all that is required to run that function in your Python scripts:
+Calling Rust code from Python is made easy by [PyO3](https://github.com/PyO3/pyo3). You can write a Rust library and rely on the combination of PyO3 and `maturin`, a supporting tool from the `PyO3` ecosystem, to compile the Rust library and have it installed directly as a Python module. Some of the things that PyO3 does is translating types from Python to Rust and vice versa, and offering a set of macros that make exporting Rust functions to Python very easy.
 
-```python
-import rust
 
-result = rust.multiply(2, 3)
-print(result)
-```
-
-In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include:
-- multiply numbers
+In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. These examples include:
 - calculate the n-th Fibonacci in Python as well as in Rust
-- sum the numbers in a list
-- use a variety of types in Rust functions that are called from Python
-- use a Rust struct in Python code
-- use Python to send JSON to Rust and serialize that JSON as a struct
+- having Python use a variety of types in Rust functions
+- using a Rust struct in Python code
+- using Python to send JSON to Rust and serialize that JSON as a struct
 - allow Rust to use the logger from the Python runtime
 - generating an Error in Rust and catching it as an exception in Python
 
@@ -677,6 +669,7 @@ The repo is actively maintained and the documentation is great.
 - [PyO3 repo](https://github.com/PyO3/pyo3)
 - [PyO3 user guide](https://pyo3.rs/main/)
 - [PyO3 architecture guide](https://github.com/PyO3/pyo3/blob/main/Architecture.md)
+- [Maturin repo](https://github.com/PyO3/maturin)
 
 
 
