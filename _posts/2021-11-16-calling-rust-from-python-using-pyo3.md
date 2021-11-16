@@ -176,15 +176,19 @@ Type "help", "copyright", "credits" or "license" for more information.
 Rust is almost 10x faster. But it gets better. We can also do a release build by adding `--release` as an argument to maturin:
 
 <pre>
-(.env) root@rust:/pyo3/pyo3# python -i
+(.env) root@rust:/pyo3/pyo3# <b>python -i</b>
 Python 3.9.2 (default, Feb 28 2021, 17:03:44) 
 [GCC 10.2.1 20210110] on linux
 Type "help", "copyright", "credits" or "license" for more information.    
->>> import rust
->>> timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")
-37.771799099995405
->>> timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")
-0.13583959999959916
+>>> <b>import rust</b>
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")</b>
+1.1113041999997222</b>
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")</b>
+0.11700650000420865</b>
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
+<b>37.771799099995405</b>
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
+<b>0.13583959999959916</b>
 </pre>
 
 Not sure what mechanism is at play here, but that is quite a difference.
@@ -261,7 +265,7 @@ Hardly any difference. Now, when we increase the function input to 3.000 numbers
 ... from __main__ import sum_list
 ... a_list = [x for x in range(1,3000)]
 ... """)
-159.5998086000036
+168.12326449999819
 >>> timeit.timeit("rust.list_sum(a_list)", setup="""
 ... import rust
 ... a_list = [x for x in range(1,3000)]
