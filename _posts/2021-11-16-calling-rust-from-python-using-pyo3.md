@@ -546,7 +546,7 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 }
 ```
 
-THen, after we define a logger in Python, we can use it in Rust:
+Then, after we define a logger in Python, we can use it in Rust:
 
 ```python
 >>> import logging
@@ -567,12 +567,12 @@ DEBUG rust 2021-11-15 20:24:55,213 lib.rs:113 logging a debug message
 
 ## Catch an exception
 
+In this last example, we will raise an error in Rust and catch that as an exception in Python. This part is quite involved, the steps I took are shown after the code snippet:
 
 ```rust
 use std::fmt;
 
-
-// Define 'MyError' as a custom exception:
+// 1
 #[derive(Debug)]
 struct MyError {
     /*
@@ -582,18 +582,17 @@ struct MyError {
     pub msg: &'static str,
 }
 
-// Implement the 'Error' trait for 'MyError':
+// 2
 impl std::error::Error for MyError {}
 
-// Implement the 'Display' trait for 'MyError':
+// 3
 impl fmt::Display for MyError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Error from Rust: {}", self.msg)
     }
 }
 
-// Implement the 'From' trait for 'MyError'.
-// Used to do value-to-value conversions while consuming the input value.
+// 4
 impl std::convert::From<MyError> for PyErr {
     fn from(err: MyError) -> PyErr {
         PyOSError::new_err(err.to_string())
@@ -601,7 +600,7 @@ impl std::convert::From<MyError> for PyErr {
 }
 
 #[pyfunction]
-// The function 'greater_than_2' raises an exception if the input value is 2 or less.
+// 5
 fn greater_than_2(number: isize) -> Result<isize, MyError> {
     if number <= 2 {
         return Err(MyError {
@@ -614,13 +613,21 @@ fn greater_than_2(number: isize) -> Result<isize, MyError> {
 
 #[pymodule]
 fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
+    // 6
     m.add_function(wrap_pyfunction!(greater_than_2, m)?)?;    
 
     Ok(())
 }
 ```
 
-Now, on the Python side, we can see the following:
+1: We define 'MyError' as a custom Error. The struct has a field that is used to be able to send a custom message.
+2: The 'Error' trait is implemented for 'MyError'.
+3: We implement the 'Display' trait for 'MyError' and have it display the message from the 'msg' field in the 'MyError' struct.
+4: The 'From' trait is implemented for 'MyError'. This trait is used to do value-to-value conversions while consuming the input value.
+5: We create a function called 'greater_than_2'. This function will raise the error/exception in case the input value is 2 or less.
+6: We add the function to the Python module in the 'regular' way.
+
+Now we move to the Python side and run the function, triggering the excpetion:
 
 ```python
 >>> rust.greater_than_2(1)
@@ -637,6 +644,11 @@ Traceback (most recent call last):
 OSError: Error from Rust: number is less than or equal to 2
 ```
 
+It took some code, but in my opinion, not that hard to use after having it setup.
+
+## Closing thoughts.
+
+Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience, the predefined types are very convenient and the build tool `maturin` is an absolute joy to work with.
 
 The code from this blog can be found [here](https://github.com/saidvandeklundert/pyo3).
 
