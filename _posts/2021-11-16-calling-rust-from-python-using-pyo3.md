@@ -32,6 +32,10 @@ In this blog post, I will give a short introduction to PyO3. After that, I will 
 
 PyO3 offers some ergonomics for people wanting to glue Rust and Python code together. It helps you calling Python code from Rust as well as calling Rust code from Python. Since I have been using it only to call Rust code from Python, that is the only thing I will write about here.
 
+{:refdef: style="text-align: center;"}
+![PyO3 logo](/learn/assets/img/pyo3.png "PyO3 logo"){:height="80%" width="80%"}
+{: refdef}
+
 PyO3 offers some ergonomics in a variety of ways.
 
 For starters, there is [maturin](https://github.com/PyO3/maturin), that will compile the Rust code for you and install the compiled code as a Python module that you can import using an import statement. After having things setup, you only have to run 1 command to use the Rust code in Python.
