@@ -81,7 +81,7 @@ name = "rust"
 
 When these two names match, the `maturin` build tool will install the Rust library as a Python module using that name.
 
-So in this case, having chosen `rust` as the name of the package, we can write the following Python to call the multiply function:
+So, in this case, having chosen `rust` as the name of the package, we can write the following Python to call the multiply function:
 ```python
 import rust
 
@@ -89,7 +89,7 @@ result = rust.multiply(2, 3)
 print(result)
 ```
 
-To be able to actually run this code, we need to compile the Rust code and install it as a Python library. This is where `maturin` comes in.
+To be able to run this code, we need to compile the Rust code and install it as a Python library. This is where `maturin` comes in.
 
 <pre>
 root@rust:/# <b>git clone https://github.com/saidvandeklundert/pyo3.git</b>
