@@ -167,19 +167,19 @@ After pulling in the new code, we can use maturin to build and install the modul
 Python 3.9.2 (default, Feb 28 2021, 17:03:44) 
 [GCC 10.2.1 20210110] on linux
 Type "help", "copyright", "credits" or "license" for more information.    
->>> <b>import rust</b>
 >>> <b>import timeit</b>
 >>>
->>> <b>timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")</b>
-0.995616299995163
->>> <b>timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")</b>
-1.0903590000016266
+>>> timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")
+0.49461510000401177
 >>>
->>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
-35.48256180000317
->>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
-3.6803346000015154
+>>> timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")
+1.1281064000068
 >>>
+>>>
+>>> timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")
+9.057604000001447
+>>> timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")
+3.5204217999998946
 </pre>
 
 The above tells us that when we call the function to calculate the 5-th Fibonacci number, Python is actually a bit faster. But when we look for the 150th Fibonacci number, Rust is almost 10x faster. 
@@ -191,15 +191,16 @@ But it gets better. We can also do a release build by adding `--release` as an a
 Python 3.9.2 (default, Feb 28 2021, 17:03:44) 
 [GCC 10.2.1 20210110] on linux
 Type "help", "copyright", "credits" or "license" for more information.    
->>> <b>import rust</b>
->>> <b>timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")</b>
-1.1113041999997222</b>
->>> <b>timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")</b>
-0.11700650000420865</b>
->>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
-<b>37.771799099995405</b>
->>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
-<b>0.13583959999959916</b>
+>>> <b>import timeit</b>
+>>> timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")
+0.4583319000012125
+>>> timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")
+0.11867309999797726
+>>> timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")
+8.990601400000742
+>>> timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")
+0.15236040000309004
+>>>
 </pre>
 
 With the release build, is a lot faster in both cases. Not sure what mechanism is at play here, but that is quite a difference.
