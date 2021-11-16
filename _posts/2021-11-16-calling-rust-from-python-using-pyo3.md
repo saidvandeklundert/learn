@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, python, PyO3 ]
 ---
 
-Calling Rust code from Python is made very easy by something called [pyo3](https://github.com/PyO3/pyo3). PyO3 can be used to build a Rust library as a Python mode. After having done so, you can then import the Rust code you wrote in your Python and run it. Imagine having build a Rust library that contains a function called `multiply`. If you build the library as a Python module called `rust`, the following would be all that is required to run that function in your Python scripts:
+Calling Rust code from Python is made easy by something called [PyO3](https://github.com/PyO3/pyo3). Imagine having build a Rust library that contains a function called `multiply`. If you build the library as a Python module called `rust`, the following would be all that is required to run that function in your Python scripts:
 
 ```python
 import rust
@@ -17,12 +17,14 @@ import rust
 result = rust.multiply(2, 3)
 print(result)
 ```
-In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include
-- multiply numbers and sum vectors
-- print different types (dicts, lists, arrrays)
-- use a Rust struct in Python code
-- serialize a Pydantic basemodel as a struct in Rust
+
+In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. Some of these examples include:
+- multiply numbers
 - calculate the n-th Fibonacci in Python as well as in Rust
+- sum the the numbers in a list
+- use a variety of types in Rust functions that are called from Python
+- use a Rust struct in Python code
+- use Python to send JSON to Rust and serialize that JSON as a struct
 - allow Rust to use the logger from the Python runtime
 - generating an Error in Rust and catching it as an exception in Python
 
