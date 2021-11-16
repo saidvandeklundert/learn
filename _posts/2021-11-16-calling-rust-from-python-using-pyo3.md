@@ -159,16 +159,22 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 ```
 
 <pre>
-(.env) root@rust:/pyo3/pyo3# maturin develop
-(.env) root@rust:/pyo3/pyo3# python -i
+(.env) root@rust:/pyo3/pyo3# <b>maturin develop</b>
+(.env) root@rust:/pyo3/pyo3# <b>python -i</b>
 Python 3.9.2 (default, Feb 28 2021, 17:03:44) 
 [GCC 10.2.1 20210110] on linux
 Type "help", "copyright", "credits" or "license" for more information.    
->>> import rust
->>> import timeit
->>> timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")
+>>> <b>import rust</b>
+>>> <b>import timeit</b>
+>>>
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from fib import get_fibonacci")</b>
+0.995616299995163
+>>> <b>timeit.timeit("get_fibonacci(5)", setup="from rust import get_fibonacci")</b>
+1.0903590000016266
+>>>
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from fib import get_fibonacci")</b>
 33.936191699998744
->>> timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")
+>>> <b>timeit.timeit("get_fibonacci(150)", setup="from rust import get_fibonacci")</b>
 3.6803346000015154
 >>>
 </pre>
