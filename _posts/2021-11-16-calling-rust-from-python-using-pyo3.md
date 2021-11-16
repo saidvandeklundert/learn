@@ -203,9 +203,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 </pre>
 
-With the release build, is a lot faster in both cases. Not sure what mechanism is at play here, but that is quite a difference.
+With the release build, is a lot faster in both cases. 
 
-I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. Typically, the performance increase is nowhere near the above example. 
+I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. I have found that this type of performance increase is not that typical. Getting things to speed up 2x or 3x is usally pretty easy though. 
 
 ## Working with different types
 
