@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, python, PyO3 ]
 ---
 
-Calling Rust code from Python is made easy by [PyO3](https://github.com/PyO3/pyo3). You can write a Rust library and rely on the combination of PyO3 and `maturin`, a supporting tool from the `PyO3` ecosystem, to compile the Rust library and have it installed directly as a Python module. Some of the things that PyO3 does is translating types from Python to Rust and vice versa. Additionally, it is offering a set of macros that make exporting Rust functions to Python very straightforward.
+Calling Rust code from Python is made easy by [PyO3](https://github.com/PyO3/pyo3). You can write a Rust library and rely on the combination of PyO3 and `maturin`, a supporting tool from the `PyO3` ecosystem, to compile the Rust library and have it installed directly as a Python module. Some of the things that PyO3 does is translate types from Python to Rust and vice versa. It also offers a set of macros that make exporting Rust functions to Python very straightforward.
 
 
 In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. These examples include:
