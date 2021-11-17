@@ -109,7 +109,9 @@ Successfully installed maturin-0.11.5 toml-0.10.2
 6
 </pre>
 
-That was it! Now I can run [this](https://github.com/saidvandeklundert/pyo3/blob/main/multiply/multiply.py) script:
+That was it! 
+
+Now I can run [this](https://github.com/saidvandeklundert/pyo3/blob/main/multiply/multiply.py) script:
 
 <pre>
 (.env) root@rust: multiply# python3 multiply.py
