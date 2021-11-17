@@ -226,9 +226,11 @@ I have also compared a lot of other functions. Scanning a text for a substring, 
 
 ## Working with different types
 
-When calling Rust function, PyO3 will convert the Python type you pass as function arguments for you. Additionally, it also takes care of the types that the Rust functions return. Those are also converted for you automatically. The PyO3 user guide describes the [mapping](https://pyo3.rs/main/conversions/tables.html) the Python type and the corresponding function argument types in Rust. Having PyO3 do this automatically for you makes it easy to work with function arguments of different types. Next up are a few examples to illustrate this.
+When calling Rust function, PyO3 will convert the Python type you pass as function arguments to Rust types for you. It also converts the Rust types that Rust functions return to types that are usable in Python. The PyO3 user guide describes the way the [mapping](https://pyo3.rs/main/conversions/tables.html) between the Python types and the Rust types is done. Having PyO3 do this automatically for you makes it easy to work with function arguments of different types. Next up are a few examples to illustrate this.
 
 ### returning the sum of the numbers in a list:
+
+The following function will sum the numbers in a vector and return the result:
 
 ```rust
 #[pyfunction]
@@ -247,14 +249,14 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 }    
 ```
 
-Calling this function in Python:
+When we call this function in Python, we can pass in a list of integers and we get a Python integer in return:
 
 ```
 >>> rust.list_sum([10, 10, 10, 10, 10])
 50
 ```
 
-When we do a performance comparison, we can see that it only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
+Let's do one last performance comparison. In this case, we can see that it only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
 
 ```python
 >>> timeit.timeit("rust.list_sum(a_list)", setup="""
@@ -286,19 +288,32 @@ Hardly any difference. Now, when we increase the function input to 3.000 numbers
 >>>
 ```
 
-
 Key takeaway is that how much you'll be able to speed things up really depends on what part of the code you outsource from Python to Rust. I'll skip any further comparisons between Rust and Python and focus on a few more scenario's that I think are worthwhile.
-### printing the values of a dict/HashMap:
+### printing the values of a dict:
+
+The next function will print the key and the values of a HashMap:
 
 ```rust
+use std::collections::HashMap;
+
 #[pyfunction]
 fn dict_printer(hm: HashMap<String, String>) {
     for (key, value) in hm {
         println!("{} {}", key, value)
     }
 }
+
+#[pymodule]
+fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(dict_printer, m)?)?;
+
+    Ok(())
+}
 ```
-Calling this function from Python:
+
+We can now call this function from Python, passing in a dictionary that is working with the same types:
+
+
 ```python
 >>> a_dict = {
 ...     "key 1": "value 1",
@@ -314,7 +329,7 @@ key 3 value 3
 key 4 value 4
 ```
 
-Note that the HashMap in Rust is very different from a Python dictionary. Given the fact that we defined the HashMap to use Strings for both key as well as value, it will fail in case we use something else in our Python dictionary. There is nothing that will try and coerce a type into another:
+Note that the HashMap in Rust is different from a Python dictionary. Since we defined the Rust HashMap to use Strings for both key as well as value, we have to do the same thing in our Python code. If we use any other type as key or value, the function call will fail. Rust will try and coerce a type into another:
 
 ```python
 >>> try:
@@ -349,9 +364,9 @@ fn word_printer(mut word: String, n: isize, reverse: bool, uppercase: bool) {
 }
 ```
 
-Calling this function in Python:
+The example is a bit lame, but it shows that writing functions that take in a variety of types as arguments is not too difficult:
 
-```
+```python
 >>> rust.word_printer("hello", 3, False, True)
 HELLO
 HELLO
@@ -361,53 +376,9 @@ bye
 bye
 ```
 
-### printing the items in a list and printing the items in an array:
-
-```rust
-#[pyfunction]
-fn array_printer(a: [String; 8]) {
-    for string in a {
-        println!("{}", string)
-    }
-}
-
-#[pyfunction]
-fn vector_printer(a: Vec<String>) {
-    for string in a {
-        println!("{}", string)
-    }
-}
-
-```
-
-
-Calling these from Python:
-```python
->>> a_list = ["1", "2", "3", "4", "5", "6", "7", "8"]
->>> rust.vector_printer(a_list)
-1
-2
-3
-4
-5
-6
-7
-8
->>> rust.array_printer(another_list)
-1
-2
-3
-4
-5
-6
-7
-8
-```
 ## Using a Rust struct in Python
 
-We can also define a struct in Rust and use it in our Python script. I have not exhausted all possibilities, but you can output the struct with a constructor and some methods. 
-
-I made the following example:
+Much to my surprise, PyO3 also makes it increadibly easy to use a Rust struct in Python. Though I have not exhausted or tested all possibilities and corner-case, using a struct with several methods is also pretty straightforward. I made the following example:
 
 ```rust
 #[pyclass]
@@ -444,12 +415,22 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 
 Notice the use of 3 new annotations:
 - `#[pyclass]`: above the struct definition
-- `#[pymethods]`: above the impl block
+- `#[pymethods]`: above the `impl` block
 - `#[new]`: above the constructor
 
-Additionally, we add the struct to the module in a slightly different way.
+Additionally, we add the struct to the module in a slightly different way. Instead if using the following:
 
-Now, to use this in Python, we do the following:
+```rust
+m.add_function(wrap_pyfunction!(xxx, m)?)?;
+```
+
+We now used this:
+```rust
+m.add_class::<RustStruct>()?; // inserted the name of the struct that is to be exported here
+```
+
+After running `maturin develop` again, we are ready to use the struct in our Python. We can use the struct as though it is a Python class:
+
 ```python
 >>> rust_struct = rust.RustStruct(data="some data", vector=[255, 255, 255])
 >>> rust_struct.extend_vector([1, 1, 1, 1])
@@ -463,6 +444,8 @@ some data
 1
 1
 1
+>>> type(rust_struct)
+<class 'builtins.RustStruct'>
 ```
 
 ## Sending over Json to Rust
