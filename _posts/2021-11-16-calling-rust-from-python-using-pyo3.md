@@ -226,9 +226,7 @@ I have also compared a lot of other functions. Scanning a text for a substring, 
 
 ## Working with different types
 
-The PyO3 user guide describes the [mapping](https://pyo3.rs/main/conversions/tables.html) the Python type and the corresponding function argument types in Rust. This makes it relatively easy to work with function arguments of different types.
-
-A few examples to illustrate this.
+When calling Rust function, PyO3 will convert the Python type you pass as function arguments for you. Additionally, it also takes care of the types that the Rust functions return. Those are also converted for you automatically. The PyO3 user guide describes the [mapping](https://pyo3.rs/main/conversions/tables.html) the Python type and the corresponding function argument types in Rust. Having PyO3 do this automatically for you makes it easy to work with function arguments of different types. Next up are a few examples to illustrate this.
 
 ### returning the sum of the numbers in a list:
 
