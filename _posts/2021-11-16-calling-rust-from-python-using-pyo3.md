@@ -448,9 +448,9 @@ some data
 <class 'builtins.RustStruct'>
 ```
 
-## Sending over Json to Rust
+## Sending Json over to Rust
 
-One way to send over complex data structures could be by using JSON. The following example marshals a JSON-string into a struct:
+One way to send over complex data structures could be by using JSON. The following example marshals a JSON-string into a Rust struct:
 
 ```rust
 extern crate serde;
@@ -476,6 +476,7 @@ struct Human {
 ```
 
 On the Python side, I will use Pydantic to send over some Json:
+
 ```python
 >>> from pydantic import BaseModel
 >>> 
@@ -497,7 +498,7 @@ Now we can work with the struct:
  Jan is 6 years old.
 ```
 
-Note, `pydantic` is one of my favourite Python packages. The `.json()` method I used here convert the class to a JSON string.
+This might be abn approach to map a large struct to a datastructure that is similar on the Python side. I used `pydantic` because it is one of my favourite Python packages. The `.json()` method I used here convert the class to a JSON string.
 
 ## Have Rust use a logger from the Python runtime
 
