@@ -383,7 +383,9 @@ Much to my surprise, PyO3 also makes it increadibly easy to use a Rust struct in
 ```rust
 #[pyclass]
 pub struct RustStruct {
+    #[pyo3(get, set)]
     pub data: String,
+    #[pyo3(get, set)]
     pub vector: Vec<u8>,
 }
 #[pymethods]
@@ -413,10 +415,11 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 }
 ```
 
-Notice the use of 3 new annotations:
-- `#[pyclass]`: above the struct definition
-- `#[pymethods]`: above the `impl` block
-- `#[new]`: above the constructor
+Notice the use of 4 new annotations:
+- `#[pyclass]`: above the struct definition, used to expose the class in Python.
+- `#[pymethods]`: above the `impl` block, used to expose the struct methods in Python as class methods.
+- `#[pyo3(get, set)]`: use these macros in case you want to be able to get or set the struct fields in Python.
+- `#[new]`: above the constructor, this is to be able to contstruct the struct as a class in Python.
 
 Additionally, we add the struct to the module in a slightly different way. Instead if using the following:
 
@@ -447,6 +450,11 @@ some data
 1
 >>> type(rust_struct)
 <class 'builtins.RustStruct'>
+>>> rust_struct.data
+'some data'
+>>> rust_struct.data = "some other data"
+>>> rust_struct.data
+'some other data'
 ```
 
 ## Sending Json over to Rust
