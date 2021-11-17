@@ -622,7 +622,7 @@ Now we move to the Python side and run the function, triggering the exception:
 ```python
 >>> rust.greater_than_2(1)
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+  ...
 OSError: Error from Rust: number is less than or equal to 2
 >>> rust.greater_than_2(3)
 3
@@ -630,7 +630,7 @@ OSError: Error from Rust: number is less than or equal to 2
 11
 >>> rust.greater_than_2(-11)
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+  ...
 OSError: Error from Rust: number is less than or equal to 2
 ```
 
@@ -640,7 +640,7 @@ It took quite a bit of code to put that in! Still not too hard in my opinion.
 
 Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience, the predefined types are very convenient and the build tool `maturin` is an absolute joy to work with.
 
-The repo is actively maintained and the documentation is great.
+The repo is actively maintained, and the documentation is great.
 
 {:refdef: style="text-align: center;"}
 ![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3_small.png "PyO3 logo"){:height="80%" width="80%"}
