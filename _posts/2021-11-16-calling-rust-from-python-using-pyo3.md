@@ -199,7 +199,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 The above tells us that when we call the function to calculate the 5-th Fibonacci number, Python is faster. But when we look for the 150th Fibonacci number, Rust is almost three times faster. 
 
-But it gets better. We can also do a release build by adding `--release` as an argument to maturin:
+But it gets better. 
+
+We can also do a release build by adding `--release` as an argument to maturin:
 
 <pre>
 (.env) root@rust:/pyo3/pyo3# <b>python -i</b>
