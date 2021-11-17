@@ -82,7 +82,7 @@ result = rust.multiply(2, 3)
 print(result)
 ```
 
-To be able to run this code, we need to compile the Rust code and install it as a Python library. This is where `maturin` comes in.
+To be able to run this code, we need to compile the Rust code and install it as a Python library. This is where `maturin` comes in:
 
 <pre>
 root@rust:/# <b>git clone https://github.com/saidvandeklundert/pyo3.git</b>
