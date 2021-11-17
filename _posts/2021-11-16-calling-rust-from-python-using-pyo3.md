@@ -220,7 +220,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 </pre>
 
-With the release build, is a lot faster in both cases. 
+With the release build, the Rust function is a lot faster in both cases. 
 
 I have also compared a lot of other functions. Scanning a text for a substring, manipulating texts, summing up numbers and a variety of other things. I have found that this type of performance increase is not that typical. Getting things to speed up 2x or 3x is usually not that hard. 
 
