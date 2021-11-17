@@ -378,7 +378,7 @@ bye
 
 ## Using a Rust struct in Python
 
-Much to my surprise, PyO3 also makes it increadibly easy to use a Rust struct in Python. Though I have not exhausted or tested all possibilities and corner-case, using a struct with several methods is also pretty straightforward. I made the following example:
+Much to my surprise, PyO3 also makes it increadibly easy to use a Rust struct in Python. Though I have not exhausted or tested all possibilities and corner-cases, using a struct with several methods is also pretty straightforward. I made the following example:
 
 ```rust
 #[pyclass]
@@ -424,7 +424,8 @@ Additionally, we add the struct to the module in a slightly different way. Inste
 m.add_function(wrap_pyfunction!(xxx, m)?)?;
 ```
 
-We now used this:
+We now used the following:
+
 ```rust
 m.add_class::<RustStruct>()?; // inserted the name of the struct that is to be exported here
 ```
@@ -502,9 +503,7 @@ This might be abn approach to map a large struct to a datastructure that is simi
 
 ## Have Rust use a logger from the Python runtime
 
-Rust can be made to log using the logger we define in Python. This is possible using `pyo3-log`. 
-
-We start off by adding the following to the Cargo.toml`:
+Rust can be made to log using the logger we define in Python. This is possible using `pyo3-log`. We start off by adding the following to the Cargo.toml`:
 
 ```
 [dependencies]
@@ -570,10 +569,6 @@ use std::fmt;
 // 1
 #[derive(Debug)]
 struct MyError {
-    /*
-    the 'message' field that is used later on
-    to be able print any message.
-    */
     pub msg: &'static str,
 }
 
@@ -622,7 +617,7 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 5: We create a function called 'greater_than_2'. This function will raise the error/exception in case the input value is 2 or less.
 6: We add the function to the Python module in the 'regular' way.
 
-Now we move to the Python side and run the function, triggering the excpetion:
+Now we move to the Python side and run the function, triggering the exception:
 
 ```python
 >>> rust.greater_than_2(1)
@@ -639,7 +634,7 @@ Traceback (most recent call last):
 OSError: Error from Rust: number is less than or equal to 2
 ```
 
-It took some code, but in my opinion, not that hard to use after having it setup.
+It took quite a bit of code to put that in! Still not too hard in my opinion.
 
 ## Closing thoughts.
 
