@@ -26,13 +26,13 @@ PyO3 offers some ergonomics for people wanting to glue Rust and Python code toge
 
 So what does PyO3 give you?
 
-For starters, there is [maturin](https://github.com/PyO3/maturin). This tool will compile the Rust code for you and install the compiled code as a Python module in your virtual environment. After this, you can import this module in your Python code and use it. After you pip install maturin, you only have to run 1 command (<b>maturin develop</b>) to use the Rust code in Python.
+For starters, there is [maturin](https://github.com/PyO3/maturin). This tool will compile the Rust code for you and install the compiled code as a Python module in your virtual environment. After this, you can import this module in your Python code and use it. After you <b>pip install maturin</b>, you only have to run 1 command (<b>maturin develop</b>) to use the Rust code in Python.
 
 Apart from `maturin`, there is of course PyO3 itself. PyO3 offers Rust bindings to the Python interpreter. This makes it so that you do not really have to bother that much with the interaction between Python and Rust. For instance, you will not have to worry about how to translate a Python string to something in C, and then something else again in Rust. The same goes for integers, floats, lists, dictionaries, etc.  And to make things convenient, PyO3 comes with a lot of macros that prevent you from having to write too much boilerplate code. To expose Rust functions to Python, you annotate them with a macro. After this, PyO3 will take care of the rest. The same applies in case you want to export a struct or methods.
 
 ## Calling a Rust function from Python
 
-In this first example, we'll call a multiplication function from Rust. Normally, we could write something like this:
+In this first example, we'll call a Rust multiplication function from Python. Normally, we could write something like this:
 
 ```rust
 fn multiply(a: isize, b: isize) -> isize {
@@ -46,7 +46,8 @@ Without adding too many things, we can make this function callable from Python. 
 - wrap the result in a `PyResult`
 - add the function to the `#[pymodule]`
 
-The following code follows the above steps in that same order:
+The following code follows illustrates the above steps in the same order:
+
 ```rust
 use pyo3::prelude::*;
 
