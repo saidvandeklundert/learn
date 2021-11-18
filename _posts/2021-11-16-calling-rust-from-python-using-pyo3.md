@@ -9,7 +9,7 @@ share-img: /assets/img/rusty_logo.jpeg
 tags: [rust, python, PyO3 ]
 ---
 
-Calling Rust code from Python is made easy by [PyO3](https://github.com/PyO3/pyo3). You can write a Rust library and rely on the combination of PyO3 and `maturin`, a supporting tool from the `PyO3` ecosystem, to compile the Rust library and have it installed directly as a Python module. Some of the things that PyO3 does is translate types from Python to Rust and vice versa. It also offers a set of macros that make exporting Rust functions to Python very straightforward.
+Calling Rust code from Python is made easy by [PyO3](https://github.com/PyO3/pyo3). You can write a Rust library and rely on the combination of PyO3 and `maturin`, a supporting tool from the `PyO3` ecosystem, to compile the Rust library and have it installed directly as a Python module. Among others, PyO3 can translate types between Python and Rust as well as make it easy to export Rust functions to Python through a set of macros.
 
 
 In this blog post, I will give a short introduction to PyO3. After that, I will discuss several example functions, written in Rust and called from Python. These examples include:
@@ -646,7 +646,7 @@ It took quite a bit of code to put that in! Still not too hard in my opinion.
 
 ## Closing thoughts.
 
-Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience, the predefined types are very convenient and the build tool `maturin` is an absolute joy to work with.
+Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience and having PyO3 translate the types between Rust and Python brings a lot of ease to the development process. And then there is the build tool `maturin`. This is an absolute joy to work with.
 
 The repo is actively maintained, and the documentation is great. After learning about PyO3, I am excited about using Rust in my Python.
 
@@ -655,7 +655,9 @@ The repo is actively maintained, and the documentation is great. After learning 
 {: refdef}
 
 
-- [code samples from this blog](https://github.com/saidvandeklundert/pyo3)
+The code samples from this blog can be found [here](https://github.com/saidvandeklundert/pyo3). There is also a Docker build file there in case you want to run the code yourself.
+
+Some other worthwhile links in the context of PyO3:
 - [PyO3 repo](https://github.com/PyO3/pyo3)
 - [PyO3 user guide](https://pyo3.rs/main/)
 - [PyO3 architecture guide](https://github.com/PyO3/pyo3/blob/main/Architecture.md)
