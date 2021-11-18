@@ -22,6 +22,11 @@ In this blog post, I will give a short introduction to PyO3. After that, I will 
 
 ## Introduction to PyO3
 
+
+{:refdef: style="text-align: center;"}
+![PyO3 logo](/learn/img/pyo3_small.png "PyO3 logo"){:height="40%" width="40%"}
+{: refdef}
+
 PyO3 offers some ergonomics for people wanting to glue Rust and Python code together. It helps you calling Python code from Rust as well as calling Rust code from Python. Since I have been using it only to call Rust code from Python, that is the only thing I will write about here.
 
 So what does PyO3 give you?
@@ -649,10 +654,6 @@ It took quite a bit of code to put that in! Still not too hard in my opinion.
 Working with PyO3 and using it to call Rust from Python is a very pleasant experience. I find that the ergonomics that have been put in place make everything a lot easier when compared to relying on `ffi` or `libc`. The macros offer a lot of convenience and having PyO3 translate the types between Rust and Python brings a lot of ease to the development process. And then there is the build tool `maturin`. This is an absolute joy to work with.
 
 The repo is actively maintained, and the documentation is great. After learning about PyO3, I am excited about using Rust in my Python.
-
-{:refdef: style="text-align: center;"}
-![PyO3 logo](https://github.com/saidvandeklundert/learn/blob/pyo3_post/img/pyo3_small.png "PyO3 logo"){:height="80%" width="80%"}
-{: refdef}
 
 
 The code samples from this blog can be found [here](https://github.com/saidvandeklundert/pyo3). There is also a Docker build file there in case you want to run the code yourself.
