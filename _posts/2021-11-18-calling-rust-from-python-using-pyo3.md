@@ -256,10 +256,10 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 
 When we call this function in Python, we can pass in a list of integers and we get a Python integer in return:
 
-```
+<pre>
 >>> rust.list_sum([10, 10, 10, 10, 10])
 50
-```
+</pre>
 
 Let's do one last performance comparison. In this case, we can see that it only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
 
@@ -518,11 +518,11 @@ This might be abn approach to map a large struct to a datastructure that is simi
 
 Rust can be made to log using the logger we define in Python. This is possible using `pyo3-log`. We start off by adding the following to the Cargo.toml`:
 
-```
+<pre>
 [dependencies]
 pyo3-log = "0.5.0"
 log = "0.4.14"
-```
+</pre>
 
 Next, we create 2 example functions that will log a message:
 
