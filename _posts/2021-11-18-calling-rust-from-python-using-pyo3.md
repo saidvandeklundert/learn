@@ -256,10 +256,10 @@ fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
 
 When we call this function in Python, we can pass in a list of integers and we get a Python integer in return:
 
-<pre>
+```python
 >>> rust.list_sum([10, 10, 10, 10, 10])
 50
-</pre>
+```
 
 Let's do one last performance comparison. In this case, we can see that it only makes sense to try and speed things up if the function has to perform a lot of computations. The following example shows the difference in performance with a small input to the function:
 
