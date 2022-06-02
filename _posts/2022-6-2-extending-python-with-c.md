@@ -34,8 +34,8 @@ For me personally though, the only reason I have is getting more familiar with C
 # How to extend Python with C?
 
 There are multiple options available to call C code from Python. The options that come with CPython by default are the following:
-- `ctypes`: https://docs.python.org/3/library/ctypes.html#module-ctypes
-- `Python API`: https://docs.python.org/3/c-api/intro.html
+- [ctypes](https://docs.python.org/3/library/ctypes.html#module-ctypes)
+- [Python API](https://docs.python.org/3/c-api/intro.html)
 
 In addition to these 2 options there is also the 'cffi', or 'C Foreign Function Interface' for Python. This package needs to be installed before you can use it and you can find more information on cffi [here](https://cffi.readthedocs.io/en/latest/index.html).
 
@@ -59,9 +59,9 @@ int square(int i)
 
 Before we can call this function from our Python code, we need to compile it. When we compile the code, we need to pass in a flag so that the produced file can be imported. To compile the C code, we run the following command:
 
-```
+<pre>
 gcc -shared -o clib.so square.c
-```
+</pre>
 
 This will output a file called `clib.so` which we can import into our Python script. Let's put a `square.py` script in the same directory:
 
@@ -232,7 +232,6 @@ Next up is putting everything we want to expose to Python in the 'method table',
 static PyMethodDef module_methods[] = {
     {"multiplier", c_multiplier, METH_VARARGS, "Multiply two numbers."},
     {NULL, NULL, 0, NULL}};
-
 ```
 
 In the above example, `module_methods` is a static array containing `PyMethodDef` structures. Since we only want to expose 1 function, we only put in the following entry:
@@ -304,18 +303,18 @@ setup(
 
 After cloning the repo, all I had to do is the following:
 
-```
+<pre>
 pip install src/
-```
+</pre>
 
 This will compile the source file and install the C extension module. You will see the packages installed when you run `pip freeze`.
 
 We can now run the test script and observe the following:
 
-```
+<pre>
 python .\test.py
 100
-```
+</pre>
 
 Awesome!
 
@@ -340,15 +339,15 @@ Few personal things I learned:
 # Links relevant to this article:
 
 
-[c modules](https://github.com/python/cpython/tree/main/Modules)
-[header files](https://github.com/python/cpython/tree/main/Include)
-[api docs](https://docs.python.org/3/c-api/index.html)
-[structures](https://docs.python.org/3/c-api/structures.html)
-[Extending Python with new types tutorial](https://docs.python.org/3/extending/newtypes_tutorial.html)
-[PyArg_ParseTuple arguments](https://docs.python.org/3/c-api/arg.html)
-[PEP 7](https://www.python.org/dev/peps/pep-0007/)
-[Paul Ross - Here be Dragons PyCon 2016](https://www.youtube.com/watch?v=Yq__HtUIH5Y)
-[Paul Ross - A faster Python? You Have These Choices](https://www.youtube.com/watch?v=5js_-pLGqwA)
-[Python Extension Patterns](https://pythonextensionpatterns.readthedocs.io/en/latest/index.html)
-[CPython internals](https://www.amazon.com/CPython-Internals-Guide-Python-Interpreter/dp/1775093344)
-[PyCon 2009 - nedbatchelder](https://nedbatchelder.com/text/whirlext.html)
+[c modules](https://github.com/python/cpython/tree/main/Modules)<br>
+[header files](https://github.com/python/cpython/tree/main/Include)<br>
+[api docs](https://docs.python.org/3/c-api/index.html)<br>
+[structures](https://docs.python.org/3/c-api/structures.html)<br>
+[Extending Python with new types tutorial](https://docs.python.org/3/extending/newtypes_tutorial.html)<br>
+[PyArg_ParseTuple arguments](https://docs.python.org/3/c-api/arg.html)<br>
+[PEP 7](https://www.python.org/dev/peps/pep-0007/)<br>
+[Paul Ross - Here be Dragons PyCon 2016](https://www.youtube.com/watch?v=Yq__HtUIH5Y)<br>
+[Paul Ross - A faster Python? You Have These Choices](https://www.youtube.com/watch?v=5js_-pLGqwA)<br>
+[Python Extension Patterns](https://pythonextensionpatterns.readthedocs.io/en/latest/index.html)<br>
+[CPython internals](https://www.amazon.com/CPython-Internals-Guide-Python-Interpreter/dp/1775093344)<br>
+[PyCon 2009 - nedbatchelder](https://nedbatchelder.com/text/whirlext.html)<br>
