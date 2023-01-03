@@ -18,7 +18,6 @@ navbar-links:
   Resources:
     - The Rust Programming Language: "https://doc.rust-lang.org/book/"
     - Rust primitives: "https://doc.rust-lang.org/std/index.html#primitives"
-    - Learn markdown: "https://www.markdowntutorial.com/"
   Author's home: "https://www.linkedin.com/in/saidvandeklundert/"
 
 # --- Logo --- #
@@ -79,7 +78,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "saidvandeklundert.net/learn"
+url-pretty: "https://saidvandeklundert.net/learn"
 
 # Excerpt word length - Truncate the excerpt of each post on the feed page to the specified number of words
 excerpt_length: 50
